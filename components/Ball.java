@@ -41,6 +41,25 @@ public class Ball {
         return this.distance(b) < BALL_SIZE*2;
     }
 
+    public void wallCollide(){
+        private double ORIGIN_X = POOL_TABLE_LENGTH - GAME_SURFACE_LENGTH;
+        private double ORIGIN_Y = POOL_TABLE_WIDTH - GAME_SURFACE_WIDTH;
+        private double rayon = BALL_SIZE/2;
+        //Bottom wall
+        if(posX-rayon <= ORIGIN_X + RUBBER_BAND){
+            this.setSpeedX(Math.abs(speedX));
+        }
+        if(posX+rayon >= ORIGIN_X + GAME_SURFACE_LENGTH - RUBBER_BAND){
+            this.setSpeedX(-Math.abs(speedX));
+        }
+        if(posY-rayon <= ORIGIN_Y + RUBBER_BAND){
+            this.setSpeedY(Math.abs(speedY));
+        }
+        if(posY+rayon >= ORIGIN_Y + GAME_SURFACE_WIDTH - RUBBER_BAND){
+            this.setSpeedX(-Math.abs(speedY));
+        }
+    }
+
     public double getPosX() { return posX; }
     public void setPosX(double posX) { this.posX = posX; }
 
