@@ -1,3 +1,6 @@
+import java.lang.Math;
+import libs.Constants;
+
 public class Ball {
 
     public static final int STRIPED = 1;
@@ -28,6 +31,14 @@ public class Ball {
 
         speedX = sx;
         speedY = sy;
+    }
+
+    public double distance(Ball b){
+        return Math.sqrt((b.getPosX()-posX)*(b.getPosX()-posX) + (b.getPosY()-this.posY)*(b.getPosY()-this.posY));
+    }
+
+    public boolean collide(Ball b) {
+        return this.distance(b) < BALL_SIZE*2;
     }
 
     public double getPosX() { return posX; }
