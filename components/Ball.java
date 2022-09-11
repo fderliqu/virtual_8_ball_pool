@@ -1,7 +1,6 @@
 package components;
 
 import java.lang.Math;
-import libs.Constants;
 
 import static libs.Constants.*;
 
@@ -42,7 +41,7 @@ public class Ball {
     }
 
     public boolean collide(Ball b) {
-        return this.distance(b) < BALL_SIZE*2;
+        return this.distance(b) < BALL_SIZE;
     }
 
     public void wallCollide(){
