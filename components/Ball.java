@@ -1,3 +1,5 @@
+package components;
+
 public class Ball {
 
     public static final int STRIPED = 1;

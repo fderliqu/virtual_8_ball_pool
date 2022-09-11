@@ -1,4 +1,4 @@
-package smart_pool.libs;
+package libs;
 
 public class Constants {
     //all dimensions of the billard stuff in cm
