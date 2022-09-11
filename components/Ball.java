@@ -1,5 +1,10 @@
 package components;
 
+import java.lang.Math;
+import libs.Constants;
+
+import static libs.Constants.*;
+
 public class Ball {
 
     public static final int STRIPED = 1;
@@ -30,6 +35,33 @@ public class Ball {
 
         speedX = sx;
         speedY = sy;
+    }
+
+    public double distance(Ball b){
+        return Math.sqrt((b.getPosX()-posX)*(b.getPosX()-posX) + (b.getPosY()-this.posY)*(b.getPosY()-this.posY));
+    }
+
+    public boolean collide(Ball b) {
+        return this.distance(b) < BALL_SIZE*2;
+    }
+
+    public void wallCollide(){
+        double ORIGIN_X = POOL_TABLE_LENGTH - GAME_SURFACE_LENGTH;
+        double ORIGIN_Y = POOL_TABLE_WIDTH - GAME_SURFACE_WIDTH;
+        double rayon = BALL_SIZE/2;
+        //Bottom wall
+        if(posX-rayon <= ORIGIN_X + RUBBER_BAND){
+            this.setSpeedX(Math.abs(speedX));
+        }
+        if(posX+rayon >= ORIGIN_X + GAME_SURFACE_LENGTH - RUBBER_BAND){
+            this.setSpeedX(-Math.abs(speedX));
+        }
+        if(posY-rayon <= ORIGIN_Y + RUBBER_BAND){
+            this.setSpeedY(Math.abs(speedY));
+        }
+        if(posY+rayon >= ORIGIN_Y + GAME_SURFACE_WIDTH - RUBBER_BAND){
+            this.setSpeedX(-Math.abs(speedY));
+        }
     }
 
     public double getPosX() { return posX; }
