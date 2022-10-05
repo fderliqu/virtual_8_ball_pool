@@ -1,5 +1,7 @@
 package components;
 
+import render.Renderer;
+
 import java.util.ArrayList;
 import javax.swing.*;
 import java.awt.event.*;
@@ -16,8 +18,7 @@ public class BallTable {
 
     private boolean cursorOnDrag = false;
 
-    protected JFrame window = new JFrame();
-    protected JPanel panel = new JPanel();
+    protected Renderer panel = new Renderer();
     
     public BallTable(Player player1, Player player2){
         this.player1 = player1;
@@ -38,10 +39,6 @@ public class BallTable {
         balls.add(new Ball(270, 10, 0, 0, BallTypeEnum.STRIPED, 13));
         balls.add(new Ball(290, 10, 0, 0, BallTypeEnum.STRIPED, 14));
         balls.add(new Ball(310, 10, 0, 0, BallTypeEnum.STRIPED, 15));
-        
-        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        window.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        window.setUndecorated(true);
 
         panel.addMouseMotionListener(new MouseMotionAdapter(){
             //Only for tracking display
@@ -67,8 +64,6 @@ public class BallTable {
                 }
             }
         });
-        window.getContentPane().add(panel);
-        window.setVisible(true);
     }
 
     public boolean checkBallsSpeed(){
