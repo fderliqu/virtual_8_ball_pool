@@ -74,6 +74,29 @@ public class Renderer extends JPanel {
         System.out.println("width, height = "+width+" "+height);
         System.out.println("pxpercm, pool_width = "+PxPerCm+" "+(PxPerCm * Constants.POOL_TABLE_WIDTH));
         System.out.println("verticalOffset = "+verticalOffset);
+
+        for (Ball b : balls) {
+            switch (b.getBallType()) {
+                case WHITE -> g.setColor(new Color(255, 255, 255));
+                case BLACK -> g.setColor(new Color(0, 0, 0));
+                default -> g.setColor(new Color(150, 25, 55));
+            }
+
+            g.fillOval((int) (PxPerCm * b.getPosX()),
+                            (int) (PxPerCm * b.getPosY()),
+                            (int) (PxPerCm * Constants.BALL_SIZE),
+                            (int) (PxPerCm * Constants.BALL_SIZE));
+
+            if (b.getBallType() == Ball.BallTypeEnum.STRIPED) {
+                g.setColor(new Color(255, 255, 255));
+                    g.drawLine(
+                        (int) (PxPerCm * (b.getPosX() + (Constants.BALL_SIZE / 2))),
+                        (int) (PxPerCm * (b.getPosY())),
+                        (int) (PxPerCm * (b.getPosX() + (Constants.BALL_SIZE / 2))),
+                        (int) (PxPerCm * (b.getPosY() + (Constants.BALL_SIZE)))
+                        );
+            }
+        }
     }
 
     public void render() {
