@@ -18,7 +18,7 @@ public class BallTable {
 
     private boolean cursorOnDrag = false;
 
-    protected Renderer panel = new Renderer();
+    protected Renderer panel;
     
     public BallTable(Player player1, Player player2){
         this.player1 = player1;
