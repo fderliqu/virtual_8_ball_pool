@@ -26,6 +26,17 @@ public class Renderer extends JPanel {
         window.add(this);
     }
 
+    public Renderer () {
+        super();
+
+        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        window.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        window.setUndecorated(true);
+        window.setVisible(true);
+
+        window.add(this);
+    }
+
     @Override
     public void paintComponent(Graphics g){
         g.setColor(new Color(107, 62, 46));
