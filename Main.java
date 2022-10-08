@@ -1,4 +1,6 @@
 import components.Ball;
+import components.BallTable;
+import components.Player;
 import components.Ball.BallTypeEnum;
 import render.Renderer;
 
@@ -6,6 +8,7 @@ import java.util.ArrayList;
 
 public class Main {
     public static void main(String[] args) {
+        /*
         ArrayList<Ball> balls = new ArrayList<>();
 
         balls.add(new Ball(20, 100, 0, 0, BallTypeEnum.WHITE, 0));
@@ -25,6 +28,12 @@ public class Main {
         balls.add(new Ball(160, 100, 0, 0, BallTypeEnum.STRIPED, 14));
         balls.add(new Ball(170, 100, 0, 0, BallTypeEnum.STRIPED, 15));
 
-        Renderer fenetre = new Renderer(balls);
+        Renderer fenetre = new Renderer(balls);*/
+        Player player1 = new Player("player1");
+        Player player2 = new Player("player2");
+        BallTable tableJeu = new BallTable(player1,player2);
+        while(true){
+            tableJeu.update();
+        }
     }
 }
