@@ -59,7 +59,7 @@ public class Renderer extends JPanel {
         }
 
         g.setColor(new Color(255,255,255));
-        System.out.println("start zone : "+Constants.START_ZONE);
+        //System.out.println("start zone : "+Constants.START_ZONE);
         g.drawLine(
                 (int) (PxPerCm * (Constants.WALL_THICKNESS + Constants.START_ZONE)),
                 (int) ((PxPerCm * Constants.WALL_THICKNESS) + verticalOffset),
@@ -71,9 +71,9 @@ public class Renderer extends JPanel {
 
         //g.fillPolygon();
 
-        System.out.println("width, height = "+width+" "+height);
-        System.out.println("pxpercm, pool_width = "+PxPerCm+" "+(PxPerCm * Constants.POOL_TABLE_WIDTH));
-        System.out.println("verticalOffset = "+verticalOffset);
+        //System.out.println("width, height = "+width+" "+height);
+        //System.out.println("pxpercm, pool_width = "+PxPerCm+" "+(PxPerCm * Constants.POOL_TABLE_WIDTH));
+        //System.out.println("verticalOffset = "+verticalOffset);
 
         for (Ball b : balls) {
             switch (b.getBallType()) {
@@ -82,18 +82,18 @@ public class Renderer extends JPanel {
                 default -> g.setColor(new Color(150, 25, 55));
             }
 
-            g.fillOval((int) (PxPerCm * b.getPosX()),
-                            (int) (PxPerCm * b.getPosY()),
+            g.fillOval((int) (PxPerCm * (b.getPosX() - Constants.BALL_SIZE/2)),
+                            (int) (PxPerCm * (b.getPosY() - Constants.BALL_SIZE/2)),
                             (int) (PxPerCm * Constants.BALL_SIZE),
                             (int) (PxPerCm * Constants.BALL_SIZE));
 
             if (b.getBallType() == Ball.BallTypeEnum.STRIPED) {
                 g.setColor(new Color(255, 255, 255));
                     g.drawLine(
-                        (int) (PxPerCm * (b.getPosX() + (Constants.BALL_SIZE / 2))),
-                        (int) (PxPerCm * (b.getPosY())),
-                        (int) (PxPerCm * (b.getPosX() + (Constants.BALL_SIZE / 2))),
-                        (int) (PxPerCm * (b.getPosY() + (Constants.BALL_SIZE)))
+                        (int) (PxPerCm * b.getPosX()),
+                        (int) (PxPerCm * (b.getPosY() - (Constants.BALL_SIZE / 2))),
+                        (int) (PxPerCm * b.getPosX()),
+                        (int) (PxPerCm * (b.getPosY() + (Constants.BALL_SIZE / 2)))
                         );
             }
         }
@@ -101,6 +101,10 @@ public class Renderer extends JPanel {
 
     public void render() {
 
+    }
+
+    public void drawUpdate(){
+        window.repaint();
     }
 
     public void lazyRender() {
