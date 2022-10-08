@@ -33,7 +33,7 @@ public class Ball {
         this.posY = posY;
         this.speedX = speedX;
         this.speedY = speedY;
-        this.acceleration = 0.98;
+        this.acceleration = 0;
         this.ballNumber = ballNumber;
         this.ballType = ballType;
     }
@@ -47,21 +47,21 @@ public class Ball {
     }
 
     public void wallCollide(){
-        double ORIGIN_X = POOL_TABLE_LENGTH - GAME_SURFACE_LENGTH;
-        double ORIGIN_Y = POOL_TABLE_WIDTH - GAME_SURFACE_WIDTH;
+        double ORIGIN_X = (POOL_TABLE_LENGTH - GAME_SURFACE_LENGTH)/2 + HORIZONTAL_OFFSET_CM;
+        double ORIGIN_Y = (POOL_TABLE_WIDTH - GAME_SURFACE_WIDTH)/2 + VERTICAL_OFFSET_CM;
         double rayon = BALL_SIZE/2;
         //Bottom wall
-        if(posX-rayon <= ORIGIN_X + RUBBER_BAND){
+        if(posX-rayon <= ORIGIN_X){
             this.setSpeedX(Math.abs(speedX));
         }
-        if(posX+rayon >= ORIGIN_X + GAME_SURFACE_LENGTH - RUBBER_BAND){
+        if(posX+rayon >= ORIGIN_X + GAME_SURFACE_LENGTH){
             this.setSpeedX(-Math.abs(speedX));
         }
-        if(posY-rayon <= ORIGIN_Y + RUBBER_BAND){
+        if(posY-rayon <= ORIGIN_Y){
             this.setSpeedY(Math.abs(speedY));
         }
-        if(posY+rayon >= ORIGIN_Y + GAME_SURFACE_WIDTH - RUBBER_BAND){
-            this.setSpeedX(-Math.abs(speedY));
+        if(posY+rayon >= ORIGIN_Y + GAME_SURFACE_WIDTH){
+            this.setSpeedY(-Math.abs(speedY));
         }
     }
 
@@ -69,17 +69,22 @@ public class Ball {
 
     public void transfert_energy(Ball b){
         //Calcul des deux vitesses transfert par le choc entre cette boule et la boule en paramètre
+        //(dx,dy) = (cos(angle entre deux axes),sin(angle entre deux axes)) 
         double dx = this.posX - b.getPosX();
         double dy = this.posY - b.getPosY();
         double size = Math.sqrt(dx*dx + dy*dy);
         dx /= size;
         dy /= size;
+        //vect_vitesse = valeur scalaire vitesse de la boule 1 selon l'axe de collision
         double vect_vitesse = dx*this.speedX + dy*this.speedY;
         
+        //vitesse transmis à boule 2 (nv1x,nv1y) = (vect_vitesse*cos(angle entre deux axes),vect_vitesse*sin(angle entre deux axes))
         double nv1x = dx*vect_vitesse;
         double nv1y = dy*vect_vitesse;
+        //vitesse gardée sur boule 1
         double nv2x = this.speedX - nv1x;
         double nv2y = this.speedY - nv1y;
+
         //Pareil à l'inverse
         dx = b.getPosX() - this.posX;
         dy = b.getPosY() - this.posY;
@@ -88,11 +93,16 @@ public class Ball {
         dy /= size;
         vect_vitesse = dx*b.getSpeedX() + dy*b.getSpeedY();
         
+        //vitesse transmis à boule 1
         double nv1bx = dx*vect_vitesse;
         double nv1by = dy*vect_vitesse;
+        //vitesse gardée sur boule 2 
         double nv2bx = b.getSpeedX() - nv1bx;
         double nv2by = b.getSpeedY() - nv1by;
-        //Additionner les vecteur ensembles
+
+        //Additionner les vecteur ensembles 
+        //vitesse boule 1 = vitesse transmis à boule 1 (nv1bx,nv1by) + vitesse gardée sur boule 1 (nv2x,nv2y)
+        //vitesse boule 2 = vitesse transmis à boule 2 (nv1x,nv1y) + vitesse gardée sur boule 2 (nv2bx,nv2by)
         b.setSpeedX(nv1x + nv2bx);
         b.setSpeedY(nv1y + nv2by);
         this.setSpeedX(nv2x + nv1bx);
