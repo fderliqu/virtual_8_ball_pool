@@ -1,8 +1,7 @@
 package components;
 
 import java.util.ArrayList;
-
-import components.Ball.BallTypeEnum;
+import static libs.Constants.*;
 
 public class Player {
     private boolean hisTurn,doFoul,heWin,allBallPotted;

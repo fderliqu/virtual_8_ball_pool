@@ -30,6 +30,18 @@ public class Constants {
     //Px cm conversion
     public static final double PX_PER_CM = SCREEN_WIDTH/POOL_TABLE_LENGTH;
 
+    //BallType
+    public static final int STRIPED = 1;
+    public static final int PLAIN = 2;
+    public static final int WHITE = 3;
+    public static final int BLACK = 4;
+
+    public enum BallTypeEnum {
+        STRIPED,
+        PLAIN,
+        WHITE,
+        BLACK
+    }
     //Others
 
     public static final double VERTICAL_OFFSET_CM = (SCREEN_HEIGHT/PX_PER_CM - POOL_TABLE_WIDTH)/2;

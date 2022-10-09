@@ -4,17 +4,6 @@ import static libs.Constants.*;
 
 public class Ball {
 
-    public static final int STRIPED = 1;
-    public static final int PLAIN = 2;
-    public static final int WHITE = 3;
-    public static final int BLACK = 4;
-
-    public enum BallTypeEnum {
-        STRIPED,
-        PLAIN,
-        WHITE,
-        BLACK
-    }
 
     private double posX;
     private double posY;
@@ -113,8 +102,15 @@ public class Ball {
     public void update(double time){
         setPosX(posX + time*speedX);
         setPosY(posY + time*speedY);
-        setSpeedX(speedX + time*acceleration);
-        setSpeedY(speedY + time*acceleration);
+        if(speedX != 0 || speedY != 0){
+            double scalar_speed = Math.sqrt(speedX*speedX + speedY*speedY);
+            double intensityX = speedX/scalar_speed;
+            double intensityY = speedY/scalar_speed;
+
+            scalar_speed = scalar_speed - time*acceleration;
+            setSpeedX(scalar_speed*intensityX);
+            setSpeedY(scalar_speed*intensityY);
+        }
     }
 
     public double getPosX() { return posX; }

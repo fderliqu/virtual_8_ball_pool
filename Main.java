@@ -1,7 +1,7 @@
-import components.Ball;
-import components.BallTable;
-import components.Player;
-import components.Ball.BallTypeEnum;
+import components.*;
+
+import static libs.Constants.*;
+
 import render.Renderer;
 
 import java.util.ArrayList;
@@ -33,7 +33,7 @@ public class Main {
         Player player2 = new Player("player2");
         BallTable tableJeu = new BallTable(player1,player2);
         while(true){
-            tableJeu.update();
+            if(!tableJeu.checkBallsNoSpeed())tableJeu.update();
         }
     }
 }
