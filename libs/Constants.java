@@ -1,6 +1,7 @@
 package libs;
 
 import java.awt.Toolkit;
+import java.awt.Color;
 
 public class Constants {
     //all dimensions of the billard stuff in cm
@@ -41,6 +42,26 @@ public class Constants {
         PLAIN,
         WHITE,
         BLACK
+    }
+
+    //ColorType
+    
+    public static final Color YELLOW = new Color(254,209,1);
+    public static final Color BLUE = new Color(1,0,228);
+    public static final Color RED = new Color(235,0,1);
+    public static final Color PURPLE = new Color(132,39,145);
+    public static final Color ORANGE = new Color(245,117,30);
+    public static final Color GREEN = new Color(0,124,62);
+    public static final Color BROWN = new Color(119,1,1);
+
+    public enum ColorTypeEnum{
+        YELLOW,
+        BLUE,
+        RED,
+        PURPLE,
+        ORANGE,
+        GREEN,
+        BROWN,
     }
     //Others
 
