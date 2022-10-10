@@ -5,21 +5,16 @@ import static libs.Constants.*;
 public class Ball {
 
 
-    private double posX;
-    private double posY;
+    private final SimplePoint position;
+    private final SimplePoint speed;
 
     private BallTypeEnum ballType;
     private int ballNumber;
     private boolean isDropped;
 
-    private double speedX;
-    private double speedY;
-
     public Ball(double posX, double posY,double speedX, double speedY, BallTypeEnum ballType, int ballNumber) {
-        this.posX = posX;
-        this.posY = posY;
-        this.speedX = speedX;
-        this.speedY = speedY;
+        this.position = new SimplePoint(posX, posY);
+        this.speed = new SimplePoint(speedX, speedY);
         this.ballNumber = ballNumber;
         this.ballType = ballType;
     }
@@ -28,8 +23,8 @@ public class Ball {
     * computes the distance between this ball and another ball
     * @param b is the ball to compute the distance to
     * */
-    public double distance(Ball b){
-        return Math.sqrt((b.getPosX()-posX)*(b.getPosX()-posX) + (b.getPosY()-this.posY)*(b.getPosY()-this.posY));
+    public double distanceTo(Ball b){
+        return position.distanceTo(b.position);
     }
 
     /*
@@ -37,7 +32,7 @@ public class Ball {
     * @param b is a boolean if the two balls are colliding
     * */
     public boolean isColliding(Ball b) {
-        return this.distance(b) < BALL_SIZE;
+        return this.distanceTo(b) < BALL_SIZE;
     }
 
     /*
@@ -48,17 +43,17 @@ public class Ball {
         double ORIGIN_Y = (POOL_TABLE_WIDTH - GAME_SURFACE_WIDTH)/2 + VERTICAL_OFFSET_CM;
         double rayon = BALL_SIZE/2;
         //Bottom wall
-        if(posX-rayon <= ORIGIN_X){
-            this.setSpeedX(Math.abs(speedX));
+        if(position.getX()-rayon <= ORIGIN_X){
+            this.setSpeedX(Math.abs(speed.getX()));
         }
-        if(posX+rayon >= ORIGIN_X + GAME_SURFACE_LENGTH){
-            this.setSpeedX(-Math.abs(speedX));
+        if(position.getX()+rayon >= ORIGIN_X + GAME_SURFACE_LENGTH){
+            this.setSpeedX(-Math.abs(speed.getX()));
         }
-        if(posY-rayon <= ORIGIN_Y){
-            this.setSpeedY(Math.abs(speedY));
+        if(position.getY()-rayon <= ORIGIN_Y){
+            this.setSpeedY(Math.abs(speed.getY()));
         }
-        if(posY+rayon >= ORIGIN_Y + GAME_SURFACE_WIDTH){
-            this.setSpeedY(-Math.abs(speedY));
+        if(position.getY()+rayon >= ORIGIN_Y + GAME_SURFACE_WIDTH){
+            this.setSpeedY(-Math.abs(speed.getY()));
         }
     }
 
@@ -71,24 +66,24 @@ public class Ball {
     public void transfert_energy(Ball b){
         //Calcul des deux vitesses transfert par le choc entre cette boule et la boule en paramètre
         //(dx,dy) = (cos(angle entre deux axes),sin(angle entre deux axes)) 
-        double dx = this.posX - b.getPosX();
-        double dy = this.posY - b.getPosY();
+        double dx = position.getX() - b.getPosX();
+        double dy = position.getY() - b.getPosY();
         double size = Math.sqrt(dx*dx + dy*dy);
         dx /= size;
         dy /= size;
         //vect_vitesse = valeur scalaire vitesse de la boule 1 selon l'axe de collision
-        double vect_vitesse = dx*this.speedX + dy*this.speedY;
+        double vect_vitesse = dx*speed.getX() + dy*speed.getY();
         
         //vitesse transmis à boule 2 (nv1x,nv1y) = (vect_vitesse*cos(angle entre deux axes),vect_vitesse*sin(angle entre deux axes))
         double nv1x = dx*vect_vitesse;
         double nv1y = dy*vect_vitesse;
         //vitesse gardée sur boule 1
-        double nv2x = this.speedX - nv1x;
-        double nv2y = this.speedY - nv1y;
+        double nv2x = speed.getX() - nv1x;
+        double nv2y = speed.getY() - nv1y;
 
         //Pareil à l'inverse
-        dx = b.getPosX() - this.posX;
-        dy = b.getPosY() - this.posY;
+        dx = b.getPosX() - position.getX();
+        dy = b.getPosY() - position.getY();
         size = Math.sqrt(dx*dx + dy*dy);
         dx /= size;
         dy /= size;
@@ -106,8 +101,8 @@ public class Ball {
         //vitesse boule 2 = vitesse transmis à boule 2 (nv1x,nv1y) + vitesse gardée sur boule 2 (nv2bx,nv2by)
         b.setSpeedX(nv1x + nv2bx);
         b.setSpeedY(nv1y + nv2by);
-        this.setSpeedX(nv2x + nv1bx);
-        this.setSpeedY(nv2y + nv1by);
+        setSpeedX(nv2x + nv1bx);
+        setSpeedY(nv2y + nv1by);
 
     }
 
@@ -116,12 +111,12 @@ public class Ball {
     * @param time is the amount of time since the last update
     * */
     public void update(double time){
-        setPosX(posX + time*speedX);
-        setPosY(posY + time*speedY);
-        if(speedX != 0 || speedY != 0){
-            double scalar_speed = Math.sqrt(speedX*speedX + speedY*speedY);
-            double intensityX = speedX/scalar_speed;
-            double intensityY = speedY/scalar_speed;
+        setPosX(position.getX() + time*speed.getX());
+        setPosY(position.getY() + time*speed.getY());
+        if(speed.getX() != 0 || speed.getY() != 0){
+            double scalar_speed = Math.sqrt(speed.getX()*speed.getX() + speed.getY()*speed.getY());
+            double intensityX = speed.getX()/scalar_speed;
+            double intensityY = speed.getY()/scalar_speed;
 
             scalar_speed = scalar_speed - time*TABLE_DEACCELERATION;
             setSpeedX(scalar_speed*intensityX);
@@ -129,17 +124,17 @@ public class Ball {
         }
     }
 
-    public double getPosX() { return posX; }
-    public void setPosX(double posX) { this.posX = posX; }
+    public double getPosX() { return position.getX(); }
+    public void setPosX(double posX) { this.position.setX(posX); }
 
-    public double getPosY() { return posY; }
-    public void setPosY(double posY) { this.posY = posY; }
+    public double getPosY() { return position.getY(); }
+    public void setPosY(double posY) { position.setY(posY); }
 
-    public double getSpeedX() { return speedX; }
-    public void setSpeedX(double speedX) { this.speedX = speedX; }
+    public double getSpeedX() { return speed.getX(); }
+    public void setSpeedX(double speedX) { speed.setX(speedX); }
 
-    public double getSpeedY() { return speedY; }
-    public void setSpeedY(double speedY) { this.speedY = speedY; }
+    public double getSpeedY() { return speed.getY(); }
+    public void setSpeedY(double speedY) { speed.setY(speedY); }
 
     public BallTypeEnum getBallType() { return ballType; }
     /*
