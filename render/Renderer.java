@@ -8,12 +8,11 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class Renderer extends JPanel {
-    private ArrayList<Ball> balls;
-    private JPanel canva = new JPanel();
-    private JFrame window = new JFrame();
+    private final ArrayList<Ball> balls;
+    private JPanel board = new JPanel();
+    private final JFrame window = new JFrame();
     private int width;
     private int height;
-
     private double PxPerCm;
 
     public Renderer (ArrayList<Ball> balls) {
@@ -25,7 +24,8 @@ public class Renderer extends JPanel {
         window.setUndecorated(true);
         window.setVisible(true);
 
-        window.add(this);
+        window.add(this, BorderLayout.CENTER);
+        window.add(board, BorderLayout.SOUTH);
         this.lazyRender();
         window.revalidate();
         window.repaint();
@@ -99,21 +99,14 @@ public class Renderer extends JPanel {
         }
     }
 
-    public void render() {
-
-    }
-
     public void drawUpdate(){
         window.repaint();
     }
 
     public void lazyRender() {
-        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        width = (int) screenSize.getWidth();
-        height = (int) screenSize.getHeight();
+        width = window.getWidth() - this.getWidth();
+        height = window.getHeight();
 
         PxPerCm = width/POOL_TABLE_LENGTH;
-
-        window.setSize(width, height);
     }
 }

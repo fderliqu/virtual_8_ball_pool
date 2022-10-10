@@ -31,6 +31,9 @@ public class Constants {
     //Px cm conversion
     public static final double PX_PER_CM = SCREEN_WIDTH/POOL_TABLE_LENGTH;
 
+    public static final double CANCEL_CERCLE_RADIUS = 50;
+    public static final double TABLE_DEACCELERATION = 98;
+
     //BallType
     public static final int STRIPED = 1;
     public static final int PLAIN = 2;

@@ -1,6 +1,5 @@
 package components;
 
-import static java.lang.Math.max;
 import static libs.Constants.*;
 
 public class Ball {
@@ -16,14 +15,11 @@ public class Ball {
     private double speedX;
     private double speedY;
 
-    private double acceleration;
-
     public Ball(double posX, double posY,double speedX, double speedY, BallTypeEnum ballType, int ballNumber) {
         this.posX = posX;
         this.posY = posY;
         this.speedX = speedX;
         this.speedY = speedY;
-        this.acceleration = 30;
         this.ballNumber = ballNumber;
         this.ballType = ballType;
     }
@@ -127,7 +123,7 @@ public class Ball {
             double intensityX = speedX/scalar_speed;
             double intensityY = speedY/scalar_speed;
 
-            scalar_speed = max(0, (scalar_speed - time*acceleration));
+            scalar_speed = scalar_speed - time*TABLE_DEACCELERATION;
             setSpeedX(scalar_speed*intensityX);
             setSpeedY(scalar_speed*intensityY);
         }
@@ -146,6 +142,7 @@ public class Ball {
     public void setSpeedY(double speedY) { this.speedY = speedY; }
 
     public BallTypeEnum getBallType() { return ballType; }
+    /*
     public void setBallType(BallTypeEnum ballType) { this.ballType = ballType; }
 
     public int getBallNumber() { return ballNumber; }
@@ -153,4 +150,5 @@ public class Ball {
 
     public boolean getIsDropped() { return isDropped; }
     public void setIsDropped(boolean isDropped) { this.isDropped = isDropped; }
+     */
 }

@@ -4,23 +4,16 @@ import render.Renderer;
 
 import java.util.ArrayList;
 
-import java.awt.event.*;
 import java.awt.*;
 
 import static libs.Constants.*;
 
 public class BallTable {
-    private ArrayList<Ball> balls = new ArrayList<Ball>();
+    private final ArrayList<Ball> balls = new ArrayList<>();
 
     private Player player1,player2;
 
-    private int cursorX,cursorY,pressedX,pressedY,draggedX,draggedY;
-
-    private boolean cursorOnDrag = false;
-
     protected Renderer panel;
-
-    double PxPerCm = POOL_TABLE_LENGTH / Toolkit.getDefaultToolkit().getScreenSize().getWidth();
 
     private long LastTime;
     private long NewTime;
@@ -48,33 +41,10 @@ public class BallTable {
         balls.add(new Ball(220, 110, 0, 0, BallTypeEnum.STRIPED, 13));
         balls.add(new Ball(150, 30, 0, 0, BallTypeEnum.STRIPED, 14));
         balls.add(new Ball(70, 30, 0, 0, BallTypeEnum.STRIPED, 15));
-     
-        panel = new Renderer(balls);
-        panel.addMouseMotionListener(new MouseMotionAdapter(){
-            //Only for tracking display
-            public void mouseMoved(MouseEvent event){
-                if(!cursorOnDrag && !checkBallsNoSpeed()){
-                    cursorX = event.getX();
-                    cursorY = event.getY();
-                }
-            }
-        });
 
-        panel.addMouseListener(new MouseAdapter(){
-            public void mousePressed(MouseEvent event){
-                if(checkBallsNoSpeed()){
-                    pressedX = event.getX();
-                    pressedY = event.getY();
-                }
-                System.out.println("pressedX : "+pressedX+" draggedY : "+draggedY);
-            }
-            public void mouseReleased(MouseEvent event){
-                if(checkBallsNoSpeed()){
-                draggedX = event.getX();
-                draggedY = event.getY();
-                }
-            }
-        });
+
+        panel = new Renderer(balls);
+
         NewTime = System.nanoTime();
     }
 
@@ -84,7 +54,9 @@ public class BallTable {
     * */
     public boolean checkBallsNoSpeed(){
         for(Ball b : this.balls){
-            if((int)(b.getSpeedX()) != 0 || (int)(b.getSpeedY()) != 0 )return false;
+            if(b.getSpeedX() != ((float) 0) || b.getSpeedY() != ((float) 0)) {
+                return false;
+            }
         }
         return true;
     }
