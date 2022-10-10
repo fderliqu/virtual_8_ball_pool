@@ -1,5 +1,6 @@
 package components;
 
+import static java.lang.Math.max;
 import static libs.Constants.*;
 
 public class Ball {
@@ -22,19 +23,30 @@ public class Ball {
         this.posY = posY;
         this.speedX = speedX;
         this.speedY = speedY;
-        this.acceleration = 0;
+        this.acceleration = 30;
         this.ballNumber = ballNumber;
         this.ballType = ballType;
     }
 
+    /*
+    * computes the distance between this ball and another ball
+    * @param b is the ball to compute the distance to
+    * */
     public double distance(Ball b){
         return Math.sqrt((b.getPosX()-posX)*(b.getPosX()-posX) + (b.getPosY()-this.posY)*(b.getPosY()-this.posY));
     }
 
-    public boolean collide(Ball b) {
+    /*
+    * checks if this ball is colliding with a given ball
+    * @param b is a boolean if the two balls are colliding
+    * */
+    public boolean isColliding(Ball b) {
         return this.distance(b) < BALL_SIZE;
     }
 
+    /*
+    * computes a collision with a wall
+    * */
     public void wallCollide(){
         double ORIGIN_X = (POOL_TABLE_LENGTH - GAME_SURFACE_LENGTH)/2 + HORIZONTAL_OFFSET_CM;
         double ORIGIN_Y = (POOL_TABLE_WIDTH - GAME_SURFACE_WIDTH)/2 + VERTICAL_OFFSET_CM;
@@ -56,6 +68,10 @@ public class Ball {
 
     /* A TEST */
 
+    /*
+    * performs a speed transfer on another ball in case of a collision
+    * @param b is the other ball colliding with this ball
+    * */
     public void transfert_energy(Ball b){
         //Calcul des deux vitesses transfert par le choc entre cette boule et la boule en paramètre
         //(dx,dy) = (cos(angle entre deux axes),sin(angle entre deux axes)) 
@@ -99,6 +115,10 @@ public class Ball {
 
     }
 
+    /*
+    * updates the position and speed of the ball
+    * @param time is the amount of time since the last update
+    * */
     public void update(double time){
         setPosX(posX + time*speedX);
         setPosY(posY + time*speedY);
@@ -107,7 +127,7 @@ public class Ball {
             double intensityX = speedX/scalar_speed;
             double intensityY = speedY/scalar_speed;
 
-            scalar_speed = scalar_speed - time*acceleration;
+            scalar_speed = max(0, (scalar_speed - time*acceleration));
             setSpeedX(scalar_speed*intensityX);
             setSpeedY(scalar_speed*intensityY);
         }

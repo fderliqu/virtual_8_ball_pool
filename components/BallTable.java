@@ -78,6 +78,10 @@ public class BallTable {
         NewTime = System.nanoTime();
     }
 
+    /*
+    * checks if any ball is moving
+    * @return boolean if at least one ball is still moving
+    * */
     public boolean checkBallsNoSpeed(){
         for(Ball b : this.balls){
             if((int)(b.getSpeedX()) != 0 || (int)(b.getSpeedY()) != 0 )return false;
@@ -85,6 +89,9 @@ public class BallTable {
         return true;
     }
 
+    /*
+    * updates the positions of every ball on the table
+    * */
     public void update(){
         double lastXpos,lastYpos;
         boolean flagDrawUpdate = false;
@@ -95,7 +102,7 @@ public class BallTable {
             //System.out.println("posX:" + b.getPosX() + " posY:" + b.getPosY()+" speedX:"+b.getSpeedX()+" speedY:"+b.getSpeedY());
             for(Ball b2 : this.balls){
                 if(!b.equals(b2)){
-                    if(b.collide(b2))b.transfert_energy(b2);
+                    if(b.isColliding(b2))b.transfert_energy(b2);
                 }
             }
             lastXpos = b.getPosX();
