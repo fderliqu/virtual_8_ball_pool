@@ -5,6 +5,7 @@ import static libs.Constants.*;
 
 import javax.swing.*;
 import java.awt.*;
+import java.lang.ProcessBuilder.Redirect;
 import java.util.ArrayList;
 
 public class Renderer extends JPanel {
@@ -76,10 +77,30 @@ public class Renderer extends JPanel {
         //System.out.println("verticalOffset = "+verticalOffset);
 
         for (Ball b : balls) {
+            /* 
             switch (b.getBallType()) {
                 case WHITE -> g.setColor(new Color(255, 255, 255));
                 case BLACK -> g.setColor(new Color(0, 0, 0));
                 default -> g.setColor(new Color(150, 25, 55));
+            }
+            */
+            switch (b.getBallNumber()){
+                case 0 -> g.setColor(new Color(255, 255, 255));
+                case 1 -> g.setColor(YELLOW);
+                case 2 ->g.setColor(BLUE);
+                case 3 -> g.setColor(RED);
+                case 4 ->g.setColor(PURPLE);
+                case 5 -> g.setColor(ORANGE);
+                case 6 ->g.setColor(GREEN);
+                case 7 ->g.setColor(BROWN);
+                case 8 -> g.setColor(new Color(0, 0, 0));
+                case 9 -> g.setColor(YELLOW);
+                case 10 ->g.setColor(BLUE);
+                case 11 -> g.setColor(RED);
+                case 12 ->g.setColor(PURPLE);
+                case 13 -> g.setColor(ORANGE);
+                case 14 ->g.setColor(GREEN);
+                case 15 ->g.setColor(BROWN);
             }
 
             g.fillOval((int) (PxPerCm * (b.getPosX() - BALL_SIZE/2)),
