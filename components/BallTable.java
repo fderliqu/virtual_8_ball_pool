@@ -10,6 +10,7 @@ import static libs.Constants.*;
 
 public class BallTable {
     private final ArrayList<Ball> balls = new ArrayList<>();
+    private final ArrayList<Hole> holes = new ArrayList<>();
 
     private Player player1,player2;
 
@@ -42,8 +43,26 @@ public class BallTable {
         balls.add(new Ball(150, 30, 0, 0, BallTypeEnum.STRIPED, 14));
         balls.add(new Ball(70, 30, 0, 0, BallTypeEnum.STRIPED, 15));
 
+        holes.add(new Hole( WALL_THICKNESS/2 + ANGLE_HOLE_DIAMETER/2 + HORIZONTAL_OFFSET_CM, 
+                            WALL_THICKNESS/2 + ANGLE_HOLE_DIAMETER/2 + VERTICAL_OFFSET_CM, 
+                            ANGLE_HOLE_DIAMETER));
+        holes.add(new Hole( WALL_THICKNESS/2 + MID_HOLE_DIAMETER/2 + HORIZONTAL_OFFSET_CM + GAME_SURFACE_LENGTH/2, 
+                            WALL_THICKNESS/2 + MID_HOLE_DIAMETER/2 + VERTICAL_OFFSET_CM, 
+                            MID_HOLE_DIAMETER));
+        holes.add(new Hole( WALL_THICKNESS/2 + ANGLE_HOLE_DIAMETER/2 + HORIZONTAL_OFFSET_CM + GAME_SURFACE_LENGTH, 
+                            WALL_THICKNESS/2 + ANGLE_HOLE_DIAMETER/2 + VERTICAL_OFFSET_CM, 
+                            ANGLE_HOLE_DIAMETER));
+        holes.add(new Hole( WALL_THICKNESS/2 + ANGLE_HOLE_DIAMETER/2 + HORIZONTAL_OFFSET_CM, 
+                            WALL_THICKNESS/2 + ANGLE_HOLE_DIAMETER/2 + VERTICAL_OFFSET_CM + GAME_SURFACE_WIDTH, 
+                            ANGLE_HOLE_DIAMETER));
+        holes.add(new Hole( WALL_THICKNESS/2 + MID_HOLE_DIAMETER/2 + HORIZONTAL_OFFSET_CM + GAME_SURFACE_LENGTH/2, 
+                            WALL_THICKNESS/2 + MID_HOLE_DIAMETER/2 + VERTICAL_OFFSET_CM + GAME_SURFACE_WIDTH, 
+                            MID_HOLE_DIAMETER));
+        holes.add(new Hole( WALL_THICKNESS/2 + ANGLE_HOLE_DIAMETER/2 + HORIZONTAL_OFFSET_CM + GAME_SURFACE_LENGTH, 
+                            WALL_THICKNESS/2 + ANGLE_HOLE_DIAMETER/2 + VERTICAL_OFFSET_CM + GAME_SURFACE_WIDTH, 
+                            ANGLE_HOLE_DIAMETER));
 
-        panel = new Renderer(balls);
+        panel = new Renderer(balls,holes);
 
         NewTime = System.nanoTime();
     }

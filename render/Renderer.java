@@ -1,6 +1,6 @@
 package render;
 
-import components.Ball;
+import components.*;
 import static libs.Constants.*;
 
 import javax.swing.*;
@@ -10,15 +10,17 @@ import java.util.ArrayList;
 
 public class Renderer extends JPanel {
     private final ArrayList<Ball> balls;
+    private final ArrayList<Hole> holes;
     private JPanel board = new JPanel();
     private final JFrame window = new JFrame();
     private int width;
     private int height;
     private double PxPerCm;
 
-    public Renderer (ArrayList<Ball> balls) {
+    public Renderer (ArrayList<Ball> balls, ArrayList<Hole> holes) {
         super();
         this.balls = balls;
+        this.holes = holes;
 
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -48,16 +50,18 @@ public class Renderer extends JPanel {
                 (int) (PxPerCm * GAME_SURFACE_LENGTH),
                 (int) (PxPerCm * GAME_SURFACE_WIDTH),
         30, 30);
+        
+        //Holes render
 
         g.setColor(new Color(0, 0, 0));
-        for (int i = 0; i < 6; ++i){
-            g.fillOval(
-                (int) ((PxPerCm * WALL_THICKNESS/2) + (PxPerCm * (GAME_SURFACE_LENGTH/2)*(i%3))),
-                (int) (((PxPerCm * WALL_THICKNESS/2) + verticalOffset) + (i>2?PxPerCm * GAME_SURFACE_WIDTH:0)),
-                (int) (i%3 == 1?(PxPerCm * MID_HOLE_DIAMETER):(PxPerCm * ANGLE_HOLE_DIAMETER)),
-                (int) (i%3 == 1?(PxPerCm * MID_HOLE_DIAMETER):(PxPerCm * ANGLE_HOLE_DIAMETER))
+        for(Hole h : holes){
+            g.fillOval( (int)((h.getPosition().getX() - h.getDiameter()/2)*PxPerCm), 
+                        (int)((h.getPosition().getY() - h.getDiameter()/2)*PxPerCm), 
+                        (int)(h.getDiameter()*PxPerCm), 
+                        (int)(h.getDiameter()*PxPerCm)
             );
         }
+
 
         g.setColor(new Color(255,255,255));
         //System.out.println("start zone : "+START_ZONE);
@@ -87,20 +91,20 @@ public class Renderer extends JPanel {
             switch (b.getBallNumber()){
                 case 0 -> g.setColor(new Color(255, 255, 255));
                 case 1 -> g.setColor(YELLOW);
-                case 2 ->g.setColor(BLUE);
+                case 2 -> g.setColor(BLUE);
                 case 3 -> g.setColor(RED);
-                case 4 ->g.setColor(PURPLE);
+                case 4 -> g.setColor(PURPLE);
                 case 5 -> g.setColor(ORANGE);
-                case 6 ->g.setColor(GREEN);
-                case 7 ->g.setColor(BROWN);
+                case 6 -> g.setColor(GREEN);
+                case 7 -> g.setColor(BROWN);
                 case 8 -> g.setColor(new Color(0, 0, 0));
                 case 9 -> g.setColor(YELLOW);
-                case 10 ->g.setColor(BLUE);
+                case 10 -> g.setColor(BLUE);
                 case 11 -> g.setColor(RED);
-                case 12 ->g.setColor(PURPLE);
+                case 12 -> g.setColor(PURPLE);
                 case 13 -> g.setColor(ORANGE);
-                case 14 ->g.setColor(GREEN);
-                case 15 ->g.setColor(BROWN);
+                case 14 -> g.setColor(GREEN);
+                case 15 -> g.setColor(BROWN);
             }
 
             g.fillOval((int) (PxPerCm * (b.getPosX() - BALL_SIZE/2)),
