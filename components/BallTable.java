@@ -23,7 +23,7 @@ public class BallTable {
     public BallTable(Player player1, Player player2){
         this.player1 = player1;
         this.player2 = player2;
-        balls.add(new Ball(WALL_THICKNESS + START_ZONE,WALL_THICKNESS + VERTICAL_OFFSET_CM + GAME_SURFACE_WIDTH/2, 250, 0, BallTypeEnum.WHITE, 0));
+        balls.add(new Ball(WALL_THICKNESS + START_ZONE,WALL_THICKNESS + VERTICAL_OFFSET_CM + GAME_SURFACE_WIDTH/2, 200, 0, BallTypeEnum.WHITE, 0));
         //System.out.println("verticalOffset:"+Constants.VERTICAL_OFFSET_CM+" honroOffset:"+Constants.HORIZONTAL_OFFSET_CM);
         balls.add(new Ball(30, 30, 0, 0, BallTypeEnum.PLAIN, 1));
         balls.add(new Ball(50, 30, 0, 0, BallTypeEnum.PLAIN, 2));
@@ -92,6 +92,19 @@ public class BallTable {
             for(Ball b2 : this.balls){
                 if(!b.equals(b2)){
                     if(b.isColliding(b2) && (b.hasSpeed() || b2.hasSpeed()))b.transfert_energy(b2);
+                }
+            }
+            for(Hole h : holes){
+                if(b.ballInHole(h)){
+                    b.setIsDropped(true);
+                    b.setPosX(0);
+                    b.setPosY(0);
+                    b.setSpeedX(0);
+                    b.setSpeedY(0);
+                    /*implement this later
+                    if(player1.getTypeBall() == b.getBallType())player1.addPottedBall(b);
+                    else player2.addPottedBall(b);
+                    */
                 }
             }
             lastXpos = b.getPosX();

@@ -12,11 +12,13 @@ public class Ball {
     private int ballNumber;
     private boolean isDropped;
 
+
     public Ball(double posX, double posY,double speedX, double speedY, BallTypeEnum ballType, int ballNumber) {
         this.position = new SimplePoint(posX, posY);
         this.speed = new SimplePoint(speedX, speedY);
         this.ballNumber = ballNumber;
         this.ballType = ballType;
+        this.isDropped = false;
     }
 
     /*
@@ -123,9 +125,29 @@ public class Ball {
         }
     }
 
+    /*
+     * Return true if the ball has speed
+     */
+
     public boolean hasSpeed(){
         return getSpeedX() != ((float) 0) || getSpeedY() != ((float) 0);
     }
+
+    /*
+     * Return true if the ball would be in the hole
+     * @param hole is the hole to be test
+     */
+
+    public boolean ballInHole(Hole hole){
+        if(position.distanceTo(hole.getPosition()) < hole.getDiameter()/2){
+            return true;
+        }
+        else return false;
+    }
+
+    /*
+     * Getters and Setters
+     */
 
     public double getPosX() { return position.getX(); }
     public void setPosX(double posX) { this.position.setX(posX); }
@@ -148,5 +170,5 @@ public class Ball {
 
     public boolean getIsDropped() { return isDropped; }
     public void setIsDropped(boolean isDropped) { this.isDropped = isDropped; }
-     
+
 }

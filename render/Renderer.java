@@ -88,38 +88,41 @@ public class Renderer extends JPanel {
                 default -> g.setColor(new Color(150, 25, 55));
             }
             */
-            switch (b.getBallNumber()){
-                case 0 -> g.setColor(new Color(255, 255, 255));
-                case 1 -> g.setColor(YELLOW);
-                case 2 -> g.setColor(BLUE);
-                case 3 -> g.setColor(RED);
-                case 4 -> g.setColor(PURPLE);
-                case 5 -> g.setColor(ORANGE);
-                case 6 -> g.setColor(GREEN);
-                case 7 -> g.setColor(BROWN);
-                case 8 -> g.setColor(new Color(0, 0, 0));
-                case 9 -> g.setColor(YELLOW);
-                case 10 -> g.setColor(BLUE);
-                case 11 -> g.setColor(RED);
-                case 12 -> g.setColor(PURPLE);
-                case 13 -> g.setColor(ORANGE);
-                case 14 -> g.setColor(GREEN);
-                case 15 -> g.setColor(BROWN);
-            }
+            if(!b.getIsDropped()){
+                switch (b.getBallNumber()){
+                    case 0 -> g.setColor(new Color(255, 255, 255));
+                    case 1 -> g.setColor(YELLOW);
+                    case 2 -> g.setColor(BLUE);
+                    case 3 -> g.setColor(RED);
+                    case 4 -> g.setColor(PURPLE);
+                    case 5 -> g.setColor(ORANGE);
+                    case 6 -> g.setColor(GREEN);
+                    case 7 -> g.setColor(BROWN);
+                    case 8 -> g.setColor(new Color(0, 0, 0));
+                    case 9 -> g.setColor(YELLOW);
+                    case 10 -> g.setColor(BLUE);
+                    case 11 -> g.setColor(RED);
+                    case 12 -> g.setColor(PURPLE);
+                    case 13 -> g.setColor(ORANGE);
+                    case 14 -> g.setColor(GREEN);
+                    case 15 -> g.setColor(BROWN);
+                }
 
-            g.fillOval((int) (PxPerCm * (b.getPosX() - BALL_SIZE/2)),
+                g.fillOval((int) (PxPerCm * (b.getPosX() - BALL_SIZE/2)),
                             (int) (PxPerCm * (b.getPosY() - BALL_SIZE/2)),
                             (int) (PxPerCm * BALL_SIZE),
                             (int) (PxPerCm * BALL_SIZE));
+            
 
-            if (b.getBallType() == BallTypeEnum.STRIPED) {
-                g.setColor(new Color(255, 255, 255));
-                    g.drawLine(
-                        (int) (PxPerCm * b.getPosX()),
-                        (int) (PxPerCm * (b.getPosY() - (BALL_SIZE / 2))),
-                        (int) (PxPerCm * b.getPosX()),
-                        (int) (PxPerCm * (b.getPosY() + (BALL_SIZE / 2)))
+                if (b.getBallType() == BallTypeEnum.STRIPED) {
+                    g.setColor(new Color(255, 255, 255));
+                        g.drawLine(
+                            (int) (PxPerCm * b.getPosX()),
+                            (int) (PxPerCm * (b.getPosY() - (BALL_SIZE / 2))),
+                            (int) (PxPerCm * b.getPosX()),
+                            (int) (PxPerCm * (b.getPosY() + (BALL_SIZE / 2)))
                         );
+                }
             }
         }
     }
