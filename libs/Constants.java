@@ -66,6 +66,8 @@ public class Constants {
         GREEN,
         BROWN,
     }
+
+
     //Others
 
     public static final double VERTICAL_OFFSET_CM = (SCREEN_HEIGHT/PX_PER_CM - POOL_TABLE_WIDTH)/2;
