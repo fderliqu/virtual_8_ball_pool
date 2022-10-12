@@ -57,7 +57,6 @@ public class Ball {
         }
     }
 
-    /* A TEST */
 
     /*
     * performs a speed transfer on another ball in case of a collision
@@ -122,6 +121,10 @@ public class Ball {
             setSpeedX(scalar_speed*intensityX);
             setSpeedY(scalar_speed*intensityY);
         }
+    }
+
+    public boolean hasSpeed(){
+        return getSpeedX() != ((float) 0) || getSpeedY() != ((float) 0);
     }
 
     public double getPosX() { return position.getX(); }

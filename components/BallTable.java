@@ -4,7 +4,7 @@ import render.Renderer;
 
 import java.util.ArrayList;
 
-import java.awt.*;
+//import java.awt.*;
 
 import static libs.Constants.*;
 
@@ -23,9 +23,7 @@ public class BallTable {
     public BallTable(Player player1, Player player2){
         this.player1 = player1;
         this.player2 = player2;
-        //double originX = (Constants.POOL_TABLE_LENGTH - Constants.GAME_SURFACE_LENGTH)/2 + Constants.HORIZONTAL_OFFSET_CM;
-        //double originY = (Constants.POOL_TABLE_WIDTH - Constants.GAME_SURFACE_WIDTH)/2 + Constants.VERTICAL_OFFSET_CM;
-        balls.add(new Ball(WALL_THICKNESS + START_ZONE,WALL_THICKNESS + VERTICAL_OFFSET_CM + GAME_SURFACE_WIDTH/2, 1200, 0, BallTypeEnum.WHITE, 0));
+        balls.add(new Ball(WALL_THICKNESS + START_ZONE,WALL_THICKNESS + VERTICAL_OFFSET_CM + GAME_SURFACE_WIDTH/2, 250, 0, BallTypeEnum.WHITE, 0));
         //System.out.println("verticalOffset:"+Constants.VERTICAL_OFFSET_CM+" honroOffset:"+Constants.HORIZONTAL_OFFSET_CM);
         balls.add(new Ball(30, 30, 0, 0, BallTypeEnum.PLAIN, 1));
         balls.add(new Ball(50, 30, 0, 0, BallTypeEnum.PLAIN, 2));
@@ -73,7 +71,7 @@ public class BallTable {
     * */
     public boolean checkBallsNoSpeed(){
         for(Ball b : this.balls){
-            if(b.getSpeedX() != ((float) 0) || b.getSpeedY() != ((float) 0)) {
+            if(b.hasSpeed()) {
                 return false;
             }
         }
@@ -93,7 +91,7 @@ public class BallTable {
             //System.out.println("posX:" + b.getPosX() + " posY:" + b.getPosY()+" speedX:"+b.getSpeedX()+" speedY:"+b.getSpeedY());
             for(Ball b2 : this.balls){
                 if(!b.equals(b2)){
-                    if(b.isColliding(b2))b.transfert_energy(b2);
+                    if(b.isColliding(b2) && (b.hasSpeed() || b2.hasSpeed()))b.transfert_energy(b2);
                 }
             }
             lastXpos = b.getPosX();
