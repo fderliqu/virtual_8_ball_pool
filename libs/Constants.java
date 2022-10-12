@@ -32,7 +32,7 @@ public class Constants {
     public static final double PX_PER_CM = SCREEN_WIDTH/POOL_TABLE_LENGTH;
 
     public static final double CANCEL_CERCLE_RADIUS = 50;
-    public static final double TABLE_DEACCELERATION = 98;
+    public static final double TABLE_DEACCELERATION = 90;
 
     //BallType
     public static final int STRIPED = 1;
@@ -55,7 +55,7 @@ public class Constants {
     public static final Color PURPLE = new Color(132,39,145);
     public static final Color ORANGE = new Color(245,117,30);
     public static final Color GREEN = new Color(0,124,62);
-    public static final Color BROWN = new Color(119,1,1);
+    public static final Color BROWN = new Color(119,1,1);  
 
     public enum ColorTypeEnum{
         YELLOW,

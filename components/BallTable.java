@@ -24,7 +24,7 @@ public class BallTable {
         this.player2 = player2;
         //double originX = (Constants.POOL_TABLE_LENGTH - Constants.GAME_SURFACE_LENGTH)/2 + Constants.HORIZONTAL_OFFSET_CM;
         //double originY = (Constants.POOL_TABLE_WIDTH - Constants.GAME_SURFACE_WIDTH)/2 + Constants.VERTICAL_OFFSET_CM;
-        balls.add(new Ball(WALL_THICKNESS + START_ZONE,WALL_THICKNESS + VERTICAL_OFFSET_CM + GAME_SURFACE_WIDTH/2, 200, 0, BallTypeEnum.WHITE, 0));
+        balls.add(new Ball(WALL_THICKNESS + START_ZONE,WALL_THICKNESS + VERTICAL_OFFSET_CM + GAME_SURFACE_WIDTH/2, 1200, 0, BallTypeEnum.WHITE, 0));
         //System.out.println("verticalOffset:"+Constants.VERTICAL_OFFSET_CM+" honroOffset:"+Constants.HORIZONTAL_OFFSET_CM);
         balls.add(new Ball(30, 30, 0, 0, BallTypeEnum.PLAIN, 1));
         balls.add(new Ball(50, 30, 0, 0, BallTypeEnum.PLAIN, 2));

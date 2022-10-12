@@ -137,7 +137,7 @@ public class Ball {
     public void setSpeedY(double speedY) { speed.setY(speedY); }
 
     public BallTypeEnum getBallType() { return ballType; }
-    /*
+    
     public void setBallType(BallTypeEnum ballType) { this.ballType = ballType; }
 
     public int getBallNumber() { return ballNumber; }
@@ -145,5 +145,5 @@ public class Ball {
 
     public boolean getIsDropped() { return isDropped; }
     public void setIsDropped(boolean isDropped) { this.isDropped = isDropped; }
-     */
+     
 }
