@@ -80,14 +80,9 @@ public class Renderer extends JPanel {
         //System.out.println("pxpercm, pool_width = "+PxPerCm+" "+(PxPerCm * POOL_TABLE_WIDTH));
         //System.out.println("verticalOffset = "+verticalOffset);
 
+        //Ball display
+        
         for (Ball b : balls) {
-            /* 
-            switch (b.getBallType()) {
-                case WHITE -> g.setColor(new Color(255, 255, 255));
-                case BLACK -> g.setColor(new Color(0, 0, 0));
-                default -> g.setColor(new Color(150, 25, 55));
-            }
-            */
             if(!b.getIsDropped()){
                 switch (b.getBallNumber()){
                     case 0 -> g.setColor(new Color(255, 255, 255));

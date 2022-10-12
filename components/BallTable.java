@@ -88,9 +88,10 @@ public class BallTable {
         NewTime = System.nanoTime();
         double delta = (NewTime-LastTime)/(1E9);
         for(Ball b : this.balls){
+            if(b.getIsDropped())continue;
             //System.out.println("posX:" + b.getPosX() + " posY:" + b.getPosY()+" speedX:"+b.getSpeedX()+" speedY:"+b.getSpeedY());
             for(Ball b2 : this.balls){
-                if(!b.equals(b2)){
+                if(!b.equals(b2) && !b2.getIsDropped()){
                     if(b.isColliding(b2) && (b.hasSpeed() || b2.hasSpeed()))b.transfert_energy(b2);
                 }
             }
