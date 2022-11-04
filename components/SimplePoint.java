@@ -10,6 +10,11 @@ public class SimplePoint {
         Y = y;
     }
 
+    public SimplePoint(int x, int y) {
+        X = x;
+        Y = y;
+    }
+
     public double distanceTo(SimplePoint p) {
         return Math.sqrt((p.getX()-getX())*(p.getX()-getX()) + (p.getY()-getY())*(p.getY()-getY()));
     }
