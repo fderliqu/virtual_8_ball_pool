@@ -49,8 +49,15 @@ public class CustomDraw {
                           (int) rightMost.getY()+halfThickness+heightDiff,
                           (int) leftMost.getY()+halfThickness+heightDiff};
         } else {
-            x = new int[]{(int) p1.getX()+halfThickness, (int) p2.getX()+halfThickness, (int) p2.getX()+halfThickness, (int) p1.getX()+halfThickness};
-            y = new int[]{(int) p1.getY()+thickness, (int) p2.getY()+thickness, (int) p2.getY(), (int) p1.getY()};
+            x = new int[]{(int) leftMost.getX()+halfThickness+widthDiff,
+                          (int) rightMost.getX()+halfThickness+widthDiff,
+                          (int) rightMost.getX()+halfThickness-widthDiff,
+                          (int) leftMost.getX()+halfThickness-widthDiff};
+
+            y = new int[]{(int) leftMost.getY()+halfThickness+heightDiff,
+                          (int) rightMost.getY()+halfThickness+heightDiff,
+                          (int) rightMost.getY()+halfThickness-heightDiff,
+                          (int) leftMost.getY()+halfThickness-heightDiff};
         }
 
         g.fillPolygon(x, y, 4);
@@ -59,7 +66,7 @@ public class CustomDraw {
     private static class TestClass extends JPanel {
         @Override
         public void paintComponent(Graphics g) {
-            fillStadium(g, new SimplePoint(50,50), new SimplePoint(150, 150), 100, Color.BLACK);
+            fillStadium(g, new SimplePoint(50,200), new SimplePoint(200, 50), 150, Color.BLACK);
         }
     }
 
