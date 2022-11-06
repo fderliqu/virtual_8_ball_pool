@@ -1,17 +1,21 @@
 package render;
 
 import components.*;
+import components.Holes.Hole;
+import components.Holes.RoundHole;
+import components.Holes.StadiumHole;
+import libs.CustomDraw;
+
 import static libs.Constants.*;
 
 import javax.swing.*;
 import java.awt.*;
-import java.lang.ProcessBuilder.Redirect;
 import java.util.ArrayList;
 
 public class Renderer extends JPanel {
     private final ArrayList<Ball> balls;
     private final ArrayList<Hole> holes;
-    private JPanel board = new JPanel();
+    private final JPanel board = new JPanel();
     private final JFrame window = new JFrame();
     private int width;
     private int height;
@@ -36,9 +40,7 @@ public class Renderer extends JPanel {
 
     @Override
     public void paintComponent(Graphics g){
-        Graphics2D g2d = (Graphics2D) g;
         g.setColor(new Color(107, 62, 46));
-        //g2d.setColor(new Color(107, 62, 46));
         int verticalOffset = (int) (height - (PxPerCm * POOL_TABLE_WIDTH))/2;
         g.fillRoundRect(0, verticalOffset, (int) (PxPerCm * POOL_TABLE_LENGTH), (int) (PxPerCm * POOL_TABLE_WIDTH), 30, 30);
         //g.drawRoundRect(0, 0, 200, 200, 20, 20);
@@ -55,11 +57,15 @@ public class Renderer extends JPanel {
 
         g.setColor(new Color(0, 0, 0));
         for(Hole h : holes){
-            g.fillOval( (int)((h.getPosition().getX() - h.getDiameter()/2)*PxPerCm), 
-                        (int)((h.getPosition().getY() - h.getDiameter()/2)*PxPerCm), 
-                        (int)(h.getDiameter()*PxPerCm), 
-                        (int)(h.getDiameter()*PxPerCm)
-            );
+            if (h instanceof RoundHole) {
+                g.fillOval((int) ((((RoundHole) h).getPosition().getX() - ((RoundHole) h).getDiameter() / 2) * PxPerCm),
+                        (int) ((((RoundHole) h).getPosition().getY() - ((RoundHole) h).getDiameter() / 2) * PxPerCm),
+                        (int) (((RoundHole) h).getDiameter() * PxPerCm),
+                        (int) (((RoundHole) h).getDiameter() * PxPerCm)
+                );
+            } else if (h instanceof StadiumHole) {
+                CustomDraw.fillStadium(g, ((StadiumHole) h).getC1(), ((StadiumHole) h).getC2(), (int) ((StadiumHole) h).getThickness(), Color.BLACK);
+            }
         }
 
 
@@ -85,16 +91,16 @@ public class Renderer extends JPanel {
         for (Ball b : balls) {
             if(!b.getIsDropped()){
                 switch (b.getBallNumber()){
-                    case 0 -> g.setColor(new Color(255, 255, 255));
-                    case 1 -> g.setColor(YELLOW);
-                    case 2 -> g.setColor(BLUE);
-                    case 3 -> g.setColor(RED);
-                    case 4 -> g.setColor(PURPLE);
-                    case 5 -> g.setColor(ORANGE);
-                    case 6 -> g.setColor(GREEN);
-                    case 7 -> g.setColor(BROWN);
-                    case 8 -> g.setColor(new Color(0, 0, 0));
-                    case 9 -> g.setColor(YELLOW);
+                    case 0  -> g.setColor(Color.WHITE);
+                    case 1  -> g.setColor(YELLOW);
+                    case 2  -> g.setColor(BLUE);
+                    case 3  -> g.setColor(RED);
+                    case 4  -> g.setColor(PURPLE);
+                    case 5  -> g.setColor(ORANGE);
+                    case 6  -> g.setColor(GREEN);
+                    case 7  -> g.setColor(BROWN);
+                    case 8  -> g.setColor(Color.BLACK);
+                    case 9  -> g.setColor(YELLOW);
                     case 10 -> g.setColor(BLUE);
                     case 11 -> g.setColor(RED);
                     case 12 -> g.setColor(PURPLE);
@@ -110,7 +116,7 @@ public class Renderer extends JPanel {
             
 
                 if (b.getBallType() == BallTypeEnum.STRIPED) {
-                    g.setColor(new Color(255, 255, 255));
+                    g.setColor(Color.WHITE);
                         g.drawLine(
                             (int) (PxPerCm * b.getPosX()),
                             (int) (PxPerCm * (b.getPosY() - (BALL_SIZE / 2))),

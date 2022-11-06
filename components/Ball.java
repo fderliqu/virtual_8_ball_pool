@@ -1,17 +1,18 @@
 package components;
 
+import components.Holes.Hole;
+import libs.SimplePoint;
+
 import static libs.Constants.*;
 
 public class Ball {
 
-
     private final SimplePoint position;
     private final SimplePoint speed;
 
-    private BallTypeEnum ballType;
-    private int ballNumber;
+    private final BallTypeEnum ballType;
+    private final int ballNumber;
     private boolean isDropped;
-
 
     public Ball(double posX, double posY,double speedX, double speedY, BallTypeEnum ballType, int ballNumber) {
         this.position = new SimplePoint(posX, posY);
@@ -139,10 +140,7 @@ public class Ball {
      */
 
     public boolean ballInHole(Hole hole){
-        if(position.distanceTo(hole.getPosition()) < hole.getDiameter()/2){
-            return true;
-        }
-        else return false;
+        return hole.isColliding(position);
     }
 
     /*
@@ -162,11 +160,8 @@ public class Ball {
     public void setSpeedY(double speedY) { speed.setY(speedY); }
 
     public BallTypeEnum getBallType() { return ballType; }
-    
-    public void setBallType(BallTypeEnum ballType) { this.ballType = ballType; }
 
     public int getBallNumber() { return ballNumber; }
-    public void setBallNumber(int ballNumber) { this.ballNumber = ballNumber; }
 
     public boolean getIsDropped() { return isDropped; }
     public void setIsDropped(boolean isDropped) { this.isDropped = isDropped; }

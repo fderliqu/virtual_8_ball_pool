@@ -1,4 +1,4 @@
-package components;
+package libs;
 
 public class SimplePoint {
 

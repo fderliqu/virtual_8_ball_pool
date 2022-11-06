@@ -32,7 +32,9 @@ public class Constants {
     public static final double PX_PER_CM = SCREEN_WIDTH/POOL_TABLE_LENGTH;
 
     public static final double CANCEL_CERCLE_RADIUS = 50;
-    public static final double TABLE_DEACCELERATION = 0;
+    public static final double TABLE_DEACCELERATION = 10;
+
+    public static final int FORCED_TIMEOUT_MS = 20;
 
     //BallType
     public static final int STRIPED = 1;
@@ -49,13 +51,13 @@ public class Constants {
 
     //ColorType
     
-    public static final Color YELLOW = new Color(254,209,1);
-    public static final Color BLUE = new Color(1,0,228);
-    public static final Color RED = new Color(235,0,1);
+    public static final Color YELLOW = Color.YELLOW;
+    public static final Color BLUE = Color.BLUE;
+    public static final Color RED = Color.RED;
     public static final Color PURPLE = new Color(132,39,145);
-    public static final Color ORANGE = new Color(245,117,30);
-    public static final Color GREEN = new Color(0,124,62);
-    public static final Color BROWN = new Color(119,1,1);  
+    public static final Color ORANGE = Color.ORANGE;
+    public static final Color GREEN = Color.GREEN;
+    public static final Color BROWN = new Color(119,1,1);
 
     public enum ColorTypeEnum{
         YELLOW,

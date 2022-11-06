@@ -7,7 +7,9 @@ public class Main {
         Player player2 = new Player("player2");
         BallTable tableJeu = new BallTable(player1,player2);
         while(true){
-            if(!tableJeu.checkBallsNoSpeed())tableJeu.update();
+            if(!tableJeu.checkBallsNoSpeed()) {
+                tableJeu.update();
+            }
         }
     }
 }

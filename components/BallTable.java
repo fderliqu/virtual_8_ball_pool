@@ -1,5 +1,7 @@
 package components;
 
+import components.Holes.Hole;
+import components.Holes.RoundHole;
 import render.Renderer;
 
 import java.util.ArrayList;
@@ -12,7 +14,7 @@ public class BallTable {
     private final ArrayList<Ball> balls = new ArrayList<>();
     private final ArrayList<Hole> holes = new ArrayList<>();
 
-    private Player player1,player2;
+    private final Player player1,player2;
 
     protected Renderer panel;
 
@@ -41,22 +43,22 @@ public class BallTable {
         balls.add(new Ball(150, 30, 0, 0, BallTypeEnum.STRIPED, 14));
         balls.add(new Ball(70, 30, 0, 0, BallTypeEnum.STRIPED, 15));
 
-        holes.add(new Hole( WALL_THICKNESS/2 + ANGLE_HOLE_DIAMETER/2 + HORIZONTAL_OFFSET_CM, 
+        holes.add(new RoundHole( WALL_THICKNESS/2 + ANGLE_HOLE_DIAMETER/2 + HORIZONTAL_OFFSET_CM,
                             WALL_THICKNESS/2 + ANGLE_HOLE_DIAMETER/2 + VERTICAL_OFFSET_CM, 
                             ANGLE_HOLE_DIAMETER));
-        holes.add(new Hole( WALL_THICKNESS/2 + MID_HOLE_DIAMETER/2 + HORIZONTAL_OFFSET_CM + GAME_SURFACE_LENGTH/2, 
+        holes.add(new RoundHole( WALL_THICKNESS/2 + MID_HOLE_DIAMETER/2 + HORIZONTAL_OFFSET_CM + GAME_SURFACE_LENGTH/2,
                             WALL_THICKNESS/2 + MID_HOLE_DIAMETER/2 + VERTICAL_OFFSET_CM, 
                             MID_HOLE_DIAMETER));
-        holes.add(new Hole( WALL_THICKNESS/2 + ANGLE_HOLE_DIAMETER/2 + HORIZONTAL_OFFSET_CM + GAME_SURFACE_LENGTH, 
+        holes.add(new RoundHole( WALL_THICKNESS/2 + ANGLE_HOLE_DIAMETER/2 + HORIZONTAL_OFFSET_CM + GAME_SURFACE_LENGTH,
                             WALL_THICKNESS/2 + ANGLE_HOLE_DIAMETER/2 + VERTICAL_OFFSET_CM, 
                             ANGLE_HOLE_DIAMETER));
-        holes.add(new Hole( WALL_THICKNESS/2 + ANGLE_HOLE_DIAMETER/2 + HORIZONTAL_OFFSET_CM, 
+        holes.add(new RoundHole( WALL_THICKNESS/2 + ANGLE_HOLE_DIAMETER/2 + HORIZONTAL_OFFSET_CM,
                             WALL_THICKNESS/2 + ANGLE_HOLE_DIAMETER/2 + VERTICAL_OFFSET_CM + GAME_SURFACE_WIDTH, 
                             ANGLE_HOLE_DIAMETER));
-        holes.add(new Hole( WALL_THICKNESS/2 + MID_HOLE_DIAMETER/2 + HORIZONTAL_OFFSET_CM + GAME_SURFACE_LENGTH/2, 
+        holes.add(new RoundHole( WALL_THICKNESS/2 + MID_HOLE_DIAMETER/2 + HORIZONTAL_OFFSET_CM + GAME_SURFACE_LENGTH/2,
                             WALL_THICKNESS/2 + MID_HOLE_DIAMETER/2 + VERTICAL_OFFSET_CM + GAME_SURFACE_WIDTH, 
                             MID_HOLE_DIAMETER));
-        holes.add(new Hole( WALL_THICKNESS/2 + ANGLE_HOLE_DIAMETER/2 + HORIZONTAL_OFFSET_CM + GAME_SURFACE_LENGTH, 
+        holes.add(new RoundHole( WALL_THICKNESS/2 + ANGLE_HOLE_DIAMETER/2 + HORIZONTAL_OFFSET_CM + GAME_SURFACE_LENGTH,
                             WALL_THICKNESS/2 + ANGLE_HOLE_DIAMETER/2 + VERTICAL_OFFSET_CM + GAME_SURFACE_WIDTH, 
                             ANGLE_HOLE_DIAMETER));
 

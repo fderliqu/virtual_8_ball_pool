@@ -1,7 +1,5 @@
 package libs;
 
-import components.SimplePoint;
-
 import javax.swing.*;
 import java.awt.*;
 
