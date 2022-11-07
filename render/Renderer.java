@@ -27,9 +27,17 @@ public class Renderer extends JPanel {
         this.holes = holes;
 
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        window.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        
+        GraphicsDevice d = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
         window.setUndecorated(true);
         window.setVisible(true);
+
+        if (d.isFullScreenSupported()) {
+            d.setFullScreenWindow(window);
+        } else {
+            System.out.println("Fullscreen is not supported for some reason");
+        }
+
 
         window.add(this, BorderLayout.CENTER);
         window.add(board, BorderLayout.SOUTH);
@@ -43,7 +51,6 @@ public class Renderer extends JPanel {
         g.setColor(new Color(107, 62, 46));
         int verticalOffset = (int) (height - (PxPerCm * POOL_TABLE_WIDTH))/2;
         g.fillRoundRect(0, verticalOffset, (int) (PxPerCm * POOL_TABLE_LENGTH), (int) (PxPerCm * POOL_TABLE_WIDTH), 30, 30);
-        //g.drawRoundRect(0, 0, 200, 200, 20, 20);
 
         g.setColor(new Color(0, 184, 148));
         g.fillRoundRect(
