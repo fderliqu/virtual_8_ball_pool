@@ -120,7 +120,7 @@ public class Ball {
             double intensityX = speed.getX()/scalar_speed;
             double intensityY = speed.getY()/scalar_speed;
 
-            scalar_speed = scalar_speed - time*TABLE_DEACCELERATION;
+            scalar_speed = Math.max((double)0,scalar_speed - time*TABLE_DEACCELERATION);
             setSpeedX(scalar_speed*intensityX);
             setSpeedY(scalar_speed*intensityY);
         }

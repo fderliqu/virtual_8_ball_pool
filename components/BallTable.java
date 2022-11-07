@@ -2,7 +2,7 @@ package components;
 
 import components.Holes.Hole;
 import components.Holes.RoundHole;
-import render.Renderer;
+//import render.Renderer;
 
 import java.util.ArrayList;
 
@@ -16,8 +16,6 @@ public class BallTable {
 
     private final Player player1,player2;
 
-    protected Renderer panel;
-
     private long LastTime;
     private long NewTime;
     
@@ -25,7 +23,7 @@ public class BallTable {
     public BallTable(Player player1, Player player2){
         this.player1 = player1;
         this.player2 = player2;
-        balls.add(new Ball(WALL_THICKNESS + START_ZONE,WALL_THICKNESS + VERTICAL_OFFSET_CM + GAME_SURFACE_WIDTH/2, 200, 0, BallTypeEnum.WHITE, 0));
+        balls.add(new Ball(WALL_THICKNESS + START_ZONE,WALL_THICKNESS + VERTICAL_OFFSET_CM + GAME_SURFACE_WIDTH/2, 50, 0, BallTypeEnum.WHITE, 0));
         //System.out.println("verticalOffset:"+Constants.VERTICAL_OFFSET_CM+" honroOffset:"+Constants.HORIZONTAL_OFFSET_CM);
         balls.add(new Ball(30, 30, 0, 0, BallTypeEnum.PLAIN, 1));
         balls.add(new Ball(50, 30, 0, 0, BallTypeEnum.PLAIN, 2));
@@ -62,8 +60,6 @@ public class BallTable {
                             WALL_THICKNESS/2 + ANGLE_HOLE_DIAMETER/2 + VERTICAL_OFFSET_CM + GAME_SURFACE_WIDTH, 
                             ANGLE_HOLE_DIAMETER));
 
-        panel = new Renderer(balls,holes);
-
         NewTime = System.nanoTime();
     }
 
@@ -72,7 +68,7 @@ public class BallTable {
     * @return boolean if at least one ball is still moving
     * */
     public boolean checkBallsNoSpeed(){
-        for(Ball b : this.balls){
+        for(Ball b : balls){
             if(b.hasSpeed()) {
                 return false;
             }
@@ -84,8 +80,8 @@ public class BallTable {
     * updates the positions of every ball on the table
     * */
     public void update(){
-        double lastXpos,lastYpos;
-        boolean flagDrawUpdate = false;
+        //double lastXpos,lastYpos;
+        //boolean flagDrawUpdate = false;
         LastTime = NewTime;
         NewTime = System.nanoTime();
         double delta = (NewTime-LastTime)/(1E9);
@@ -110,15 +106,27 @@ public class BallTable {
                     */
                 }
             }
-            lastXpos = b.getPosX();
-            lastYpos = b.getPosY();
+            //lastXpos = b.getPosX();
+            //lastYpos = b.getPosY();
             b.wallCollide();
             b.update(delta);
+            /*
             if((int)(PX_PER_CM*b.getPosX()) == (int)(lastXpos*PX_PER_CM) || (int)(PX_PER_CM*b.getPosY()) == (int)(lastYpos*PX_PER_CM)){
                 flagDrawUpdate = true;
             }
+            */
             
         }
-        if(flagDrawUpdate)panel.drawUpdate();
+        //if(flagDrawUpdate)panel.drawUpdate();
+    }
+
+    public ArrayList<Ball> getBalls(){
+        return balls;
+    }
+    
+    public ArrayList<Hole> getHoles(){
+        return holes;
     }
 }
+
+

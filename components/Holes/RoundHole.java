@@ -21,6 +21,6 @@ public class RoundHole implements Hole {
 
     @Override
     public boolean isColliding(SimplePoint s) {
-        return (s.distanceTo(this.position) < this.diameter);
+        return (s.distanceTo(this.position) < this.diameter/2);
     }
 }

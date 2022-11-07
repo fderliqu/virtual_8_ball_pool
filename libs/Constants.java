@@ -32,9 +32,10 @@ public class Constants {
     public static final double PX_PER_CM = SCREEN_WIDTH/POOL_TABLE_LENGTH;
 
     public static final double CANCEL_CERCLE_RADIUS = 50;
-    public static final double TABLE_DEACCELERATION = 10;
+    public static final double TABLE_DEACCELERATION = 0;
 
-    public static final int FORCED_TIMEOUT_MS = 20;
+    public static final long FORCED_FPS = 40;
+    public static final double FORCED_TIMEOUT_MS = 1000/FORCED_FPS;
 
     //BallType
     public static final int STRIPED = 1;
