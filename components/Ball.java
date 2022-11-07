@@ -147,6 +147,8 @@ public class Ball {
      * Getters and Setters
      */
 
+    public SimplePoint getPos() { return position; }
+
     public double getPosX() { return position.getX(); }
     public void setPosX(double posX) { this.position.setX(posX); }
 

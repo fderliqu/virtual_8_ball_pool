@@ -2,11 +2,9 @@ package components;
 
 import components.Holes.Hole;
 import components.Holes.RoundHole;
-//import render.Renderer;
 
 import java.util.ArrayList;
 
-//import java.awt.*;
 
 import static libs.Constants.*;
 
@@ -15,6 +13,10 @@ public class BallTable {
     private final ArrayList<Hole> holes = new ArrayList<>();
 
     private final Player player1,player2;
+    
+    private boolean playerMoveFlag;
+    private boolean playerPressedFlag;
+    private boolean playerReleasedFlag;
 
     private long LastTime;
     private long NewTime;
@@ -23,8 +25,7 @@ public class BallTable {
     public BallTable(Player player1, Player player2){
         this.player1 = player1;
         this.player2 = player2;
-        balls.add(new Ball(WALL_THICKNESS + START_ZONE,WALL_THICKNESS + VERTICAL_OFFSET_CM + GAME_SURFACE_WIDTH/2, 50, 0, BallTypeEnum.WHITE, 0));
-        //System.out.println("verticalOffset:"+Constants.VERTICAL_OFFSET_CM+" honroOffset:"+Constants.HORIZONTAL_OFFSET_CM);
+        balls.add(new Ball(WALL_THICKNESS + START_ZONE,WALL_THICKNESS + VERTICAL_OFFSET_CM + GAME_SURFACE_WIDTH/2, 0, 0, BallTypeEnum.WHITE, 0));
         balls.add(new Ball(30, 30, 0, 0, BallTypeEnum.PLAIN, 1));
         balls.add(new Ball(50, 30, 0, 0, BallTypeEnum.PLAIN, 2));
         balls.add(new Ball(70, 100, 0, 0, BallTypeEnum.PLAIN, 3));
@@ -80,8 +81,6 @@ public class BallTable {
     * updates the positions of every ball on the table
     * */
     public void update(){
-        //double lastXpos,lastYpos;
-        //boolean flagDrawUpdate = false;
         LastTime = NewTime;
         NewTime = System.nanoTime();
         double delta = (NewTime-LastTime)/(1E9);
@@ -106,18 +105,11 @@ public class BallTable {
                     */
                 }
             }
-            //lastXpos = b.getPosX();
-            //lastYpos = b.getPosY();
             b.wallCollide();
             b.update(delta);
-            /*
-            if((int)(PX_PER_CM*b.getPosX()) == (int)(lastXpos*PX_PER_CM) || (int)(PX_PER_CM*b.getPosY()) == (int)(lastYpos*PX_PER_CM)){
-                flagDrawUpdate = true;
-            }
-            */
             
         }
-        //if(flagDrawUpdate)panel.drawUpdate();
+
     }
 
     public ArrayList<Ball> getBalls(){
@@ -126,6 +118,34 @@ public class BallTable {
     
     public ArrayList<Hole> getHoles(){
         return holes;
+    }
+
+    public void setNewTime(long NewTime){
+        this.NewTime = NewTime;
+    }
+
+    public boolean getPlayerMoveFlag(){
+        return playerMoveFlag;
+    }
+
+    public void setPlayerMoveFlag(boolean playerMoveFlag){
+        this.playerMoveFlag = playerMoveFlag;
+    }
+
+    public boolean getPlayerPressedFlag(){
+        return playerPressedFlag;
+    }
+
+    public void setPlayerPressedFlag(boolean playerPressedFlag){
+        this.playerPressedFlag = playerPressedFlag;
+    }
+
+    public boolean getPlayerReleasedFlag(){
+        return playerReleasedFlag;
+    }
+
+    public void setPlayerReleasedFlag(boolean playerReleasedFlag){
+        this.playerReleasedFlag = playerReleasedFlag;
     }
 }
 
