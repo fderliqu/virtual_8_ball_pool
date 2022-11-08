@@ -15,11 +15,9 @@ import java.util.ArrayList;
 public class Renderer extends JPanel {
     private final ArrayList<Ball> balls;
     private final ArrayList<Hole> holes;
-    private final JPanel board = new JPanel();
     private final JFrame window = new JFrame();
-    private int width;
-    private int height;
-    private double PxPerCm;
+    private final int height;
+    private final double PxPerCm;
 
     public Renderer (ArrayList<Ball> balls, ArrayList<Hole> holes) {
         super();
@@ -40,8 +38,10 @@ public class Renderer extends JPanel {
 
 
         window.add(this, BorderLayout.CENTER);
-        window.add(board, BorderLayout.SOUTH);
-        this.lazyRender();
+        int width = window.getWidth() - this.getWidth();
+        height = window.getHeight();
+
+        PxPerCm = width /POOL_TABLE_LENGTH;
         window.revalidate();
         window.repaint();
     }
@@ -86,34 +86,19 @@ public class Renderer extends JPanel {
                 );
 
         g.setColor(new Color(85, 239, 196));
-
-        //g.fillPolygon();
-
-        //System.out.println("width, height = "+width+" "+height);
-        //System.out.println("pxpercm, pool_width = "+PxPerCm+" "+(PxPerCm * POOL_TABLE_WIDTH));
-        //System.out.println("verticalOffset = "+verticalOffset);
-
-        //Ball display
         
         for (Ball b : balls) {
             if(!b.getIsDropped()){
                 switch (b.getBallNumber()){
                     case 0  -> g.setColor(Color.WHITE);
-                    case 1  -> g.setColor(YELLOW);
-                    case 2  -> g.setColor(BLUE);
-                    case 3  -> g.setColor(RED);
-                    case 4  -> g.setColor(PURPLE);
-                    case 5  -> g.setColor(ORANGE);
-                    case 6  -> g.setColor(GREEN);
-                    case 7  -> g.setColor(BROWN);
+                    case 1, 9 -> g.setColor(YELLOW);
+                    case 2, 10 -> g.setColor(BLUE);
+                    case 3, 11 -> g.setColor(RED);
+                    case 4, 12 -> g.setColor(PURPLE);
+                    case 5, 13 -> g.setColor(ORANGE);
+                    case 6, 14 -> g.setColor(GREEN);
+                    case 7, 15 -> g.setColor(BROWN);
                     case 8  -> g.setColor(Color.BLACK);
-                    case 9  -> g.setColor(YELLOW);
-                    case 10 -> g.setColor(BLUE);
-                    case 11 -> g.setColor(RED);
-                    case 12 -> g.setColor(PURPLE);
-                    case 13 -> g.setColor(ORANGE);
-                    case 14 -> g.setColor(GREEN);
-                    case 15 -> g.setColor(BROWN);
                 }
 
                 g.fillOval((int) (PxPerCm * (b.getPosX() - BALL_SIZE/2)),
@@ -137,12 +122,5 @@ public class Renderer extends JPanel {
 
     public void drawUpdate(){
         window.repaint();
-    }
-
-    public void lazyRender() {
-        width = window.getWidth() - this.getWidth();
-        height = window.getHeight();
-
-        PxPerCm = width/POOL_TABLE_LENGTH;
     }
 }
