@@ -18,6 +18,18 @@ public class SimplePoint {
     public double distanceTo(SimplePoint p) {
         return Math.sqrt((p.getX()-getX())*(p.getX()-getX()) + (p.getY()-getY())*(p.getY()-getY()));
     }
+    
+    public SimplePoint getNewSpeedfromListener(SimplePoint p){
+        SimplePoint speed = new SimplePoint(0, 0);
+        double dist = p.distanceTo(this);
+
+        SimplePoint intensity = new SimplePoint((X - p.getX()) / dist, (Y - p.getY()) / dist);
+        dist = Math.min(400, dist*3);
+        speed.setX(dist * intensity.getX());
+        speed.setY(dist * intensity.getY());
+        System.out.println("speed : " + dist + "intesity : " + intensity.getX() + " " + intensity.getY());
+        return speed;
+    }
 
     public double getX() {
         return X;

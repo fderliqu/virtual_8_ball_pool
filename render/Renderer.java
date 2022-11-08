@@ -23,6 +23,7 @@ public class Renderer extends JPanel {
 
     private final SimplePoint cursor;
     private boolean isAiming;
+    private boolean ballSpeed = false;
 
     public Renderer (ArrayList<Ball> balls, ArrayList<Hole> holes, SimplePoint cursor) {
         super();
@@ -162,8 +163,10 @@ public class Renderer extends JPanel {
         *
         */
         if (isAiming) {
-            g.setColor(Color.WHITE);
-            g.drawLine((int) (PxPerCm * whiteBall.getPosX()), (int) (PxPerCm * whiteBall.getPosY()), (int) cursor.getX(), (int) cursor.getY());
+            if(!ballSpeed){
+                g.setColor(Color.WHITE);
+                g.drawLine((int) (PxPerCm * whiteBall.getPosX()), (int) (PxPerCm * whiteBall.getPosY()), (int) cursor.getX(), (int) cursor.getY());
+            }
         }
     }
 
@@ -173,6 +176,14 @@ public class Renderer extends JPanel {
 
     public void stopAiming() {
         isAiming = false;
+    }
+
+    public void ballHasSpeed(){
+        ballSpeed = true;
+    }
+
+    public void ballHasNoSpeed(){
+        ballSpeed = false;
     }
 
     public void drawUpdate(){

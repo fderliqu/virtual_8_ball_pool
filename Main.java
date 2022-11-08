@@ -46,15 +46,10 @@ public class Main {
                     mouseReleased.setY(e.getY() / PX_PER_CM);
 
                     Ball white = tableJeu.getBalls().get(0);
-                    double dist = white.getPos().distanceTo(mousePressed);
-
-                    SimplePoint intensity = new SimplePoint((mouseReleased.getX() - white.getPosX()) / dist, (mouseReleased.getY() - white.getPosY()) / dist);
-                    dist = Math.min(400, mousePressed.distanceTo(mouseReleased) * 2);
-
+                    SimplePoint speed = mouseReleased.getNewSpeedfromListener(white.getPos());
                     tableJeu.setNewTime(System.nanoTime());
-
-                    white.setSpeedX(dist * intensity.getX());
-                    white.setSpeedY(dist * intensity.getY());
+                    white.setSpeedX(speed.getX());
+                    white.setSpeedY(speed.getY());
 
                     isAiming = false;
                 }
@@ -79,8 +74,10 @@ public class Main {
 
         while (true) {
             if (!tableJeu.checkBallsNoSpeed()) {
+                panel.ballHasSpeed();
                 tableJeu.update();
             }
+            else panel.ballHasNoSpeed();
         }
     }
 }
