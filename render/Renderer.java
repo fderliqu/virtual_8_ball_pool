@@ -5,6 +5,7 @@ import components.Holes.Hole;
 import components.Holes.RoundHole;
 import components.Holes.StadiumHole;
 import libs.CustomDraw;
+import libs.SimplePoint;
 
 import static libs.Constants.*;
 
@@ -18,11 +19,28 @@ public class Renderer extends JPanel {
     private final JFrame window = new JFrame();
     private final int height;
     private final double PxPerCm;
+    private Ball whiteBall=null;
 
-    public Renderer (ArrayList<Ball> balls, ArrayList<Hole> holes) {
+    private final SimplePoint cursor;
+    private boolean isAiming;
+
+    public Renderer (ArrayList<Ball> balls, ArrayList<Hole> holes, SimplePoint cursor) {
         super();
-        this.balls = balls;
-        this.holes = holes;
+        this.balls  = balls;
+        this.holes  = holes;
+        this.cursor = cursor;
+
+        for (Ball b : balls) {
+            if (b.getBallType() == BallTypeEnum.WHITE) {
+                whiteBall = b;
+                break;
+            }
+        }
+
+        if (whiteBall == null) {
+            System.out.println("there are no white ball");
+            System.exit(2);
+        }
 
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
@@ -37,7 +55,7 @@ public class Renderer extends JPanel {
         }
 
 
-        window.add(this, BorderLayout.CENTER);
+        window.add(this);
         int width = window.getWidth() - this.getWidth();
         height = window.getHeight();
 
@@ -52,6 +70,11 @@ public class Renderer extends JPanel {
         int verticalOffset = (int) (height - (PxPerCm * POOL_TABLE_WIDTH))/2;
         g.fillRoundRect(0, verticalOffset, (int) (PxPerCm * POOL_TABLE_LENGTH), (int) (PxPerCm * POOL_TABLE_WIDTH), 30, 30);
 
+        /*
+        *
+        * Drawing brown outer frame
+        *
+        */
         g.setColor(new Color(0, 184, 148));
         g.fillRoundRect(
                 (int) (PxPerCm * WALL_THICKNESS),
@@ -60,8 +83,11 @@ public class Renderer extends JPanel {
                 (int) (PxPerCm * GAME_SURFACE_WIDTH),
         30, 30);
         
-        //Holes render
-
+        /*
+        *
+        * Drawing the holes
+        *
+        */
         g.setColor(new Color(0, 0, 0));
         for(Hole h : holes){
             if (h instanceof RoundHole) {
@@ -76,6 +102,11 @@ public class Renderer extends JPanel {
         }
 
 
+        /*
+        *
+        * Drawing the start zone vertical line
+        *
+        */
         g.setColor(new Color(255,255,255));
         //System.out.println("start zone : "+START_ZONE);
         g.drawLine(
@@ -86,7 +117,13 @@ public class Renderer extends JPanel {
                 );
 
         g.setColor(new Color(85, 239, 196));
-        
+
+
+        /*
+        *
+        *  Drawing balls
+        *
+        */
         for (Ball b : balls) {
             if(!b.getIsDropped()){
                 switch (b.getBallNumber()){
@@ -118,6 +155,24 @@ public class Renderer extends JPanel {
                 }
             }
         }
+
+        /*
+        *
+        * Drawing the aiming line
+        *
+        */
+        if (isAiming) {
+            g.setColor(Color.WHITE);
+            g.drawLine((int) (PxPerCm * whiteBall.getPosX()), (int) (PxPerCm * whiteBall.getPosY()), (int) cursor.getX(), (int) cursor.getY());
+        }
+    }
+
+    public void startAiming () {
+        isAiming = true;
+    }
+
+    public void stopAiming() {
+        isAiming = false;
     }
 
     public void drawUpdate(){
