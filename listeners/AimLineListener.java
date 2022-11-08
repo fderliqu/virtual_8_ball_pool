@@ -39,8 +39,6 @@ public class AimLineListener extends MouseAdapter {
         cursor.setX(e.getX());
         cursor.setY(e.getY());
 
-        System.out.println("dragging");
-
         renderer.drawUpdate();
     }
 }

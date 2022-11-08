@@ -36,21 +36,23 @@ public class Main {
 
             public void mouseReleased(MouseEvent e) {
                 if (e.getButton() == MouseEvent.BUTTON1 && isAiming) {
+
                     if (!tableJeu.checkBallsNoSpeed()) {
                         isAiming = false;
                         return;
                     }
+
                     mouseReleased.setX(e.getX() / PX_PER_CM);
                     mouseReleased.setY(e.getY() / PX_PER_CM);
-                    //System.out.println("x:" + mouseReleased.getX() + " y:" + mouseReleased.getY());
+
                     Ball white = tableJeu.getBalls().get(0);
                     double dist = white.getPos().distanceTo(mousePressed);
-                    //System.out.println("dist : " + dist);
+
                     SimplePoint intensity = new SimplePoint((mouseReleased.getX() - white.getPosX()) / dist, (mouseReleased.getY() - white.getPosY()) / dist);
-                    //System.out.println("x:" + intensity.getX() + " y:" + intensity.getY());
                     dist = Math.min(400, mousePressed.distanceTo(mouseReleased) * 2);
-                    //System.out.println("dist : " + dist);
+
                     tableJeu.setNewTime(System.nanoTime());
+
                     white.setSpeedX(dist * intensity.getX());
                     white.setSpeedY(dist * intensity.getY());
 
