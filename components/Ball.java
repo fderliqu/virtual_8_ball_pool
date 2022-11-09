@@ -13,6 +13,7 @@ public class Ball {
     private final BallTypeEnum ballType;
     private final int ballNumber;
     private boolean isDropped;
+    private boolean alreadyChecked[] = new boolean[16];
 
     public Ball(double posX, double posY,double speedX, double speedY, BallTypeEnum ballType, int ballNumber) {
         this.position = new SimplePoint(posX, posY);
@@ -115,12 +116,14 @@ public class Ball {
     public void update(double time){
         setPosX(position.getX() + time*speed.getX());
         setPosY(position.getY() + time*speed.getY());
-        if(speed.getX() != 0 || speed.getY() != 0){
+        if(this.hasSpeed()){
+            //System.out.print(ballNumber + " update : ");
             double scalar_speed = Math.sqrt(speed.getX()*speed.getX() + speed.getY()*speed.getY());
             double intensityX = speed.getX()/scalar_speed;
             double intensityY = speed.getY()/scalar_speed;
 
             scalar_speed = Math.max((double)0,scalar_speed - time*TABLE_DEACCELERATION);
+            
             setSpeedX(scalar_speed*intensityX);
             setSpeedY(scalar_speed*intensityY);
         }
@@ -131,7 +134,7 @@ public class Ball {
      */
 
     public boolean hasSpeed(){
-        return getSpeedX() != ((float) 0) || getSpeedY() != ((float) 0);
+        return Math.abs(getSpeedX()) > ((float) 0.1) || Math.abs(getSpeedY()) > ((float) 0.1);
     }
 
     /*
@@ -167,5 +170,8 @@ public class Ball {
 
     public boolean getIsDropped() { return isDropped; }
     public void setIsDropped(boolean isDropped) { this.isDropped = isDropped; }
+
+    public boolean[] getChecked() {return alreadyChecked;}
+    public void setChecked(boolean status,int i){alreadyChecked[i] = status;}
 
 }

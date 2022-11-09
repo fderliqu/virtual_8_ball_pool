@@ -34,7 +34,7 @@ public class Constants {
     public static final double CANCEL_CERCLE_RADIUS = 50;
     public static final double TABLE_DEACCELERATION = 99;
 
-    public static final long FORCED_FPS = 144;
+    public static final long FORCED_FPS = 60;
     public static final double FORCED_TIMEOUT_MS = 1000/FORCED_FPS;
 
     //BallType

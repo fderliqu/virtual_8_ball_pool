@@ -78,6 +78,7 @@ public class Main {
                 tableJeu.update();
             }
             else panel.ballHasNoSpeed();
+            //System.out.println(tableJeu.checkBallsNoSpeed());
         }
     }
 }
