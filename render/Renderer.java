@@ -116,9 +116,6 @@ public class Renderer extends JPanel {
                 (int) (((PxPerCm * (WALL_THICKNESS + GAME_SURFACE_WIDTH)) + verticalOffset))
                 );
 
-        g.setColor(new Color(85, 239, 196));
-
-
         /*
         *
         *  Drawing balls
