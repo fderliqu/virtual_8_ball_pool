@@ -30,7 +30,9 @@ public class Rules {
         else if(whiteBallCollisions == 0 && firstBallTouch == BallTypeEnum.NULL){
             return RulesTypeEnum.WHITE_BALL_NO_HIT_FOOL;
         }
-        else if(playerHisTurn.getTypeBall() != BallTypeEnum.NULL && firstBallTouch != playerHisTurn.getTypeBall()){
+        else if(    playerHisTurn.getTypeBall() != BallTypeEnum.NULL && 
+                    !(firstBallTouch==BallTypeEnum.BLACK && playerHisTurn.allowedToPutBlackBall()) && 
+                    firstBallTouch != playerHisTurn.getTypeBall()){
             return RulesTypeEnum.WHITE_BALL_HIT_NOT_ALLOWED_BALL_FOOL;
         }
         else if(!ballsArePotted() && wallCollisions == 0){
@@ -55,7 +57,7 @@ public class Rules {
     }
     
     public void printflag(){
-        System.out.println("player : " + playerHisTurn.getID());
+        System.out.println("player : " + playerHisTurn.getID() + " balls : "+playerHisTurn.getTypeBall()+" potted : "+playerHisTurn.getBallPotted());
         System.out.println("--firstballtouch = "+firstBallTouch);
         System.out.println("--whiteballcollision = "+whiteBallCollisions);
         System.out.println("--wallcollision = "+wallCollisions);

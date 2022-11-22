@@ -106,12 +106,7 @@ public class BallTable {
                     b.setIsDropped(true);
                     b.setSpeedX(0);
                     b.setSpeedY(0);
-                    if(b.getBallType()!=BallTypeEnum.WHITE){
-                        if(rules.getPlayer(true).getTypeBall() == b.getBallType()){
-                            rules.getPlayer(true).incrementBallPotted();
-                        }   
-                        else rules.getPlayer(false).incrementBallPotted();
-                    }
+                    
                     if(b.getBallType()==BallTypeEnum.STRIPED){
                         if(rules.getPlayer(true).noBallPotted()){
                             rules.getPlayer(true).setTypeBall(BallTypeEnum.STRIPED);
@@ -132,6 +127,12 @@ public class BallTable {
                     }
                     else {
                         rules.setWhitePotted(true);
+                    }
+                    if(b.getBallType()!=BallTypeEnum.WHITE){
+                        if(rules.getPlayer(true).getTypeBall() == b.getBallType()){
+                            rules.getPlayer(true).incrementBallPotted();
+                        }   
+                        else rules.getPlayer(false).incrementBallPotted();
                     }
                 }
             }
