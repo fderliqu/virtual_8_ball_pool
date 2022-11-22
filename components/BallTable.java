@@ -12,16 +12,13 @@ public class BallTable {
     private final ArrayList<Ball> balls = new ArrayList<>();
     private final ArrayList<Hole> holes = new ArrayList<>();
 
-    private Player playerWhoPlaying,playerWhoDontPlaying;
     private Rules rules;
     private long LastTime;
     private long NewTime;
     
     
-    public BallTable(Player playerWhoPlaying,Player playerWhoDontPlaying, Rules rules){
+    public BallTable(Rules rules){
         this.rules = rules;
-        this.playerWhoPlaying = playerWhoPlaying;
-        this.playerWhoDontPlaying = playerWhoDontPlaying;
         balls.add(new Ball(WALL_THICKNESS + START_ZONE,WALL_THICKNESS + VERTICAL_OFFSET_CM + GAME_SURFACE_WIDTH/2, 0, 0, BallTypeEnum.WHITE, 0));
         balls.add(new Ball(180, WALL_THICKNESS + VERTICAL_OFFSET_CM + GAME_SURFACE_WIDTH/2, 0, 0, BallTypeEnum.PLAIN, 1));
         balls.add(new Ball(180 + BALL_SIZE, WALL_THICKNESS + VERTICAL_OFFSET_CM + GAME_SURFACE_WIDTH/2 + BALL_SIZE/2, 0, 0, BallTypeEnum.PLAIN, 2));
@@ -112,19 +109,28 @@ public class BallTable {
                     b.setSpeedX(0);
                     b.setSpeedY(0);
                     if(b.getBallType()!=BallTypeEnum.WHITE){
-                        if(playerWhoPlaying.getTypeBall() == b.getBallType()){
-                            playerWhoPlaying.incrementBallPotted();
+                        if(rules.getPlayer(true).getTypeBall() == b.getBallType()){
+                            rules.getPlayer(true).incrementBallPotted();
                         }   
-                        else playerWhoDontPlaying.incrementBallPotted();
+                        else rules.getPlayer(false).incrementBallPotted();
                     }
                     if(b.getBallType()==BallTypeEnum.STRIPED){
+                        if(rules.getPlayer(true).noBallPotted()){
+                            rules.getPlayer(true).setTypeBall(BallTypeEnum.STRIPED);
+                            rules.getPlayer(false).setTypeBall(BallTypeEnum.PLAIN);
+                        }
                         rules.setStripedPotted(true);
                     }
                     else if(b.getBallType()==BallTypeEnum.PLAIN){
+                        if(rules.getPlayer(true).noBallPotted()){
+                            rules.getPlayer(true).setTypeBall(BallTypeEnum.PLAIN);
+                            rules.getPlayer(false).setTypeBall(BallTypeEnum.STRIPED);
+                        }
                         rules.setPlainPotted(true);
                     }
                     else if(b.getBallType()==BallTypeEnum.BLACK){
-                        rules.setBlackPotted(true);
+                        if(rules.getPlayer(true).allowedToPutBlackBall())rules.getPlayer(true).setHeWin(true);
+                        else rules.setBlackPotted(true);
                     }
                     else {
                         rules.setWhitePotted(true);

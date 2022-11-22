@@ -12,12 +12,10 @@ public class Main {
     
     public static void main(String[] args) {
 
-        Player player1 = new Player("player1");
-        Player player2 = new Player("player2");
-        Player playerTurn = player1;
-        Player playerNoTurn = player2;
+        Player player1 = new Player("1");
+        Player player2 = new Player("2");
         Rules rules = new Rules();
-        BallTable tableJeu = new BallTable(playerTurn,playerNoTurn,rules);
+        BallTable tableJeu = new BallTable(rules);
 
         SimplePoint cursor = new SimplePoint(0, 0);
 
@@ -59,22 +57,63 @@ public class Main {
          * main loop
          */
 
-        boolean alreadyCheckedRules = false;
-        rules.setPlayers(player1);
+        boolean alreadyCheckedRules = true;
+        rules.setPlayer(player1,player2);
 
         while (true) {
+            /*WHILE BALL HAS SPEED */
             if (!tableJeu.checkBallsNoSpeed()) {
                 alreadyCheckedRules = false;
                 panel.ballHasSpeed();
                 tableJeu.update();
             }
+            /*WHILE PLAYER IS AIMING OR AFTER BALLS MOVEMENT */
             else {
                 panel.ballHasNoSpeed();
+                /*RULES CHECKER */
                 if(!alreadyCheckedRules){
-                    System.out.println(""+rules.checkRules());
                     rules.printflag();
+                    switch (rules.checkRules()){
+                        case NO_FOOL -> {
+                            System.out.println("NO_FOOL");
+                            if(rules.getPlayer(true) == player1){
+                                rules.setPlayer(player2,player1);
+                            }
+                            else{
+                                rules.setPlayer(player1,player2);
+                            }
+                        }
+                        case WHITE_BALL_HIT_NOT_ALLOWED_BALL_FOOL,WHITE_BALL_NO_HIT_FOOL,WHITE_BALL_POTTED_FOOL,BALL_HITTED_BY_WHITE_DO_NOT_TOUCH_BAND_FOOL -> {
+                            /*Set whitelitsner active */
+                            System.out.println("FOOL");
+                            if(rules.getPlayer(true) == player1){
+                                rules.setPlayer(player2,player1);
+                            }
+                            else{
+                                rules.setPlayer(player1,player2);
+                            }
+                        }
+                        case BLACK_BALL_POTTED_FOOL -> {
+                            if(rules.getPlayer(true) == player1){
+                                player2.setHeWin(true);
+                            }
+                            else{
+                                player1.setHeWin(true);
+                            }
+                        }
+                        case NO_FOOL_BUT_CAN_REPLAY ->{System.out.println("NO_FOOL_CAN_REPLAY");}
+                    }
                     alreadyCheckedRules = true;
                     rules.resetFlags();
+                }
+                /*WIN CHECKER */
+                if(player1.getHeWin()){
+                    System.out.println("player 1 win !");
+                    /*reset table */
+                }
+                else if(player2.getHeWin()){
+                    System.out.println("player 2 win !");
+                    /*reset table */
                 }
             }
         }
