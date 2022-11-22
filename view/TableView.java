@@ -9,6 +9,10 @@ public class TableView implements View{
 
     @Override
     public void render(Graphics g, double PxPerCm, double verticalOffset) {
+
+        g.setColor(new Color(107, 62, 46));
+        g.fillRoundRect(0, (int) verticalOffset, (int) (PxPerCm * POOL_TABLE_LENGTH), (int) (PxPerCm * POOL_TABLE_WIDTH), 30, 30);
+
         g.setColor(new Color(0, 184, 148));
         g.fillRoundRect(
                 (int) (PxPerCm * WALL_THICKNESS),
