@@ -5,10 +5,7 @@ import listeners.WhiteListener;
 import render.*;
 import static libs.Constants.*;
 import libs.SimplePoint;
-import view.BallView;
-import view.StartZoneView;
-import view.TableView;
-import view.View;
+import view.*;
 
 import java.util.ArrayList;
 
@@ -26,12 +23,11 @@ public class Main {
         //views creation
         ArrayList<View> views = new ArrayList<>();
         views.add(new TableView());
+        views.add(new HolesView(tableJeu.getHoles()));
         views.add(new StartZoneView());
-        for (Ball b : tableJeu.getBalls()) {
-            views.add(new BallView(b));
-        }
+        views.add(new BallsView(tableJeu.getBalls()));
 
-        Renderer panel = new Renderer(tableJeu.getHoles(), views);
+        Renderer panel = new Renderer(views);
 
         AimLineListener ligneListener = new AimLineListener(panel, cursor);
         AimListener aimListener = new AimListener(tableJeu);
