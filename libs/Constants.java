@@ -38,27 +38,49 @@ public class Constants {
     public static final double FORCED_TIMEOUT_MS = 1000/FORCED_FPS;
 
     //BallType
+    public static final int NULL = 0;
     public static final int STRIPED = 1;
     public static final int PLAIN = 2;
     public static final int WHITE = 3;
     public static final int BLACK = 4;
 
     public enum BallTypeEnum {
+        NULL,
         STRIPED,
         PLAIN,
         WHITE,
         BLACK
     }
 
+    //RulesType
+    public static final int NO_FOOL_BUT_CAN_REPLAY = -1;
+    public static final int NO_FOOL = 0;
+    public static final int WHITE_BALL_NO_HIT_FOOL = 1;
+    public static final int WHITE_BALL_HIT_NOT_ALLOWED_BALL_FOOL = 2;
+    public static final int BALL_HITTED_BY_WHITE_DO_NOT_TOUCH_BAND_FOOL = 3;
+    public static final int WHITE_BALL_POTTED_FOOL = 4;
+    public static final int BLACK_BALL_POTTED_FOOL = 5;
+
+    public enum RulesTypeEnum {
+        NO_FOOL_BUT_CAN_REPLAY,
+        NO_FOOL,
+        WHITE_BALL_NO_HIT_FOOL,
+        WHITE_BALL_HIT_NOT_ALLOWED_BALL_FOOL,
+        BALL_HITTED_BY_WHITE_DO_NOT_TOUCH_BAND_FOOL,
+        WHITE_BALL_POTTED_FOOL,
+        BLACK_BALL_POTTED_FOOL
+    }
+
     //ColorType
     
-    public static final Color YELLOW = Color.YELLOW;
-    public static final Color BLUE = Color.BLUE;
-    public static final Color RED = Color.RED;
+    public static final Color YELLOW = new Color(254,209,1);
+    public static final Color BLUE = new Color(1,0,228);
+    public static final Color RED = new Color(235,0,1);
     public static final Color PURPLE = new Color(132,39,145);
-    public static final Color ORANGE = Color.ORANGE;
-    public static final Color GREEN = Color.GREEN;
+    public static final Color ORANGE = new Color(245,117,30);
+    public static final Color GREEN = new Color(0,124,62);
     public static final Color BROWN = new Color(119,1,1);
+
 
     public enum ColorTypeEnum{
         YELLOW,

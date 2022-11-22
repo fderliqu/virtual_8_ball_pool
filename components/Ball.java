@@ -42,23 +42,28 @@ public class Ball {
     /*
     * computes a collision with a wall
     * */
-    public void wallCollide(){
+    public boolean wallCollide(){
         double ORIGIN_X = (POOL_TABLE_LENGTH - GAME_SURFACE_LENGTH)/2 + HORIZONTAL_OFFSET_CM;
         double ORIGIN_Y = (POOL_TABLE_WIDTH - GAME_SURFACE_WIDTH)/2 + VERTICAL_OFFSET_CM;
         double rayon = BALL_SIZE/2;
         //Bottom wall
         if(position.getX()-rayon <= ORIGIN_X){
             this.setSpeedX(Math.abs(speed.getX()));
+            return true;
         }
-        if(position.getX()+rayon >= ORIGIN_X + GAME_SURFACE_LENGTH){
+        else if(position.getX()+rayon >= ORIGIN_X + GAME_SURFACE_LENGTH){
             this.setSpeedX(-Math.abs(speed.getX()));
+            return true;
         }
-        if(position.getY()-rayon <= ORIGIN_Y){
+        else if(position.getY()-rayon <= ORIGIN_Y){
             this.setSpeedY(Math.abs(speed.getY()));
+            return true;
         }
-        if(position.getY()+rayon >= ORIGIN_Y + GAME_SURFACE_WIDTH){
+        else if(position.getY()+rayon >= ORIGIN_Y + GAME_SURFACE_WIDTH){
             this.setSpeedY(-Math.abs(speed.getY()));
+            return true;
         }
+        else return false;
     }
 
 
@@ -134,7 +139,7 @@ public class Ball {
      */
 
     public boolean hasSpeed(){
-        return Math.abs(getSpeedX()) > ((float) 0.1) || Math.abs(getSpeedY()) > ((float) 0.1);
+        return Math.abs(getSpeedX()) > ((float) 0) || Math.abs(getSpeedY()) > ((float) 0);
     }
 
     /*

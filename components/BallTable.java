@@ -12,19 +12,16 @@ public class BallTable {
     private final ArrayList<Ball> balls = new ArrayList<>();
     private final ArrayList<Hole> holes = new ArrayList<>();
 
-    private final Player player1,player2;
-    
+    private Player playerWhoPlaying,playerWhoDontPlaying;
+    private Rules rules;
     private long LastTime;
     private long NewTime;
-
-    private Player playerTurn;
-    private BallTypeEnum firstBallTouch;
-    private int whiteBallCollisions;
     
     
-    public BallTable(Player player1, Player player2){
-        this.player1 = player1;
-        this.player2 = player2;
+    public BallTable(Player playerWhoPlaying,Player playerWhoDontPlaying, Rules rules){
+        this.rules = rules;
+        this.playerWhoPlaying = playerWhoPlaying;
+        this.playerWhoDontPlaying = playerWhoDontPlaying;
         balls.add(new Ball(WALL_THICKNESS + START_ZONE,WALL_THICKNESS + VERTICAL_OFFSET_CM + GAME_SURFACE_WIDTH/2, 0, 0, BallTypeEnum.WHITE, 0));
         balls.add(new Ball(180, WALL_THICKNESS + VERTICAL_OFFSET_CM + GAME_SURFACE_WIDTH/2, 0, 0, BallTypeEnum.PLAIN, 1));
         balls.add(new Ball(180 + BALL_SIZE, WALL_THICKNESS + VERTICAL_OFFSET_CM + GAME_SURFACE_WIDTH/2 + BALL_SIZE/2, 0, 0, BallTypeEnum.PLAIN, 2));
@@ -95,6 +92,14 @@ public class BallTable {
                         //System.out.println(b.getBallNumber() + " speedX:" + b.getSpeedX() + " speedY:" + b.getSpeedY() + " " + b2.getBallNumber()); 
                         b.transfert_energy(b2);
                         b2.setChecked(true, b.getBallNumber());
+                        if(b.getBallType() == BallTypeEnum.WHITE){
+                            rules.incWhiteBallCollisions();
+                            if(rules.getFirstBallTouch() == BallTypeEnum.NULL)rules.setFirstBallTouch(b2.getBallType()); 
+                        }
+                        else if(b2.getBallType() == BallTypeEnum.WHITE){
+                            rules.incWhiteBallCollisions();
+                            if(rules.getFirstBallTouch() == BallTypeEnum.NULL)rules.setFirstBallTouch(b.getBallType()); 
+                        }
                         //System.out.println(b.getBallNumber() + " speedX:" + b.getSpeedX() + " speedY:" + b.getSpeedY() + " aftertranfert");
                     }
                 }
@@ -106,13 +111,27 @@ public class BallTable {
                     b.setPosY(0);
                     b.setSpeedX(0);
                     b.setSpeedY(0);
-                    /*implement this later
-                    if(player1.getTypeBall() == b.getBallType())player1.addPottedBall(b);
-                    else player2.addPottedBall(b);
-                    */
+                    if(b.getBallType()!=BallTypeEnum.WHITE){
+                        if(playerWhoPlaying.getTypeBall() == b.getBallType()){
+                            playerWhoPlaying.incrementBallPotted();
+                        }   
+                        else playerWhoDontPlaying.incrementBallPotted();
+                    }
+                    if(b.getBallType()==BallTypeEnum.STRIPED){
+                        rules.setStripedPotted(true);
+                    }
+                    else if(b.getBallType()==BallTypeEnum.PLAIN){
+                        rules.setPlainPotted(true);
+                    }
+                    else if(b.getBallType()==BallTypeEnum.BLACK){
+                        rules.setBlackPotted(true);
+                    }
+                    else {
+                        rules.setWhitePotted(true);
+                    }
                 }
             }
-            b.wallCollide();
+            if(b.wallCollide())rules.incWallCollisions();
             b.update(delta);
             for(int i=0;i<b.getChecked().length;i++){
                 b.setChecked(false, i);

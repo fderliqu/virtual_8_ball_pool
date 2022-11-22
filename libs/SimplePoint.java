@@ -27,7 +27,6 @@ public class SimplePoint {
         dist = Math.min(400, dist*3);
         speed.setX(dist * intensity.getX());
         speed.setY(dist * intensity.getY());
-        System.out.println("speed : " + dist + "intesity : " + intensity.getX() + " " + intensity.getY());
         return speed;
     }
 

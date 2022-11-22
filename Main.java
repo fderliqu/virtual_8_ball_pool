@@ -11,7 +11,10 @@ public class Main {
 
         Player player1 = new Player("player1");
         Player player2 = new Player("player2");
-        BallTable tableJeu = new BallTable(player1, player2);
+        Player playerTurn = player1;
+        Player playerNoTurn = player2;
+        Rules rules = new Rules();
+        BallTable tableJeu = new BallTable(playerTurn,playerNoTurn,rules);
 
         SimplePoint cursor = new SimplePoint(0, 0);
         Renderer panel = new Renderer(tableJeu.getBalls(), tableJeu.getHoles(), cursor);
@@ -44,12 +47,24 @@ public class Main {
          * main loop
          */
 
+        boolean alreadyCheckedRules = false;
+        rules.setPlayers(player1);
+
         while (true) {
             if (!tableJeu.checkBallsNoSpeed()) {
+                alreadyCheckedRules = false;
                 panel.ballHasSpeed();
                 tableJeu.update();
             }
-            else panel.ballHasNoSpeed();
+            else {
+                panel.ballHasNoSpeed();
+                if(!alreadyCheckedRules){
+                    System.out.println(""+rules.checkRules());
+                    rules.printflag();
+                    alreadyCheckedRules = true;
+                    rules.resetFlags();
+                }
+            }
         }
-    }
+    }   
 }
