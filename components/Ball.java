@@ -156,6 +156,10 @@ public class Ball {
      */
 
     public SimplePoint getPos() { return position; }
+    public void setPos(double x, double y){
+        setPosX(x);
+        setPosY(y);
+    }
 
     public double getPosX() { return position.getX(); }
     public void setPosX(double posX) { this.position.setX(posX); }

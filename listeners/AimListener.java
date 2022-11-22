@@ -4,7 +4,7 @@ import libs.SimplePoint;
 import components.BallTable;
 import components.Ball;
 import static libs.Constants.PX_PER_CM;
-
+import static libs.Constants.BALL_SIZE;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -24,6 +24,7 @@ public class AimListener extends MouseAdapter {
             isAiming = true;
             mousePressed.setX(e.getX() / PX_PER_CM);
             mousePressed.setY(e.getY() / PX_PER_CM);
+            if(table.getBalls().get(0).getPos().distanceTo(mousePressed) >= BALL_SIZE)isAiming = true;
         }
         if (e.getButton() == MouseEvent.BUTTON3) {
             isAiming = false;

@@ -104,8 +104,6 @@ public class BallTable {
             for(Hole h : holes){
                 if(b.ballInHole(h)){
                     b.setIsDropped(true);
-                    b.setPosX(0);
-                    b.setPosY(0);
                     b.setSpeedX(0);
                     b.setSpeedY(0);
                     if(b.getBallType()!=BallTypeEnum.WHITE){

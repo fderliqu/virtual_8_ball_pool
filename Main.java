@@ -1,6 +1,7 @@
 import components.*;
 import listeners.AimLineListener;
 import listeners.AimListener;
+import listeners.WhiteListener;
 import render.*;
 import static libs.Constants.*;
 import libs.SimplePoint;
@@ -34,9 +35,12 @@ public class Main {
 
         AimLineListener ligneListener = new AimLineListener(panel, cursor);
         AimListener aimListener = new AimListener(tableJeu);
+        WhiteListener whiteListener = new WhiteListener(tableJeu.getBalls().get(0));
         panel.addMouseListener(ligneListener);
         panel.addMouseMotionListener(ligneListener);
         panel.addMouseListener(aimListener);
+        panel.addMouseListener(whiteListener);
+        panel.addMouseMotionListener(whiteListener);
 
         /*
          * Thread for renderer
@@ -88,8 +92,9 @@ public class Main {
                             }
                         }
                         case WHITE_BALL_HIT_NOT_ALLOWED_BALL_FOOL,WHITE_BALL_NO_HIT_FOOL,WHITE_BALL_POTTED_FOOL,BALL_HITTED_BY_WHITE_DO_NOT_TOUCH_BAND_FOOL -> {
-                            /*Set whitelitsner active */
                             System.out.println("FOOL");
+                            whiteListener.active();
+                            tableJeu.getBalls().get(0).setIsDropped(false);
                             if(rules.getPlayer(true) == player1){
                                 rules.setPlayer(player2,player1);
                             }
