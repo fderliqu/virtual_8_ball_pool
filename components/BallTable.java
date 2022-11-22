@@ -16,6 +16,10 @@ public class BallTable {
     
     private long LastTime;
     private long NewTime;
+
+    private Player playerTurn;
+    private BallTypeEnum firstBallTouch;
+    private int whiteBallCollisions;
     
     
     public BallTable(Player player1, Player player2){
