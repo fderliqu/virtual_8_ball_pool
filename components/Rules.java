@@ -5,7 +5,7 @@ import libs.Constants.RulesTypeEnum;
 
 public class Rules {
     private Player playerHisTurn;
-    //private Player playerNoHisTurn;
+    private Player playerNoHisTurn;
     private BallTypeEnum firstBallTouch;
     private int whiteBallCollisions;
     private int wallCollisions;
@@ -55,6 +55,7 @@ public class Rules {
     }
     
     public void printflag(){
+        System.out.println("player : " + playerHisTurn.getID());
         System.out.println("--firstballtouch = "+firstBallTouch);
         System.out.println("--whiteballcollision = "+whiteBallCollisions);
         System.out.println("--wallcollision = "+wallCollisions);
@@ -66,9 +67,9 @@ public class Rules {
     
     //Setters
 
-    public void setPlayers(Player playerHisTurn){
+    public void setPlayer(Player playerHisTurn, Player playerNoHisTurn){
         this.playerHisTurn = playerHisTurn;
-        //this.playerNoHisTurn = playerNoHisTurn;
+        this.playerNoHisTurn = playerNoHisTurn;
     }
 
     public void setFirstBallTouch(BallTypeEnum firstBallTouch){
@@ -99,8 +100,15 @@ public class Rules {
         this.stripedPotted = stripedPotted;
     }
 
+    //getters
+
     public BallTypeEnum getFirstBallTouch(){
         return firstBallTouch;
+    }
+
+    public Player getPlayer(boolean histurn){
+        if(histurn)return playerHisTurn;
+        else return playerNoHisTurn;
     }
     
 }
