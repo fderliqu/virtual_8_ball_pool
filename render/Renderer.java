@@ -18,6 +18,7 @@ public class Renderer extends JPanel {
     private final JFrame window = new JFrame();
     private final int height;
     private final double PxPerCm;
+    private boolean ballSpeed=true;
 
     public Renderer (ArrayList<Hole> holes, ArrayList<View> views) {
         super();
