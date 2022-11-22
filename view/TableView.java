@@ -5,10 +5,10 @@ import java.awt.*;
 import static libs.Constants.*;
 
 public class TableView implements View{
-
+    public TableView() {}
 
     @Override
-    public void render(Graphics g, double PxPerCm) {
+    public void render(Graphics g, double PxPerCm, double verticalOffset) {
         g.setColor(new Color(0, 184, 148));
         g.fillRoundRect(
                 (int) (PxPerCm * WALL_THICKNESS),

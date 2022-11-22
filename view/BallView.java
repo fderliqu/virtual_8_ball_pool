@@ -14,7 +14,7 @@ public class BallView implements View {
     }
 
     @Override
-    public void render(Graphics g, double PxPerCm) {
+    public void render(Graphics g, double PxPerCm, double verticalOffset) {
         if(!ball.getIsDropped()){
             switch (ball.getBallNumber()){
                 case 0  -> g.setColor(Color.WHITE);

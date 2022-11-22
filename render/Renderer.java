@@ -1,11 +1,10 @@
 package render;
 
-import components.*;
 import components.Holes.Hole;
 import components.Holes.RoundHole;
 import components.Holes.StadiumHole;
 import libs.CustomDraw;
-import libs.SimplePoint;
+import view.View;
 
 import static libs.Constants.*;
 
@@ -14,34 +13,16 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class Renderer extends JPanel {
-    private final ArrayList<Ball> balls;
     private final ArrayList<Hole> holes;
+    private final ArrayList<View> views;
     private final JFrame window = new JFrame();
     private final int height;
     private final double PxPerCm;
-    private Ball whiteBall=null;
 
-    private final SimplePoint cursor;
-    private boolean isAiming;
-    private boolean ballSpeed = false;
-
-    public Renderer (ArrayList<Ball> balls, ArrayList<Hole> holes, SimplePoint cursor) {
+    public Renderer (ArrayList<Hole> holes, ArrayList<View> views) {
         super();
-        this.balls  = balls;
         this.holes  = holes;
-        this.cursor = cursor;
-
-        for (Ball b : balls) {
-            if (b.getBallType() == BallTypeEnum.WHITE) {
-                whiteBall = b;
-                break;
-            }
-        }
-
-        if (whiteBall == null) {
-            System.out.println("there are no white ball");
-            System.exit(2);
-        }
+        this.views  = views;
 
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
@@ -67,13 +48,19 @@ public class Renderer extends JPanel {
 
     @Override
     public void paintComponent(Graphics g){
+
+        /*
+        *
+        * Drawing brown outer frame
+        *
+        */
         g.setColor(new Color(107, 62, 46));
         int verticalOffset = (int) (height - (PxPerCm * POOL_TABLE_WIDTH))/2;
         g.fillRoundRect(0, verticalOffset, (int) (PxPerCm * POOL_TABLE_LENGTH), (int) (PxPerCm * POOL_TABLE_WIDTH), 30, 30);
 
         /*
         *
-        * Drawing brown outer frame
+        * Drwawing the green playboard
         *
         */
         g.setColor(new Color(0, 184, 148));
@@ -83,7 +70,17 @@ public class Renderer extends JPanel {
                 (int) (PxPerCm * GAME_SURFACE_LENGTH),
                 (int) (PxPerCm * GAME_SURFACE_WIDTH),
         30, 30);
-        
+
+        /*
+        *
+        * Drawing views (WIP)
+        *
+        */
+        for (View v : views) {
+            v.render(g, PxPerCm, verticalOffset);
+        }
+
+
         /*
         *
         * Drawing the holes
@@ -101,78 +98,6 @@ public class Renderer extends JPanel {
                 CustomDraw.fillStadium(g, ((StadiumHole) h).getC1(), ((StadiumHole) h).getC2(), (int) ((StadiumHole) h).getThickness(), Color.BLACK);
             }
         }
-
-
-        /*
-        *
-        * Drawing the start zone vertical line
-        *
-        */
-        g.setColor(new Color(255,255,255));
-        //System.out.println("start zone : "+START_ZONE);
-        g.drawLine(
-                (int) (PxPerCm * (WALL_THICKNESS + START_ZONE)),
-                (int) ((PxPerCm * WALL_THICKNESS) + verticalOffset),
-                (int) (PxPerCm * (WALL_THICKNESS + START_ZONE)),
-                (int) (((PxPerCm * (WALL_THICKNESS + GAME_SURFACE_WIDTH)) + verticalOffset))
-                );
-
-        /*
-        *
-        *  Drawing balls
-        *
-        */
-        for (Ball b : balls) {
-            if(!b.getIsDropped()){
-                switch (b.getBallNumber()){
-                    case 0  -> g.setColor(Color.WHITE);
-                    case 1, 9 -> g.setColor(YELLOW);
-                    case 2, 10 -> g.setColor(BLUE);
-                    case 3, 11 -> g.setColor(RED);
-                    case 4, 12 -> g.setColor(PURPLE);
-                    case 5, 13 -> g.setColor(ORANGE);
-                    case 6, 14 -> g.setColor(GREEN);
-                    case 7, 15 -> g.setColor(BROWN);
-                    case 8  -> g.setColor(Color.BLACK);
-                }
-
-                g.fillOval((int) (PxPerCm * (b.getPosX() - BALL_SIZE/2)),
-                            (int) (PxPerCm * (b.getPosY() - BALL_SIZE/2)),
-                            (int) (PxPerCm * BALL_SIZE),
-                            (int) (PxPerCm * BALL_SIZE));
-            
-
-                if (b.getBallType() == BallTypeEnum.STRIPED) {
-                    g.setColor(Color.WHITE);
-                        g.drawLine(
-                            (int) (PxPerCm * b.getPosX()),
-                            (int) (PxPerCm * (b.getPosY() - (BALL_SIZE / 2))),
-                            (int) (PxPerCm * b.getPosX()),
-                            (int) (PxPerCm * (b.getPosY() + (BALL_SIZE / 2)))
-                        );
-                }
-            }
-        }
-
-        /*
-        *
-        * Drawing the aiming line
-        *
-        */
-        if (isAiming) {
-            if(!ballSpeed){
-                g.setColor(Color.WHITE);
-                g.drawLine((int) (PxPerCm * whiteBall.getPosX()), (int) (PxPerCm * whiteBall.getPosY()), (int) cursor.getX(), (int) cursor.getY());
-            }
-        }
-    }
-
-    public void startAiming () {
-        isAiming = true;
-    }
-
-    public void stopAiming() {
-        isAiming = false;
     }
 
     public void ballHasSpeed(){

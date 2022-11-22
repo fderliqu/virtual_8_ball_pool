@@ -4,5 +4,5 @@ import java.awt.*;
 
 public interface View {
 
-    public void render(Graphics g, double PxPerCm);
+    void render(Graphics g, double PxPerCm, double verticalOffset);
 }

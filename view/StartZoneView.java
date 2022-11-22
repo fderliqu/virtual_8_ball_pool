@@ -5,14 +5,9 @@ import java.awt.*;
 import static libs.Constants.*;
 
 public class StartZoneView implements View {
-    private final double verticalOffset;
-
-    public StartZoneView(double verticalOffset) {
-        this.verticalOffset = verticalOffset;
-    }
-
+    public StartZoneView(){}
     @Override
-    public void render(Graphics g, double PxPerCm) {
+    public void render(Graphics g, double PxPerCm, double verticalOffset) {
         g.setColor(new Color(255,255,255));
 
         g.drawLine(
