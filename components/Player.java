@@ -1,13 +1,12 @@
 package components;
 
-import java.util.ArrayList;
 import static libs.Constants.*;
 
 public class Player {
     private boolean hisTurn,doFoul,heWin,allBallPotted;
     private String ID;
     private BallTypeEnum typeBall;
-    private ArrayList<Ball> ballPotted;
+    private int ballPotted;
 
     //Constructors
 
@@ -18,6 +17,7 @@ public class Player {
         heWin = false;
         allBallPotted = false;
         typeBall = null;
+        ballPotted = 0;
     }
 
     public Player(String ID){
@@ -26,7 +26,19 @@ public class Player {
         doFoul = false;
         heWin = false;
         allBallPotted = false;
-        typeBall = null;
+        typeBall = BallTypeEnum.NULL;
+    }
+
+    /*
+     * Methods
+     */
+
+    public boolean allowedToPutBlackBall(){
+        return ballPotted == 7;
+    }
+
+    public boolean noBallPotted(){
+        return ballPotted == 0;
     }
 
     //Getters
@@ -55,7 +67,7 @@ public class Player {
         return typeBall;
     }
 
-    public ArrayList<Ball> getBallPotted(){
+    public int getBallPotted(){
         return ballPotted;
     }
 
@@ -85,8 +97,8 @@ public class Player {
         this.typeBall = typeBall;
     }
 
-    public void addPottedBall(Ball ball){
-        ballPotted.add(ball);
+    public void incrementBallPotted(){
+        ballPotted++;
     }
 
     
