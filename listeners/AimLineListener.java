@@ -21,15 +21,11 @@ public class AimLineListener extends MouseAdapter {
 
         cursor.setX(e.getX());
         cursor.setY(e.getY());
-
-        renderer.startAiming();
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
         super.mouseReleased(e);
-
-        renderer.stopAiming();
     }
 
     @Override

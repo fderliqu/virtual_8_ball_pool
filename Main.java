@@ -4,6 +4,12 @@ import listeners.AimListener;
 import render.*;
 import static libs.Constants.*;
 import libs.SimplePoint;
+import view.BallView;
+import view.StartZoneView;
+import view.TableView;
+import view.View;
+
+import java.util.ArrayList;
 
 public class Main {
     
@@ -15,7 +21,17 @@ public class Main {
         BallTable tableJeu = new BallTable(rules);
 
         SimplePoint cursor = new SimplePoint(0, 0);
-        Renderer panel = new Renderer(tableJeu.getBalls(), tableJeu.getHoles(), cursor);
+
+        //views creation
+        ArrayList<View> views = new ArrayList<>();
+        views.add(new TableView());
+        views.add(new StartZoneView());
+        for (Ball b : tableJeu.getBalls()) {
+            views.add(new BallView(b));
+        }
+
+        Renderer panel = new Renderer(tableJeu.getHoles(), views);
+
         AimLineListener ligneListener = new AimLineListener(panel, cursor);
         AimListener aimListener = new AimListener(tableJeu);
         panel.addMouseListener(ligneListener);
