@@ -1,18 +1,15 @@
 package listeners;
 
 import libs.SimplePoint;
-import render.Renderer;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 public class AimLineListener extends MouseAdapter {
     private final SimplePoint cursor;
-    private final Renderer renderer;
 
-    public AimLineListener(Renderer r, SimplePoint s) {
+    public AimLineListener(SimplePoint s) {
         this.cursor   = s;
-        this.renderer = r;
     }
 
     @Override
@@ -34,7 +31,5 @@ public class AimLineListener extends MouseAdapter {
 
         cursor.setX(e.getX());
         cursor.setY(e.getY());
-
-        renderer.drawUpdate();
     }
 }

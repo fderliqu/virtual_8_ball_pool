@@ -28,7 +28,7 @@ public class Main {
 
         Renderer panel = new Renderer(views);
 
-        AimLineListener ligneListener = new AimLineListener(panel, cursor);
+        AimLineListener ligneListener = new AimLineListener(cursor);
         AimListener aimListener = new AimListener(tableJeu);
         WhiteListener whiteListener = new WhiteListener(tableJeu.getBalls());
         KeyboardListener keyListerner = new KeyboardListener(tableJeu, rules, player1, player2);
