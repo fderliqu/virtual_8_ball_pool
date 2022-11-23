@@ -38,7 +38,10 @@ public class Main {
         panel.addMouseListener(whiteListener);
         panel.addMouseMotionListener(whiteListener);
         panel.addKeyListener(keyListerner);
+        panel.setVisible(true);
         panel.setFocusable(true);
+        if(panel.requestFocusInWindow() == true)System.out.println("request focus succes");
+        
 
         /*
          * Thread for renderer
