@@ -21,7 +21,7 @@ public class AimListener extends MouseAdapter {
     @Override
     public void mousePressed(MouseEvent e) {
         if (e.getButton() == MouseEvent.BUTTON1) {
-            isAiming = true;
+            isAiming = false;
             mousePressed.setX(e.getX() / PX_PER_CM);
             mousePressed.setY(e.getY() / PX_PER_CM);
             if(table.getBalls().get(0).getPos().distanceTo(mousePressed) >= BALL_SIZE)isAiming = true;
