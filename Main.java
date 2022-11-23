@@ -30,7 +30,7 @@ public class Main {
 
         AimLineListener ligneListener = new AimLineListener(panel, cursor);
         AimListener aimListener = new AimListener(tableJeu);
-        WhiteListener whiteListener = new WhiteListener(tableJeu.getBalls().get(0));
+        WhiteListener whiteListener = new WhiteListener(tableJeu.getBalls());
         KeyboardListener keyListerner = new KeyboardListener(tableJeu, rules, player1, player2);
         panel.addMouseListener(ligneListener);
         panel.addMouseMotionListener(ligneListener);
@@ -69,6 +69,7 @@ public class Main {
         while (true) {
             /*WHILE BALL HAS SPEED */
             if (!tableJeu.checkBallsNoSpeed()) {
+                if(alreadyCheckedRules)whiteListener.off();
                 alreadyCheckedRules = false;
                 panel.ballHasSpeed();
                 tableJeu.update();
@@ -91,7 +92,7 @@ public class Main {
                         }
                         case WHITE_BALL_HIT_NOT_ALLOWED_BALL_FOOL,WHITE_BALL_NO_HIT_FOOL,WHITE_BALL_POTTED_FOOL,BALL_HITTED_BY_WHITE_DO_NOT_TOUCH_BAND_FOOL -> {
                             System.out.println("FOOL");
-                            whiteListener.active();
+                            whiteListener.on();
                             tableJeu.getBalls().get(0).setIsDropped(false);
                             if(rules.getPlayer(true) == player1){
                                 rules.setPlayer(player2,player1);
