@@ -1,6 +1,7 @@
 package render;
 
 import components.Holes.Hole;
+import listeners.KeyboardListener;
 import view.View;
 
 import static libs.Constants.*;
@@ -16,15 +17,19 @@ public class Renderer extends JPanel {
     private final double PxPerCm;
     private boolean ballSpeed=true;
 
-    public Renderer (ArrayList<View> views) {
+    public Renderer (ArrayList<View> views,KeyboardListener kListener) {
         super();
         this.views  = views;
+
+        window.addKeyListener(kListener);
 
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
         GraphicsDevice d = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
         window.setUndecorated(true);
         window.setVisible(true);
+        window.setFocusable(true);
+        if(window.requestFocusInWindow() == true)System.out.println("request focus succes");
 
         if (d.isFullScreenSupported()) {
             d.setFullScreenWindow(window);

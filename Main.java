@@ -19,6 +19,11 @@ public class Main {
 
         SimplePoint cursor = new SimplePoint(0, 0);
 
+        AimLineListener ligneListener = new AimLineListener(cursor);
+        AimListener aimListener = new AimListener(tableJeu);
+        WhiteListener whiteListener = new WhiteListener(tableJeu.getBalls());
+        KeyboardListener keyListerner = new KeyboardListener(tableJeu, rules, player1, player2);
+
         //views creation
         ArrayList<View> views = new ArrayList<>();
         views.add(new TableView());
@@ -26,21 +31,13 @@ public class Main {
         views.add(new StartZoneView());
         views.add(new BallsView(tableJeu.getBalls()));
 
-        Renderer panel = new Renderer(views);
-
-        AimLineListener ligneListener = new AimLineListener(cursor);
-        AimListener aimListener = new AimListener(tableJeu);
-        WhiteListener whiteListener = new WhiteListener(tableJeu.getBalls());
-        KeyboardListener keyListerner = new KeyboardListener(tableJeu, rules, player1, player2);
+        Renderer panel = new Renderer(views,keyListerner);
+        
         panel.addMouseListener(ligneListener);
         panel.addMouseMotionListener(ligneListener);
         panel.addMouseListener(aimListener);
         panel.addMouseListener(whiteListener);
         panel.addMouseMotionListener(whiteListener);
-        panel.addKeyListener(keyListerner);
-        panel.setVisible(true);
-        panel.setFocusable(true);
-        if(panel.requestFocusInWindow() == true)System.out.println("request focus succes");
         
 
         /*
