@@ -167,6 +167,12 @@ public class Ball {
     public double getPosY() { return position.getY(); }
     public void setPosY(double posY) { position.setY(posY); }
 
+    public SimplePoint getSpeed() { return speed; }
+    public void setSpeed(double x, double y){
+        setSpeedX(x);
+        setSpeedY(y);
+    }
+
     public double getSpeedX() { return speed.getX(); }
     public void setSpeedX(double speedX) { speed.setX(speedX); }
 

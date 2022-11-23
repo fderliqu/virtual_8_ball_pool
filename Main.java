@@ -1,7 +1,6 @@
 import components.*;
-import listeners.AimLineListener;
-import listeners.AimListener;
-import listeners.WhiteListener;
+
+import listeners.*;
 import render.*;
 import static libs.Constants.*;
 import libs.SimplePoint;
@@ -32,11 +31,14 @@ public class Main {
         AimLineListener ligneListener = new AimLineListener(panel, cursor);
         AimListener aimListener = new AimListener(tableJeu);
         WhiteListener whiteListener = new WhiteListener(tableJeu.getBalls().get(0));
+        KeyboardListener keyListerner = new KeyboardListener(tableJeu, rules, player1, player2);
         panel.addMouseListener(ligneListener);
         panel.addMouseMotionListener(ligneListener);
         panel.addMouseListener(aimListener);
         panel.addMouseListener(whiteListener);
         panel.addMouseMotionListener(whiteListener);
+        panel.addKeyListener(keyListerner);
+        panel.setFocusable(true);
 
         /*
          * Thread for renderer
