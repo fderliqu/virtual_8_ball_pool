@@ -27,11 +27,7 @@ public class WhiteListener extends MouseAdapter{
         cursor.setY(e.getY() / PX_PER_CM);
         if(on && white.getPos().distanceTo(cursor) < BALL_SIZE){
             canUpdate = true;
-            System.out.println(""+white.getPos().distanceTo(cursor));
         }
-        System.out.println(""+white.getPos().distanceTo(cursor));
-        
-        
     }
 
     @Override
