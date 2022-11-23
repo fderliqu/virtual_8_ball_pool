@@ -64,18 +64,23 @@ public class Main {
          */
 
         boolean alreadyCheckedRules = true;
+        boolean alreadyCheckedWinner = true;
+        boolean sleeper = true;
         rules.setPlayer(player1,player2);
 
         while (true) {
             /*WHILE BALL HAS SPEED */
             if (!tableJeu.checkBallsNoSpeed()) {
+                sleeper = false;
                 if(alreadyCheckedRules)whiteListener.off();
                 alreadyCheckedRules = false;
+                alreadyCheckedWinner = false;
                 panel.ballHasSpeed();
                 tableJeu.update();
             }
             /*WHILE PLAYER IS AIMING OR AFTER BALLS MOVEMENT */
             else {
+                sleeper = true;
                 panel.ballHasNoSpeed();
                 /*RULES CHECKER */
                 if(!alreadyCheckedRules){
@@ -115,14 +120,21 @@ public class Main {
                     rules.resetFlags();
                 }
                 /*WIN CHECKER */
-                if(player1.getHeWin()){
-                    System.out.println("player 1 win !");
-                    /*reset table */
-                }
-                else if(player2.getHeWin()){
-                    System.out.println("player 2 win !");
-                    /*reset table */
-                }
+                if(!alreadyCheckedWinner){
+                    if(player1.getHeWin()){
+                        System.out.println("player 1 win !");
+                        /*reset table */
+                    }
+                    else if(player2.getHeWin()){
+                        System.out.println("player 2 win !");
+                        /*reset table */
+                    }
+                }    
+            }
+            if(sleeper){
+                try {
+                    Thread.sleep(100);
+                } catch (Exception ignored) {}
             }
         }
     }   
