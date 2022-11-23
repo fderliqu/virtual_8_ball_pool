@@ -1,5 +1,13 @@
 package libs;
 
+import static libs.Constants.POOL_TABLE_LENGTH;
+import static libs.Constants.POOL_TABLE_WIDTH;
+import static libs.Constants.HORIZONTAL_OFFSET_CM;
+import static libs.Constants.VERTICAL_OFFSET_CM;
+import static libs.Constants.GAME_SURFACE_LENGTH;
+import static libs.Constants.GAME_SURFACE_WIDTH;
+import static libs.Constants.BALL_SIZE;
+
 public class SimplePoint {
 
     private double X;
@@ -28,6 +36,15 @@ public class SimplePoint {
         speed.setX(dist * intensity.getX());
         speed.setY(dist * intensity.getY());
         return speed;
+    }
+
+    public boolean outOfBounds(){
+        double ORIGIN_X = (POOL_TABLE_LENGTH - GAME_SURFACE_LENGTH)/2 + HORIZONTAL_OFFSET_CM;
+        double ORIGIN_Y = (POOL_TABLE_WIDTH - GAME_SURFACE_WIDTH)/2 + VERTICAL_OFFSET_CM;
+        if(X-BALL_SIZE/2  < ORIGIN_X|| X + BALL_SIZE/2 > GAME_SURFACE_LENGTH + ORIGIN_X || Y - BALL_SIZE/2 < ORIGIN_Y || Y + BALL_SIZE/2 > GAME_SURFACE_WIDTH + ORIGIN_Y){
+            return true;
+        }
+        else return false;
     }
 
     public double getX() {
