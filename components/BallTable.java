@@ -15,6 +15,7 @@ public class BallTable {
     private Rules rules;
     private long LastTime;
     private long NewTime;
+    private int count = 0;
     
     
     public BallTable(Rules rules){
@@ -79,17 +80,20 @@ public class BallTable {
         LastTime = NewTime;
         NewTime = System.nanoTime();
         double delta = (NewTime-LastTime)/(1E9);
-
+        count++;
+        for(Ball b : balls)b.update(delta);
         /*Ball checking collision loop */
         for(Ball b : this.balls){
             /*If ball is already dropped then continue */
             if(b.getIsDropped())continue;
-
+          //  b.update(delta);
             for(Ball b2 : this.balls){
                 /*if same ball or ball2 is already dropped, skip this loop */
                 if(!b.equals(b2) && !b2.getIsDropped()){
                     /*if collide and balls has speed and collision is not checked yet then : */
+                    
                     if(b.isColliding(b2) && (b.hasSpeed() || b2.hasSpeed()) && (!b.getChecked()[b2.getBallNumber()] || !b2.getChecked()[b.getBallNumber()])){
+                        System.out.println(count+" "+b.getBallNumber()+"/"+b2.getBallNumber()+" : "+b.distanceTo(b2)+" vit : "+b.getSpeedX()+"/"+b.getSpeedY());
                         b.transfert_energy(b2);
                         b.setChecked(true, b2.getBallNumber());
                         b2.setChecked(true, b.getBallNumber());
@@ -104,7 +108,7 @@ public class BallTable {
                         }
                     }
                     /*if this collision already check and balls not collide then update flag */
-                    else if(!b.isColliding(b2) && (b.getChecked()[b2.getBallNumber()] || b2.getChecked()[b.getBallNumber()])){
+                    else if((!b.isColliding(b2)  || (!b.hasSpeed() && !b2.hasSpeed())) && (b.getChecked()[b2.getBallNumber()] || b2.getChecked()[b.getBallNumber()])){
                         b.setChecked(false, b2.getBallNumber());
                         b2.setChecked(false, b.getBallNumber());
                     }
@@ -147,12 +151,13 @@ public class BallTable {
                 }
             }
             if(b.wallCollide())rules.incWallCollisions();
-            b.update(delta);
+            
             /*
             for(int i=0;i<b.getChecked().length;i++){
                 b.setChecked(false, i);
             }
             */
+
         }
     }
 

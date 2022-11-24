@@ -131,11 +131,13 @@ public class Main {
                     }
                 }    
             }
+            /* 
             if(sleeper){
                 try {
                     Thread.sleep(100);
                 } catch (Exception ignored) {}
             }
+            */
         }
     }   
 }
