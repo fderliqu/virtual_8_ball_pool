@@ -122,7 +122,6 @@ public class Ball {
         setPosX(position.getX() + time*speed.getX());
         setPosY(position.getY() + time*speed.getY());
         if(this.hasSpeed()){
-            //System.out.print(ballNumber + " update : ");
             double scalar_speed = Math.sqrt(speed.getX()*speed.getX() + speed.getY()*speed.getY());
             double intensityX = speed.getX()/scalar_speed;
             double intensityY = speed.getY()/scalar_speed;

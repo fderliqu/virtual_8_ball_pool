@@ -19,7 +19,6 @@ public class KeyboardListener extends KeyAdapter {
     }
     @Override
     public void keyPressed(KeyEvent e){
-        System.out.println("key : "+e.getKeyCode());
         if(e.getKeyCode() == KeyEvent.VK_R){
             rules.setPlayer(player2, player1);
             rules.resetFlags();
