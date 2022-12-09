@@ -1,6 +1,5 @@
 package render;
 
-import components.Holes.Hole;
 import listeners.KeyboardListener;
 import view.View;
 
@@ -15,7 +14,6 @@ public class Renderer extends JPanel {
     private final JFrame window = new JFrame();
     private final int height;
     private final double PxPerCm;
-    private boolean ballSpeed=true;
 
     public Renderer (ArrayList<View> views,KeyboardListener kListener) {
         super();
@@ -29,7 +27,7 @@ public class Renderer extends JPanel {
         window.setUndecorated(true);
         window.setVisible(true);
         window.setFocusable(true);
-        if(window.requestFocusInWindow() == true)System.out.println("request focus succes");
+        if(window.requestFocusInWindow())System.out.println("request focus succes");
 
         if (d.isFullScreenSupported()) {
             d.setFullScreenWindow(window);
@@ -54,14 +52,6 @@ public class Renderer extends JPanel {
         for (View v : views) {
             v.render(g, PxPerCm, verticalOffset);
         }
-    }
-
-    public void ballHasSpeed(){
-        ballSpeed = true;
-    }
-
-    public void ballHasNoSpeed(){
-        ballSpeed = false;
     }
 
     public void drawUpdate(){

@@ -20,6 +20,8 @@ public class AimListener extends MouseAdapter {
 
     @Override
     public void mousePressed(MouseEvent e) {
+        super.mousePressed(e);
+
         if (e.getButton() == MouseEvent.BUTTON1) {
             isAiming = false;
             mousePressed.setX(e.getX() / PX_PER_CM);
@@ -33,6 +35,8 @@ public class AimListener extends MouseAdapter {
 
     @Override   
     public void mouseReleased(MouseEvent e) {
+        super.mouseReleased(e);
+
         if (e.getButton() == MouseEvent.BUTTON1 && isAiming) {
 
             if (!table.checkBallsNoSpeed()) {

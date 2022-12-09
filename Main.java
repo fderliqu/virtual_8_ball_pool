@@ -3,7 +3,6 @@ import components.*;
 import listeners.*;
 import render.*;
 import static libs.Constants.*;
-import libs.SimplePoint;
 import view.*;
 
 import java.util.ArrayList;
@@ -17,28 +16,33 @@ public class Main {
         Rules rules = new Rules();
         BallTable tableJeu = new BallTable(rules);
 
-        SimplePoint cursor = new SimplePoint(0, 0);
+        //views creation
+        ArrayList<View> views = new ArrayList<>();
 
-        AimLineListener ligneListener = new AimLineListener(cursor);
+        AimLineListener ligneListener = new AimLineListener(null);
         AimListener aimListener = new AimListener(tableJeu);
         WhiteListener whiteListener = new WhiteListener(tableJeu.getBalls());
         KeyboardListener keyListerner = new KeyboardListener(tableJeu, rules, player1, player2);
 
-        //views creation
-        ArrayList<View> views = new ArrayList<>();
+        AimLineView aimLine = new AimLineView(ligneListener.getCursor(), tableJeu.getBalls().get(0).getPos());
+
         views.add(new TableView());
         views.add(new HolesView(tableJeu.getHoles()));
         views.add(new StartZoneView());
         views.add(new BallsView(tableJeu.getBalls()));
+        views.add(aimLine);
 
         Renderer panel = new Renderer(views,keyListerner);
-        
+        ligneListener.setView(aimLine);
+
         panel.addMouseListener(ligneListener);
         panel.addMouseMotionListener(ligneListener);
         panel.addMouseListener(aimListener);
+        panel.addMouseMotionListener(aimListener);
         panel.addMouseListener(whiteListener);
         panel.addMouseMotionListener(whiteListener);
-        
+
+
 
         /*
          * Thread for renderer
@@ -73,12 +77,10 @@ public class Main {
                 if(alreadyCheckedRules)whiteListener.off();
                 alreadyCheckedRules = false;
                 alreadyCheckedWinner = false;
-                panel.ballHasSpeed();
                 tableJeu.update();
             }
             /*WHILE PLAYER IS AIMING OR AFTER BALLS MOVEMENT */
             else {
-                panel.ballHasNoSpeed();
                 /*RULES CHECKER */
                 if(!alreadyCheckedRules){
                     //rules.printflag();
