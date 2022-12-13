@@ -33,19 +33,10 @@ public class Constants {
     //Px cm conversion
     public static final double PX_PER_CM = SCREEN_WIDTH/POOL_TABLE_LENGTH;
 
-    public static final double CANCEL_CERCLE_RADIUS = 50;
     public static final double TABLE_DEACCELERATION = 99;
 
     public static final long FORCED_FPS = 60;
     public static final double FORCED_TIMEOUT_MS = 1000.0/FORCED_FPS;
-
-    public enum BallTypeEnum {
-        NULL,
-        STRIPED,
-        PLAIN,
-        WHITE,
-        BLACK
-    }
 
     //ColorType
     
@@ -56,6 +47,8 @@ public class Constants {
     public static final Color ORANGE = new Color(245,117,30);
     public static final Color GREEN = new Color(0,124,62);
     public static final Color BROWN = new Color(119,1,1);
+
+    public static final int FONT_SIZE = 12;
 
     //offsets
 

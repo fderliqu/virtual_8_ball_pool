@@ -2,6 +2,7 @@ package components;
 
 import components.Holes.Hole;
 import components.Holes.RoundHole;
+import libs.BallTypeEnum;
 
 import java.util.ArrayList;
 
@@ -12,13 +13,12 @@ public class BallTable {
     private final ArrayList<Ball> balls = new ArrayList<>();
     private final ArrayList<Hole> holes = new ArrayList<>();
 
-    private final Rules rules;
+    private Rules rules;
     private long LastTime;
     private long NewTime;
     
     
-    public BallTable(Rules rules){
-        this.rules = rules;
+    public BallTable(){
         balls.add(new Ball(BALLS_INIT_POS_X[0],BALLS_INIT_POS_Y[0], 0, 0, BallTypeEnum.WHITE, 0));
         balls.add(new Ball(BALLS_INIT_POS_X[1],BALLS_INIT_POS_Y[1], 0, 0, BallTypeEnum.PLAIN, 1));
         balls.add(new Ball(BALLS_INIT_POS_X[2],BALLS_INIT_POS_Y[2], 0, 0, BallTypeEnum.STRIPED, 9));
@@ -52,7 +52,7 @@ public class BallTable {
             b.setPos(BALLS_INIT_POS_X[i],BALLS_INIT_POS_Y[i]);
             b.setSpeed(0, 0);
             for(int j=0;j<b.getChecked().length;j++)b.setChecked(false, j);
-            b.setIsDropped(false);
+            b.setIsPotted(false);
             i++;
         }
         NewTime = System.nanoTime();
@@ -83,24 +83,19 @@ public class BallTable {
         /*Ball checking collision loop */
         for(Ball b : this.balls){
             /*If ball is already dropped then continue */
-            if(b.getIsDropped())continue;
+            if(b.getIsPotted())continue;
             for(Ball b2 : this.balls){
                 /*if same ball or ball2 is already dropped, skip this loop */
-                if(!b.equals(b2) && !b2.getIsDropped()){
+                if(!b.equals(b2) && !b2.getIsPotted()){
                     /*if collide and balls has speed and collision is not checked yet then : */
                     
                     if(b.isColliding(b2) && (b.hasSpeed() || b2.hasSpeed()) && (!b.getChecked()[b2.getBallNumber()] || !b2.getChecked()[b.getBallNumber()])){
                         b.transfert_energy(b2);
                         b.setChecked(true, b2.getBallNumber());
                         b2.setChecked(true, b.getBallNumber());
-                        /*First ball touched checker for rules */
+
                         if(b.getBallType() == BallTypeEnum.WHITE){
-                            rules.whiteBallCollide();
-                            if(rules.getFirstBallTouch() == BallTypeEnum.NULL)rules.setFirstBallTouch(b2.getBallType()); 
-                        }
-                        else if(b2.getBallType() == BallTypeEnum.WHITE){
-                            rules.whiteBallCollide();
-                            if(rules.getFirstBallTouch() == BallTypeEnum.NULL)rules.setFirstBallTouch(b.getBallType()); 
+                            rules.whiteCollide(b2);
                         }
                     }
                     /*if this collision already check and balls not collide then update flag */
@@ -113,40 +108,14 @@ public class BallTable {
             }
             for(Hole h : holes){
                 if(b.ballInHole(h)){
-                    b.setIsDropped(true);
+                    b.setIsPotted(true);
                     b.setSpeedX(0);
                     b.setSpeedY(0);
                     
-                    if(b.getBallType()==BallTypeEnum.STRIPED){
-                        if(rules.getPlayer(true).noBallPotted()){
-                            rules.getPlayer(true).setTypeBall(BallTypeEnum.STRIPED);
-                            rules.getPlayer(false).setTypeBall(BallTypeEnum.PLAIN);
-                        }
-                        rules.setStripedPotted(true);
-                    }
-                    else if(b.getBallType()==BallTypeEnum.PLAIN){
-                        if(rules.getPlayer(true).noBallPotted()){
-                            rules.getPlayer(true).setTypeBall(BallTypeEnum.PLAIN);
-                            rules.getPlayer(false).setTypeBall(BallTypeEnum.STRIPED);
-                        }
-                        rules.setPlainPotted(true);
-                    }
-                    else if(b.getBallType()==BallTypeEnum.BLACK){
-                        if(rules.getPlayer(true).allowedToPutBlackBall())rules.setWinner(rules.getPlayer(true));
-                        else rules.setBlackPotted(true);
-                    }
-                    else {
-                        rules.setWhitePotted(true);
-                    }
-                    if(b.getBallType()!=BallTypeEnum.WHITE){
-                        if(rules.getPlayer(true).getTypeBall() == b.getBallType()){
-                            rules.getPlayer(true).incrementBallPotted();
-                        }   
-                        else rules.getPlayer(false).incrementBallPotted();
-                    }
+                    rules.ballPotted(b);
                 }
             }
-            if(b.wallCollide())rules.incWallCollisions();
+            if(b.wallCollide())rules.wallCollision(b);
         }
     }
 
@@ -156,6 +125,17 @@ public class BallTable {
     
     public ArrayList<Hole> getHoles(){
         return holes;
+    }
+
+    public boolean ballsRemaining(BallTypeEnum type) {
+        for (Ball b : balls) {
+            if ((b.getBallType() == type) && (!b.getIsPotted())) return true;
+        }
+        return false;
+    }
+
+    public void setRules (Rules r) {
+        rules = r;
     }
 
     public void setNewTime(long NewTime){

@@ -1,153 +1,106 @@
 package components;
 
-import libs.Constants.BallTypeEnum;
+import libs.BallTypeEnum;
 import libs.GameStatusEnum;
 
+import java.util.ArrayList;
+
 public class Rules {
-    private final Player players[] = new Player[2];
     private Player currentPlayer;
+    private Player nextPlayer;
     private BallTypeEnum firstBallTouch;
-    private boolean hasWhiteCollided;
-    private int wallCollisions;
-    private boolean whitePotted;
-    private boolean blackPotted;
-    private boolean stripedPotted;
-    private boolean plainPotted;
+
     private Player winner = null;
 
-    public Rules (Player p1, Player p2) {
+    private BallTable table;
+
+    private GameStatusEnum status = GameStatusEnum.NO_FOOL;
+
+    public Rules (Player p1, Player p2, BallTable table) {
         if (p1 == null || p2 == null) {
             return;
         }
 
-        players[0] = p1;
-        players[1] = p2;
+        this.table = table;
 
         currentPlayer = p1;
+        nextPlayer = p2;
     }
 
     //Method
 
-    private boolean ballsArePotted(){
-        return stripedPotted || plainPotted;
+    public void whiteCollide(Ball b1) {
+        //this function is only called when b1 is the white ball
+        if (firstBallTouch == BallTypeEnum.NULL) {
+            firstBallTouch = b1.getBallType();
+
+            if ((b1.getBallType() != currentPlayer.getTypeBall()) && (currentPlayer.getTypeBall() != BallTypeEnum.NULL)) {
+                status = GameStatusEnum.WHITE_BALL_HIT_NOT_ALLOWED_BALL_FOOL;
+            }
+        }
     }
 
-    //public GameStatusEnum getStatus();
-    public GameStatusEnum checkRules(){
-        if(whitePotted){
-            return GameStatusEnum.WHITE_BALL_POTTED_FOOL;
+    public void wallCollision(Ball b) {
+
+    }
+
+    public void ballPotted(Ball b) {
+        if ((b.getBallType() == currentPlayer.getTypeBall()) &&
+                (status == GameStatusEnum.NO_FOOL)) {
+                status = GameStatusEnum.NO_FOOL_BUT_CAN_REPLAY;
+        } else {
+            switch (b.getBallType()) {
+                case BLACK :
+                    if (table.ballsRemaining(currentPlayer.getTypeBall())) {
+                       status = GameStatusEnum.BLACK_BALL_POTTED_FOOL;
+                    } else {
+                        winner = currentPlayer;
+                    }
+                    break;
+                case WHITE:
+                    status = GameStatusEnum.WHITE_BALL_POTTED_FOOL;
+            }
         }
-        else if(blackPotted){
-            return GameStatusEnum.BLACK_BALL_POTTED_FOOL;
+    }
+
+    public void endTurn() {
+        if (firstBallTouch == BallTypeEnum.NULL) {
+            status = GameStatusEnum.WHITE_BALL_NO_HIT_FOOL;
         }
-        else if(!hasWhiteCollided){
-            return GameStatusEnum.WHITE_BALL_NO_HIT_FOOL;
-        }
-        else if(    currentPlayer.getTypeBall() != BallTypeEnum.NULL &&
-                    !(firstBallTouch==BallTypeEnum.BLACK && currentPlayer.allowedToPutBlackBall()) &&
-                    firstBallTouch != currentPlayer.getTypeBall()){
-            return GameStatusEnum.WHITE_BALL_HIT_NOT_ALLOWED_BALL_FOOL;
-        }
-        else if(!ballsArePotted() && wallCollisions == 0){
-            return GameStatusEnum.BALL_HITTED_BY_WHITE_DO_NOT_TOUCH_BAND_FOOL;
-        }
-        else if(    currentPlayer.getTypeBall() != BallTypeEnum.NULL &&
-                    ((currentPlayer.getTypeBall() == BallTypeEnum.STRIPED && stripedPotted) || (currentPlayer.getTypeBall() == BallTypeEnum.PLAIN && plainPotted))
-                ){
-            return GameStatusEnum.NO_FOOL_BUT_CAN_REPLAY;
-        }
-        else return GameStatusEnum.NO_FOOL;
     }
 
     public void resetFlags(){
         firstBallTouch = BallTypeEnum.NULL;
-        hasWhiteCollided = false;
-        wallCollisions = 0;
-        whitePotted = false;
-        blackPotted = false;
-        plainPotted = false;
-        stripedPotted = false;
+        status = GameStatusEnum.NO_FOOL;
     }
 
     public void resetGame() {
         resetFlags();
         this.winner = null;
     }
-    
-    public void printflag(){
-        System.out.println("player : " + currentPlayer.getID() + " balls : "+currentPlayer.getTypeBall()+" potted : "+currentPlayer.getBallPotted());
-        System.out.println("--firstballtouch = "+firstBallTouch);
-        System.out.println("--whiteballcollision = "+ hasWhiteCollided);
-        System.out.println("--wallcollision = "+wallCollisions);
-        System.out.println("--white = "+whitePotted);
-        System.out.println("--black = "+blackPotted);
-        System.out.println("--plain = "+plainPotted);
-        System.out.println("--striped = "+stripedPotted);
-    }
 
     //Setters
-
     public void setPlayer(Player currentPlayer, Player playerNoHisTurn){
         this.currentPlayer = currentPlayer;
-    }
-
-    public void setFirstBallTouch(BallTypeEnum firstBallTouch){
-        this.firstBallTouch = firstBallTouch;
-    }
-
-    public void whiteBallCollide(){
-        this.hasWhiteCollided = true;
-    }
-
-    public void incWallCollisions(){
-        this.wallCollisions++;
-    }
-
-    public void setWhitePotted(boolean whitePotted){
-        this.whitePotted = whitePotted;
-    }
-
-    public void setBlackPotted(boolean blackPotted){
-        this.blackPotted = blackPotted;
-    }
-
-    public void setPlainPotted(boolean plainPotted){
-        this.plainPotted = plainPotted;
-    }
-    public void setStripedPotted(boolean stripedPotted){
-        this.stripedPotted = stripedPotted;
-    }
-
-    //getters
-
-    public BallTypeEnum getFirstBallTouch(){
-        return firstBallTouch;
     }
 
     public Player getPlayer(boolean histurn){
         if(histurn) return currentPlayer;
         else {
-            for (Player p : players) {
-                if (p != currentPlayer) return p;
-            }
-            return null;
+            return nextPlayer;
         }
-    }
-
-    public Player[] getPlayers() {
-        return players;
     }
 
     public Player getWinner() {
         return winner;
     }
 
-    public void setWinner(int nb) {
-        this.winner = players[nb%2];
-    }
-
     public void setWinner(Player player) {
         this.winner = player;
+    }
+
+    public GameStatusEnum getStatus() {
+        return status;
     }
     
 }

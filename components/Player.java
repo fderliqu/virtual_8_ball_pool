@@ -1,11 +1,10 @@
 package components;
 
-import static libs.Constants.*;
+import libs.BallTypeEnum;
 
 public class Player {
-    private String ID = "anonymous player";
+    private String ID;
     private BallTypeEnum typeBall = BallTypeEnum.NULL;
-    private int ballPotted = 0;
 
     //Constructors
 
@@ -17,14 +16,6 @@ public class Player {
      * Methods
      */
 
-    public boolean allowedToPutBlackBall(){
-        return ballPotted == 7;
-    }
-
-    public boolean noBallPotted(){
-        return ballPotted == 0;
-    }
-
     //Getters
     public String getID(){
         return ID;
@@ -32,10 +23,6 @@ public class Player {
 
     public BallTypeEnum getTypeBall(){
         return typeBall;
-    }
-
-    public int getBallPotted(){
-        return ballPotted;
     }
 
     //Setters
@@ -47,10 +34,4 @@ public class Player {
     public void setTypeBall(BallTypeEnum typeBall){
         this.typeBall = typeBall;
     }
-
-    public void incrementBallPotted(){
-        ballPotted++;
-    }
-
-    
 }

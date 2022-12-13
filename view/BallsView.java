@@ -6,6 +6,7 @@ import java.awt.*;
 import java.util.ArrayList;
 
 import static libs.Constants.*;
+import libs.BallTypeEnum;
 
 public class BallsView implements View {
     private final ArrayList<Ball> balls;
@@ -17,7 +18,7 @@ public class BallsView implements View {
     @Override
     public void render(Graphics g, double PxPerCm, double verticalOffset) {
         for (Ball ball : balls) {
-            if(!ball.getIsDropped()){
+            if(!ball.getIsPotted()){
                 switch (ball.getBallNumber()){
                     case 0  -> g.setColor(Color.WHITE);
                     case 1, 9 -> g.setColor(YELLOW);

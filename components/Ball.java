@@ -4,6 +4,7 @@ import components.Holes.Hole;
 import libs.SimplePoint;
 
 import static libs.Constants.*;
+import libs.BallTypeEnum;
 
 public class Ball {
 
@@ -12,7 +13,7 @@ public class Ball {
 
     private final BallTypeEnum ballType;
     private final int ballNumber;
-    private boolean isDropped;
+    private boolean isPotted;
     private boolean alreadyChecked[] = new boolean[16];
 
     public Ball(double posX, double posY,double speedX, double speedY, BallTypeEnum ballType, int ballNumber) {
@@ -20,7 +21,7 @@ public class Ball {
         this.speed = new SimplePoint(speedX, speedY);
         this.ballNumber = ballNumber;
         this.ballType = ballType;
-        this.isDropped = false;
+        this.isPotted = false;
     }
 
     /*
@@ -126,7 +127,7 @@ public class Ball {
             double intensityX = speed.getX()/scalar_speed;
             double intensityY = speed.getY()/scalar_speed;
 
-            scalar_speed = Math.max((double)0,scalar_speed - time*TABLE_DEACCELERATION);
+            scalar_speed = Math.max(0,scalar_speed - time*TABLE_DEACCELERATION);
             
             setSpeedX(scalar_speed*intensityX);
             setSpeedY(scalar_speed*intensityY);
@@ -182,8 +183,8 @@ public class Ball {
 
     public int getBallNumber() { return ballNumber; }
 
-    public boolean getIsDropped() { return isDropped; }
-    public void setIsDropped(boolean isDropped) { this.isDropped = isDropped; }
+    public boolean getIsPotted() { return isPotted; }
+    public void setIsPotted(boolean isDropped) { this.isPotted = isDropped; }
 
     public boolean[] getChecked() {return alreadyChecked;}
     public void setChecked(boolean status,int i){alreadyChecked[i] = status;}

@@ -11,10 +11,11 @@ public class Main {
     
     public static void main(String[] args) {
 
-        Player player1 = new Player("1");
-        Player player2 = new Player("2");
-        Rules rules = new Rules(player1, player2);
-        BallTable tableJeu = new BallTable(rules);
+        Player player1 = new Player("Player 1");
+        Player player2 = new Player("Player 2");
+        BallTable tableJeu = new BallTable();
+        Rules rules = new Rules(player1, player2, tableJeu);
+        tableJeu.setRules(rules);
 
         //views creation
         ArrayList<View> views = new ArrayList<>();
@@ -85,7 +86,7 @@ public class Main {
                 /*RULES CHECKER */
                 if(!alreadyCheckedRules){
                     //rules.printflag();
-                    switch (rules.checkRules()){
+                    switch (rules.getStatus()){
                         case NO_FOOL -> {
                             System.out.println("NO_FOOL");
                             if(rules.getPlayer(true) == player1){
@@ -98,7 +99,7 @@ public class Main {
                         case WHITE_BALL_HIT_NOT_ALLOWED_BALL_FOOL,WHITE_BALL_NO_HIT_FOOL,WHITE_BALL_POTTED_FOOL,BALL_HITTED_BY_WHITE_DO_NOT_TOUCH_BAND_FOOL -> {
                             System.out.println("FOOL");
                             whiteListener.on();
-                            tableJeu.getBalls().get(0).setIsDropped(false);
+                            tableJeu.getBalls().get(0).setIsPotted(false);
                             if(rules.getPlayer(true) == player1){
                                 rules.setPlayer(player2,player1);
                             }
