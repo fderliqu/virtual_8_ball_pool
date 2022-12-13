@@ -11,10 +11,12 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 public class WhiteListener extends MouseAdapter{
-    private SimplePoint cursor = new SimplePoint(0, 0);
-    private ArrayList<Ball> balls;
+    private final SimplePoint cursor = new SimplePoint(0, 0);
+    private final ArrayList<Ball> balls;
+
     private boolean canUpdate;
     private boolean active;
+
     public WhiteListener(ArrayList<Ball> balls) {
         this.balls = balls;
         canUpdate = false;
@@ -26,6 +28,7 @@ public class WhiteListener extends MouseAdapter{
         super.mousePressed(e);
         cursor.setX(e.getX() / PX_PER_CM);
         cursor.setY(e.getY() / PX_PER_CM);
+
         if(active && balls.get(0).getPos().distanceTo(cursor) < BALL_SIZE){
             canUpdate = true;
         }
@@ -39,23 +42,18 @@ public class WhiteListener extends MouseAdapter{
 
     @Override
     public void mouseDragged(MouseEvent e) {
-        boolean flag = true;
         super.mouseDragged(e);
         if(canUpdate){
             cursor.setX(e.getX() / PX_PER_CM);
             cursor.setY(e.getY() / PX_PER_CM);
             for(Ball b : balls){
-                if(b.getBallNumber() != 0 && cursor.distanceTo(b.getPos()) < BALL_SIZE)flag = false;
+                if(b.getBallNumber() != 0 && cursor.distanceTo(b.getPos()) < BALL_SIZE) return;
             }
-            if(!cursor.outOfBounds() && flag)balls.get(0).setPos(cursor.getX(),cursor.getY());
+            if(!cursor.outOfBounds())balls.get(0).setPos(cursor.getX(),cursor.getY());
         }
     }
 
-    public void on(){
-        active = true;
-        //System.out.println("set whitelistner to on");
-    }
-
+    public void on(){ active = true; }
     public void off(){
         active = false;
     }

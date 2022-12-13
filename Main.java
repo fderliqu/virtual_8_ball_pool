@@ -13,7 +13,7 @@ public class Main {
 
         Player player1 = new Player("1");
         Player player2 = new Player("2");
-        Rules rules = new Rules();
+        Rules rules = new Rules(player1, player2);
         BallTable tableJeu = new BallTable(rules);
 
         //views creation
@@ -28,6 +28,7 @@ public class Main {
 
         views.add(new TableView());
         views.add(new HolesView(tableJeu.getHoles()));
+        views.add(new StatusView(rules));
         views.add(new StartZoneView());
         views.add(new BallsView(tableJeu.getBalls()));
         views.add(aimLine);
@@ -73,7 +74,7 @@ public class Main {
 
         while (true) {
             /*WHILE BALL HAS SPEED */
-            if (!tableJeu.checkBallsNoSpeed()) {
+            if (tableJeu.anyBallMoving()) {
                 if(alreadyCheckedRules)whiteListener.off();
                 alreadyCheckedRules = false;
                 alreadyCheckedWinner = false;
@@ -106,12 +107,7 @@ public class Main {
                             }
                         }
                         case BLACK_BALL_POTTED_FOOL -> {
-                            if(rules.getPlayer(true) == player1){
-                                player2.setHeWin(true);
-                            }
-                            else{
-                                player1.setHeWin(true);
-                            }
+                            rules.setWinner(rules.getPlayer(true));
                         }
                         case NO_FOOL_BUT_CAN_REPLAY ->{System.out.println("NO_FOOL_CAN_REPLAY");}
                     }
@@ -120,13 +116,8 @@ public class Main {
                 }
                 /*WIN CHECKER */
                 if(!alreadyCheckedWinner){
-                    if(player1.getHeWin()){
-                        System.out.println("player 1 win !");
-                        /*reset table */
-                    }
-                    else if(player2.getHeWin()){
-                        System.out.println("player 2 win !");
-                        /*reset table */
+                    if(rules.getWinner() != null) {
+                        System.out.println(rules.getWinner().getID() + " has won");
                     }
                     alreadyCheckedWinner = true;
                 }    

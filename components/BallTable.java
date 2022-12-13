@@ -12,7 +12,7 @@ public class BallTable {
     private final ArrayList<Ball> balls = new ArrayList<>();
     private final ArrayList<Hole> holes = new ArrayList<>();
 
-    private Rules rules;
+    private final Rules rules;
     private long LastTime;
     private long NewTime;
     
@@ -62,13 +62,13 @@ public class BallTable {
     * checks if any ball is moving
     * @return boolean if at least one ball is still moving
     * */
-    public boolean checkBallsNoSpeed(){
+    public boolean anyBallMoving(){
         for(Ball b : balls){
             if(b.hasSpeed()) {
-                return false;
+                return true;
             }
         }
-        return true;
+        return false;
     }
 
     /*
@@ -95,11 +95,11 @@ public class BallTable {
                         b2.setChecked(true, b.getBallNumber());
                         /*First ball touched checker for rules */
                         if(b.getBallType() == BallTypeEnum.WHITE){
-                            rules.incWhiteBallCollisions();
+                            rules.whiteBallCollide();
                             if(rules.getFirstBallTouch() == BallTypeEnum.NULL)rules.setFirstBallTouch(b2.getBallType()); 
                         }
                         else if(b2.getBallType() == BallTypeEnum.WHITE){
-                            rules.incWhiteBallCollisions();
+                            rules.whiteBallCollide();
                             if(rules.getFirstBallTouch() == BallTypeEnum.NULL)rules.setFirstBallTouch(b.getBallType()); 
                         }
                     }
@@ -132,7 +132,7 @@ public class BallTable {
                         rules.setPlainPotted(true);
                     }
                     else if(b.getBallType()==BallTypeEnum.BLACK){
-                        if(rules.getPlayer(true).allowedToPutBlackBall())rules.getPlayer(true).setHeWin(true);
+                        if(rules.getPlayer(true).allowedToPutBlackBall())rules.setWinner(rules.getPlayer(true));
                         else rules.setBlackPotted(true);
                     }
                     else {
@@ -147,13 +147,6 @@ public class BallTable {
                 }
             }
             if(b.wallCollide())rules.incWallCollisions();
-            
-            /*
-            for(int i=0;i<b.getChecked().length;i++){
-                b.setChecked(false, i);
-            }
-            */
-
         }
     }
 

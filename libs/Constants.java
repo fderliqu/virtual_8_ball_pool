@@ -37,14 +37,7 @@ public class Constants {
     public static final double TABLE_DEACCELERATION = 99;
 
     public static final long FORCED_FPS = 60;
-    public static final double FORCED_TIMEOUT_MS = 1000/FORCED_FPS;
-
-    //BallType
-    public static final int NULL = 0;
-    public static final int STRIPED = 1;
-    public static final int PLAIN = 2;
-    public static final int WHITE = 3;
-    public static final int BLACK = 4;
+    public static final double FORCED_TIMEOUT_MS = 1000.0/FORCED_FPS;
 
     public enum BallTypeEnum {
         NULL,
@@ -52,25 +45,6 @@ public class Constants {
         PLAIN,
         WHITE,
         BLACK
-    }
-
-    //RulesType
-    public static final int NO_FOOL_BUT_CAN_REPLAY = -1;
-    public static final int NO_FOOL = 0;
-    public static final int WHITE_BALL_NO_HIT_FOOL = 1;
-    public static final int WHITE_BALL_HIT_NOT_ALLOWED_BALL_FOOL = 2;
-    public static final int BALL_HITTED_BY_WHITE_DO_NOT_TOUCH_BAND_FOOL = 3;
-    public static final int WHITE_BALL_POTTED_FOOL = 4;
-    public static final int BLACK_BALL_POTTED_FOOL = 5;
-
-    public enum RulesTypeEnum {
-        NO_FOOL_BUT_CAN_REPLAY,
-        NO_FOOL,
-        WHITE_BALL_NO_HIT_FOOL,
-        WHITE_BALL_HIT_NOT_ALLOWED_BALL_FOOL,
-        BALL_HITTED_BY_WHITE_DO_NOT_TOUCH_BAND_FOOL,
-        WHITE_BALL_POTTED_FOOL,
-        BLACK_BALL_POTTED_FOOL
     }
 
     //ColorType
@@ -83,25 +57,16 @@ public class Constants {
     public static final Color GREEN = new Color(0,124,62);
     public static final Color BROWN = new Color(119,1,1);
 
-
-    public enum ColorTypeEnum{
-        YELLOW,
-        BLUE,
-        RED,
-        PURPLE,
-        ORANGE,
-        GREEN,
-        BROWN,
-    }
-
     //offsets
 
     public static final double VERTICAL_OFFSET_CM = (SCREEN_HEIGHT/PX_PER_CM - POOL_TABLE_WIDTH)/2;
-    public static final double HORIZONTAL_OFFSET_CM = (SCREEN_WIDTH/PX_PER_CM - POOL_TABLE_LENGTH)/2;  
+    public static final double HORIZONTAL_OFFSET_CM = (SCREEN_WIDTH/PX_PER_CM - POOL_TABLE_LENGTH)/2;
 
-    //Initial pos of balls and holes : 
+    public static final double ORIGIN_X = (POOL_TABLE_LENGTH - GAME_SURFACE_LENGTH)/2 + HORIZONTAL_OFFSET_CM;
+    public static final double ORIGIN_Y = (POOL_TABLE_WIDTH - GAME_SURFACE_WIDTH)/2 + VERTICAL_OFFSET_CM;
+    //Initial pos of balls and holes :
 
-    public static final double BALLS_INIT_POS_X[] =  {
+    public static final double[] BALLS_INIT_POS_X =  {
         WALL_THICKNESS + START_ZONE,
         180,
         180 + DECALE_X,
@@ -120,7 +85,7 @@ public class Constants {
         180 + DECALE_X*4
     };
 
-    public static final double BALLS_INIT_POS_Y[] =  {
+    public static final double[] BALLS_INIT_POS_Y =  {
         WALL_THICKNESS + VERTICAL_OFFSET_CM + GAME_SURFACE_WIDTH/2,
         WALL_THICKNESS + VERTICAL_OFFSET_CM + GAME_SURFACE_WIDTH/2,
         WALL_THICKNESS + VERTICAL_OFFSET_CM + GAME_SURFACE_WIDTH/2 + BALL_SIZE_e/2,
@@ -139,7 +104,7 @@ public class Constants {
         WALL_THICKNESS + VERTICAL_OFFSET_CM + GAME_SURFACE_WIDTH/2 - 2*BALL_SIZE_e
     };
 
-    public static final double HOLES_INIT_POS_X[] = {
+    public static final double[] HOLES_INIT_POS_X = {
         WALL_THICKNESS/2 + ANGLE_HOLE_DIAMETER/2 + HORIZONTAL_OFFSET_CM,
         WALL_THICKNESS/2 + MID_HOLE_DIAMETER/2 + HORIZONTAL_OFFSET_CM + GAME_SURFACE_LENGTH/2,
         WALL_THICKNESS/2 + ANGLE_HOLE_DIAMETER/2 + HORIZONTAL_OFFSET_CM + GAME_SURFACE_LENGTH,
@@ -148,7 +113,7 @@ public class Constants {
         WALL_THICKNESS/2 + ANGLE_HOLE_DIAMETER/2 + HORIZONTAL_OFFSET_CM + GAME_SURFACE_LENGTH
     };
 
-    public static final double HOLES_INIT_POS_Y[] = {
+    public static final double[] HOLES_INIT_POS_Y = {
         WALL_THICKNESS/2 + ANGLE_HOLE_DIAMETER/2 + VERTICAL_OFFSET_CM,
         WALL_THICKNESS/2 + MID_HOLE_DIAMETER/2 + VERTICAL_OFFSET_CM,
         WALL_THICKNESS/2 + ANGLE_HOLE_DIAMETER/2 + VERTICAL_OFFSET_CM,

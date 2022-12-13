@@ -39,7 +39,7 @@ public class AimListener extends MouseAdapter {
 
         if (e.getButton() == MouseEvent.BUTTON1 && isAiming) {
 
-            if (!table.checkBallsNoSpeed()) {
+            if (table.anyBallMoving()) {
                 isAiming = false;
                 return;
             }
