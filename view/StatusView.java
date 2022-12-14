@@ -22,6 +22,6 @@ public class StatusView implements View{
         g.setFont(new Font("Helvetica", Font.PLAIN, 12));
         g.drawString(status.toString(), (int) (ORIGIN_X),(int) (ORIGIN_Y + verticalOffset));
 
-        g.drawString(rule.getPlayer(true).getID(), (int) ORIGIN_X, (int) (ORIGIN_Y + verticalOffset + FONT_SIZE + 1));
+        g.drawString(rule.getCurrentPlayer().getID() + " " + rule.getCurrentPlayer().getTypeBall(), (int) ORIGIN_X, (int) (ORIGIN_Y + verticalOffset + FONT_SIZE + 1));
     }
 }

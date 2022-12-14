@@ -1,5 +1,6 @@
 package listeners;
 
+import components.Rules;
 import libs.SimplePoint;
 import components.BallTable;
 import components.Ball;
@@ -13,9 +14,12 @@ public class AimListener extends MouseAdapter {
     static boolean isAiming = false;
     static SimplePoint mousePressed = new SimplePoint(0,0);
     static SimplePoint mouseReleased = new SimplePoint(0,0);
+    private final Rules rules;
 
-    public AimListener(BallTable table) {
+    public AimListener(BallTable table, Rules r) {
+
         this.table = table;
+        this.rules = r;
     }
 
     @Override
@@ -54,6 +58,7 @@ public class AimListener extends MouseAdapter {
             white.setSpeedY(speed.getY());
 
             isAiming = false;
+            rules.resetFlags();
         }
     }
 }

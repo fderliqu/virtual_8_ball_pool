@@ -15,7 +15,6 @@ public class AimLineView implements View{
     @Override
     public void render(Graphics g, double PxPerCm, double verticalOffset) {
         if (!active) return;
-        System.out.println("drawing..."+cursor.getY()+" "+cursor.getY());
 
         g.setColor(Color.WHITE);
         g.drawLine(

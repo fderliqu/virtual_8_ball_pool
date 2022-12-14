@@ -14,7 +14,7 @@ public class Ball {
     private final BallTypeEnum ballType;
     private final int ballNumber;
     private boolean isPotted;
-    private boolean alreadyChecked[] = new boolean[16];
+    private final boolean alreadyChecked[] = new boolean[16];
 
     public Ball(double posX, double posY,double speedX, double speedY, BallTypeEnum ballType, int ballNumber) {
         this.position = new SimplePoint(posX, posY);
@@ -189,4 +189,8 @@ public class Ball {
     public boolean[] getChecked() {return alreadyChecked;}
     public void setChecked(boolean status,int i){alreadyChecked[i] = status;}
 
+
+    public String toString() {
+        return ballNumber + " " + ballType;
+    }
 }

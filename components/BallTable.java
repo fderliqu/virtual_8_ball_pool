@@ -87,9 +87,12 @@ public class BallTable {
             for(Ball b2 : this.balls){
                 /*if same ball or ball2 is already dropped, skip this loop */
                 if(!b.equals(b2) && !b2.getIsPotted()){
+
                     /*if collide and balls has speed and collision is not checked yet then : */
-                    
-                    if(b.isColliding(b2) && (b.hasSpeed() || b2.hasSpeed()) && (!b.getChecked()[b2.getBallNumber()] || !b2.getChecked()[b.getBallNumber()])){
+                    if(b.isColliding(b2) && (b.hasSpeed() ||
+                       b2.hasSpeed()) && (!b.getChecked()[b2.getBallNumber()] ||
+                       !b2.getChecked()[b.getBallNumber()])){
+
                         b.transfert_energy(b2);
                         b.setChecked(true, b2.getBallNumber());
                         b2.setChecked(true, b.getBallNumber());

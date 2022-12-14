@@ -4,6 +4,8 @@ import java.awt.Toolkit;
 import java.awt.Color;
 
 public class Constants {
+    public static final boolean DEBUG = true;
+
     //all dimensions of the billard stuff in cm
     public static final double BALL_SIZE = 5.72;
     public static final double BALL_SIZE_e = 5.80;
@@ -20,10 +22,7 @@ public class Constants {
     public static final double ANGLE_HOLE_DIAMETER = 13; // 12.5-14
     public static final double MID_HOLE_DIAMETER = 11;   // 10.5-12
 
-    public static final double MARK_DIAMETER = 2;
     public static final double START_ZONE = GAME_SURFACE_LENGTH/5.0;
-
-    public static final double RUBBER_BAND = 3.6;
 
     //screen dimension
     public static final double SCREEN_WIDTH = Toolkit.getDefaultToolkit().getScreenSize().getWidth();

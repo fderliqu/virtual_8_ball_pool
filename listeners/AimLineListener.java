@@ -24,7 +24,6 @@ public class AimLineListener extends MouseAdapter {
             cursor.setX(e.getX());
             cursor.setY(e.getY());
             view.activate();
-            System.out.println("activating line");
         } else if (e.getButton() == MouseEvent.BUTTON2){
             view.deactivate();
         }

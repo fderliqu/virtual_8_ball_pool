@@ -1,7 +1,9 @@
 import components.*;
 
+import libs.GameStatusEnum;
 import listeners.*;
 import render.*;
+
 import static libs.Constants.*;
 import view.*;
 
@@ -21,9 +23,9 @@ public class Main {
         ArrayList<View> views = new ArrayList<>();
 
         AimLineListener ligneListener = new AimLineListener(null);
-        AimListener aimListener = new AimListener(tableJeu);
+        AimListener aimListener = new AimListener(tableJeu, rules);
         WhiteListener whiteListener = new WhiteListener(tableJeu.getBalls());
-        KeyboardListener keyListerner = new KeyboardListener(tableJeu, rules, player1, player2);
+        KeyboardListener keyListerner = new KeyboardListener(rules);
 
         AimLineView aimLine = new AimLineView(ligneListener.getCursor(), tableJeu.getBalls().get(0).getPos());
 
@@ -33,8 +35,9 @@ public class Main {
         views.add(new StartZoneView());
         views.add(new BallsView(tableJeu.getBalls()));
         views.add(aimLine);
+        views.add(new WinnerView(rules));
 
-        Renderer panel = new Renderer(views,keyListerner);
+        Renderer panel = new Renderer(views);
         ligneListener.setView(aimLine);
 
         panel.addMouseListener(ligneListener);
@@ -44,7 +47,7 @@ public class Main {
         panel.addMouseListener(whiteListener);
         panel.addMouseMotionListener(whiteListener);
 
-
+        panel.getWindow().addKeyListener(keyListerner);
 
         /*
          * Thread for renderer
@@ -70,59 +73,28 @@ public class Main {
          */
 
         boolean alreadyCheckedRules = true;
-        boolean alreadyCheckedWinner = true;
-        rules.setPlayer(player1,player2);
 
         while (true) {
             /*WHILE BALL HAS SPEED */
-            if (tableJeu.anyBallMoving()) {
+            while (tableJeu.anyBallMoving()) {
                 if(alreadyCheckedRules)whiteListener.off();
                 alreadyCheckedRules = false;
-                alreadyCheckedWinner = false;
                 tableJeu.update();
             }
             /*WHILE PLAYER IS AIMING OR AFTER BALLS MOVEMENT */
-            else {
-                /*RULES CHECKER */
-                if(!alreadyCheckedRules){
-                    //rules.printflag();
-                    switch (rules.getStatus()){
-                        case NO_FOOL -> {
-                            System.out.println("NO_FOOL");
-                            if(rules.getPlayer(true) == player1){
-                                rules.setPlayer(player2,player1);
-                            }
-                            else{
-                                rules.setPlayer(player1,player2);
-                            }
-                        }
-                        case WHITE_BALL_HIT_NOT_ALLOWED_BALL_FOOL,WHITE_BALL_NO_HIT_FOOL,WHITE_BALL_POTTED_FOOL,BALL_HITTED_BY_WHITE_DO_NOT_TOUCH_BAND_FOOL -> {
-                            System.out.println("FOOL");
-                            whiteListener.on();
-                            tableJeu.getBalls().get(0).setIsPotted(false);
-                            if(rules.getPlayer(true) == player1){
-                                rules.setPlayer(player2,player1);
-                            }
-                            else{
-                                rules.setPlayer(player1,player2);
-                            }
-                        }
-                        case BLACK_BALL_POTTED_FOOL -> {
-                            rules.setWinner(rules.getPlayer(true));
-                        }
-                        case NO_FOOL_BUT_CAN_REPLAY ->{System.out.println("NO_FOOL_CAN_REPLAY");}
-                    }
-                    alreadyCheckedRules = true;
-                    rules.resetFlags();
+            /*RULES CHECKER */
+            if(!alreadyCheckedRules){
+                if (rules.getStatus() != GameStatusEnum.NO_FOOL &&
+                    rules.getStatus() != GameStatusEnum.NO_FOOL_BUT_CAN_REPLAY) {
+
+                    whiteListener.on();
+                    tableJeu.getBalls().get(0).setIsPotted(false);
                 }
-                /*WIN CHECKER */
-                if(!alreadyCheckedWinner){
-                    if(rules.getWinner() != null) {
-                        System.out.println(rules.getWinner().getID() + " has won");
-                    }
-                    alreadyCheckedWinner = true;
-                }    
+                alreadyCheckedRules = true;
+                rules.endTurn();
             }
+
+            //Thread.sleep(10);
         }
     }   
 }

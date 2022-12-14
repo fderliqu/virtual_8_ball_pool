@@ -1,6 +1,5 @@
 package render;
 
-import listeners.KeyboardListener;
 import view.View;
 
 import static libs.Constants.*;
@@ -15,11 +14,9 @@ public class Renderer extends JPanel {
     private final int height;
     private final double PxPerCm;
 
-    public Renderer (ArrayList<View> views,KeyboardListener kListener) {
+    public Renderer (ArrayList<View> views) {
         super();
         this.views  = views;
-
-        window.addKeyListener(kListener);
 
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
@@ -56,5 +53,9 @@ public class Renderer extends JPanel {
 
     public void drawUpdate(){
         window.repaint();
+    }
+
+    public JFrame getWindow() {
+        return window;
     }
 }
