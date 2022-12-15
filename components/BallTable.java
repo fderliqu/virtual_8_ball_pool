@@ -131,6 +131,8 @@ public class BallTable {
     }
 
     public boolean ballsRemaining(BallTypeEnum type) {
+        if (type == BallTypeEnum.NULL) return true;
+
         for (Ball b : balls) {
             if ((b.getBallType() == type) && (!b.getIsPotted())) return true;
         }

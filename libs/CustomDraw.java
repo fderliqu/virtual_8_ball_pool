@@ -3,6 +3,8 @@ package libs;
 import javax.swing.*;
 import java.awt.*;
 
+import static libs.Constants.SCREEN_WIDTH;
+
 public class CustomDraw {
 
     public static void fillStadium(Graphics g, SimplePoint p1, SimplePoint p2, int thickness, Color c) {
@@ -66,6 +68,11 @@ public class CustomDraw {
         public void paintComponent(Graphics g) {
             fillStadium(g, new SimplePoint(50,200), new SimplePoint(200, 50), 150, Color.BLACK);
         }
+    }
+
+    public static int computeTextWidth(Graphics g, String text, int size) {
+        FontMetrics metrics = g.getFontMetrics(new Font("Helvetica", Font.BOLD, size));
+        return (int) ((SCREEN_WIDTH - metrics.stringWidth(text)) / 2);
     }
 
     public static void main(String[] args) {

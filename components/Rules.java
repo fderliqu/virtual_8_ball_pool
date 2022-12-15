@@ -36,7 +36,7 @@ public class Rules {
 
             if ((b.getBallType() != currentPlayer.getTypeBall()) && (currentPlayer.getTypeBall() != BallTypeEnum.NULL)) {
                 if  (DEBUG) System.out.println("Fool : wrong ball hit");
-                status = GameStatusEnum.WHITE_BALL_HIT_NOT_ALLOWED_BALL_FOOL;
+                status = GameStatusEnum.WRONG_WHITE_COLLISION;
             }
         }
     }
@@ -47,25 +47,26 @@ public class Rules {
 
         if ((b.getBallType() == currentPlayer.getTypeBall()) &&
                 (status == GameStatusEnum.NO_FOOL)) {
-                status = GameStatusEnum.NO_FOOL_BUT_CAN_REPLAY;
+                status = GameStatusEnum.GOOD_BALL_POTTED;
         } else if (currentPlayer.getTypeBall() == BallTypeEnum.NULL &&
                 b.getBallType() != BallTypeEnum.WHITE &&
                 b.getBallType() != BallTypeEnum.BLACK) {
                         currentPlayer.setTypeBall(b.getBallType());
                         nextPlayer.setTypeBall(BallTypeEnum.getOpposite(b.getBallType()));
-                        status = GameStatusEnum.NO_FOOL_BUT_CAN_REPLAY;
+                        status = GameStatusEnum.GOOD_BALL_POTTED;
         } else {
             switch (b.getBallType()) {
                 case BLACK :
                     if (table.ballsRemaining(currentPlayer.getTypeBall())) {
-                        status = GameStatusEnum.BLACK_BALL_POTTED_FOOL;
+                        status = GameStatusEnum.DEFEAT;
                         this.setWinner(nextPlayer);
                     } else {
+                        status = GameStatusEnum.VICTORY;
                         this.setWinner(currentPlayer);
                     }
                     return;
                 case WHITE:
-                    status = GameStatusEnum.WHITE_BALL_POTTED_FOOL;
+                    status = GameStatusEnum.WHITE_BALL_POTTED;
             }
         }
     }
@@ -74,13 +75,13 @@ public class Rules {
         if  (DEBUG) System.out.println("Turn ends");
 
         if (firstBallTouch == BallTypeEnum.NULL) {
-            status = GameStatusEnum.WHITE_BALL_NO_HIT_FOOL;
+            status = GameStatusEnum.NO_WHITE_COLLISION;
         } else if (firstBallTouch == BallTypeEnum.BLACK && table.ballsRemaining(currentPlayer.getTypeBall()) ||
                     firstBallTouch == BallTypeEnum.getOpposite(currentPlayer.getTypeBall())) {
-            status = GameStatusEnum.WHITE_BALL_HIT_NOT_ALLOWED_BALL_FOOL;
+            status = GameStatusEnum.WRONG_WHITE_COLLISION;
         }
 
-        if  (status != GameStatusEnum.NO_FOOL_BUT_CAN_REPLAY) {
+        if  (status != GameStatusEnum.GOOD_BALL_POTTED) {
             Player tmp = currentPlayer;
             currentPlayer = nextPlayer;
             nextPlayer = tmp;
@@ -94,8 +95,12 @@ public class Rules {
 
     public void resetGame() {
         resetFlags();
-        currentPlayer = nextPlayer;
         this.winner = null;
+        Player tmp = currentPlayer;
+        currentPlayer = nextPlayer;
+        nextPlayer = tmp;
+        currentPlayer.setTypeBall(BallTypeEnum.NULL);
+        nextPlayer.setTypeBall(BallTypeEnum.NULL);
         winnerView.setStatus(false);
         table.resetTable();
     }
