@@ -118,6 +118,7 @@ public class BallTable {
                     rules.ballPotted(b);
                 }
             }
+            b.wallCollide();
         }
     }
 

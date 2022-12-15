@@ -98,5 +98,7 @@ public class Main {
 
             //Thread.sleep(10);
         }
+
+        System.exit(0);
     }   
 }
