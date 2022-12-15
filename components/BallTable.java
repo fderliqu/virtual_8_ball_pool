@@ -118,7 +118,6 @@ public class BallTable {
                     rules.ballPotted(b);
                 }
             }
-            if(b.wallCollide())rules.wallCollision(b);
         }
     }
 
