@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 public class Main {
     
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
 
 
         BallTable tableJeu = new BallTable();
@@ -96,7 +96,7 @@ public class Main {
                 alreadyCheckedRules = true;
             }
 
-            //Thread.sleep(10);
+            Thread.sleep(10);
         }
 
         System.exit(0);
