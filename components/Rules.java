@@ -1,59 +1,56 @@
 package components;
 
 import libs.BallTypeEnum;
-import libs.Constants;
 import libs.GameStatusEnum;
+import view.WinnerView;
+
+import static libs.Constants.DEBUG;
 
 public class Rules {
     private Player currentPlayer;
     private Player nextPlayer;
     private BallTypeEnum firstBallTouch;
+    private WinnerView winnerView;
 
     private Player winner = null;
 
-    private BallTable table;
+    private final BallTable table;
 
     private GameStatusEnum status = GameStatusEnum.NO_FOOL;
 
-    public Rules (Player p1, Player p2, BallTable table) {
-        if (p1 == null || p2 == null) {
-            return;
-        }
+    public Rules (BallTable table) {
+        currentPlayer = new Player("Player 1");
+        nextPlayer = new Player("Player 2");
 
         this.table = table;
-
-        currentPlayer = p1;
-        nextPlayer = p2;
     }
 
     //Method
 
     public void whiteCollide(Ball b) {
-        if  (Constants.DEBUG) System.out.println("white ball collision with " + b);
+        if  (DEBUG) System.out.println("white ball collision with " + b);
 
         //this function is only called when b is the white ball
         if (firstBallTouch == BallTypeEnum.NULL) {
             firstBallTouch = b.getBallType();
 
             if ((b.getBallType() != currentPlayer.getTypeBall()) && (currentPlayer.getTypeBall() != BallTypeEnum.NULL)) {
-                if  (Constants.DEBUG) System.out.println("Fool : wrong ball hit");
+                if  (DEBUG) System.out.println("Fool : wrong ball hit");
                 status = GameStatusEnum.WHITE_BALL_HIT_NOT_ALLOWED_BALL_FOOL;
             }
         }
     }
 
-    public void wallCollision(Ball b) {
-
-    }
-
     public void ballPotted(Ball b) {
-        if  (Constants.DEBUG) System.out.println("Ball " + b + " potted");
+        if  (DEBUG) System.out.println("Ball " + b + " potted");
 
 
         if ((b.getBallType() == currentPlayer.getTypeBall()) &&
                 (status == GameStatusEnum.NO_FOOL)) {
                 status = GameStatusEnum.NO_FOOL_BUT_CAN_REPLAY;
-        } else if (currentPlayer.getTypeBall() == BallTypeEnum.NULL) {
+        } else if (currentPlayer.getTypeBall() == BallTypeEnum.NULL &&
+                b.getBallType() != BallTypeEnum.WHITE &&
+                b.getBallType() != BallTypeEnum.BLACK) {
                         currentPlayer.setTypeBall(b.getBallType());
                         nextPlayer.setTypeBall(BallTypeEnum.getOpposite(b.getBallType()));
                         status = GameStatusEnum.NO_FOOL_BUT_CAN_REPLAY;
@@ -62,9 +59,9 @@ public class Rules {
                 case BLACK :
                     if (table.ballsRemaining(currentPlayer.getTypeBall())) {
                         status = GameStatusEnum.BLACK_BALL_POTTED_FOOL;
-                        winner = nextPlayer;
+                        this.setWinner(nextPlayer);
                     } else {
-                        winner = currentPlayer;
+                        this.setWinner(currentPlayer);
                     }
                     return;
                 case WHITE:
@@ -74,7 +71,7 @@ public class Rules {
     }
 
     public void endTurn() {
-        if  (Constants.DEBUG) System.out.println("Turn ends");
+        if  (DEBUG) System.out.println("Turn ends");
 
         if (firstBallTouch == BallTypeEnum.NULL) {
             status = GameStatusEnum.WHITE_BALL_NO_HIT_FOOL;
@@ -99,6 +96,7 @@ public class Rules {
         resetFlags();
         currentPlayer = nextPlayer;
         this.winner = null;
+        winnerView.setStatus(false);
         table.resetTable();
     }
 
@@ -113,6 +111,20 @@ public class Rules {
 
     public GameStatusEnum getStatus() {
         return status;
+    }
+
+    public void stopGame() {
+        status = GameStatusEnum.GAME_STOPPED;
+    }
+
+    private void setWinner(Player p) {
+        if (DEBUG) System.out.println("and the winner is :"+currentPlayer);
+        winner = p;
+        winnerView.setStatus(true);
+    }
+
+    public void setWinnerView(WinnerView w) {
+        winnerView = w;
     }
     
 }

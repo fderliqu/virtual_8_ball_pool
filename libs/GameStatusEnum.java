@@ -1,25 +1,29 @@
 package libs;
 
 public enum GameStatusEnum {
-    NO_FOOL_BUT_CAN_REPLAY ("Ball potted, last player can replay"),
-    NO_FOOL ("Player turn"),
-    WHITE_BALL_NO_HIT_FOOL ("Fool, White Ball didn't hit a ball"),
-    WHITE_BALL_HIT_NOT_ALLOWED_BALL_FOOL ("Fool, White ball hit opposite player's ball first"),
-    BALL_HITTED_BY_WHITE_DO_NOT_TOUCH_BAND_FOOL ("Fool, The ball hit by the white ball didn't touch a band"),
-    WHITE_BALL_POTTED_FOOL ("Fool, White ball has been potted"),
-    BLACK_BALL_POTTED_FOOL ("Game Over, Black ball has been potted");
+    NO_FOOL_BUT_CAN_REPLAY ("Ball potted, last player can replay", false),
+    NO_FOOL ("Player turn", false),
+    WHITE_BALL_NO_HIT_FOOL ("White Ball didn't hit a ball", true),
+    WHITE_BALL_HIT_NOT_ALLOWED_BALL_FOOL ("White ball hit opposite player's or black ball first", true),
+    WHITE_BALL_POTTED_FOOL ("White ball has been potted", true),
+    BLACK_BALL_POTTED_FOOL ("Game Over, Black ball has been potted", false),
+
+
+    GAME_STOPPED ("Game Over", false);
 
     private final String statusMsg;
+    private final boolean isFool;
 
-    GameStatusEnum(String s) {
+    GameStatusEnum(String s, boolean b) {
         statusMsg = s;
+        isFool = b;
     }
 
-    public boolean equalsStatus(String otherStatus) {
-        return statusMsg.equals(otherStatus);
+    public boolean getFool() {
+        return this.isFool;
     }
 
     public String toString() {
-       return this.statusMsg;
+       return (isFool?"Fool, ":"") + this.statusMsg;
     }
 }

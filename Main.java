@@ -13,10 +13,9 @@ public class Main {
     
     public static void main(String[] args) {
 
-        Player player1 = new Player("Player 1");
-        Player player2 = new Player("Player 2");
+
         BallTable tableJeu = new BallTable();
-        Rules rules = new Rules(player1, player2, tableJeu);
+        Rules rules = new Rules(tableJeu);
         tableJeu.setRules(rules);
 
         //views creation
@@ -28,6 +27,7 @@ public class Main {
         KeyboardListener keyListerner = new KeyboardListener(rules);
 
         AimLineView aimLine = new AimLineView(ligneListener.getCursor(), tableJeu.getBalls().get(0).getPos());
+        WinnerView wview = new WinnerView(rules);
 
         views.add(new TableView());
         views.add(new HolesView(tableJeu.getHoles()));
@@ -35,10 +35,11 @@ public class Main {
         views.add(new StartZoneView());
         views.add(new BallsView(tableJeu.getBalls()));
         views.add(aimLine);
-        views.add(new WinnerView(rules));
+        views.add(wview);
 
         Renderer panel = new Renderer(views);
         ligneListener.setView(aimLine);
+        rules.setWinnerView(wview);
 
         panel.addMouseListener(ligneListener);
         panel.addMouseMotionListener(ligneListener);
@@ -53,7 +54,7 @@ public class Main {
          * Thread for renderer
          */
         Thread render = new Thread(() -> {
-            while (true) {
+            while (rules.getStatus() != GameStatusEnum.GAME_STOPPED) {
                 long before = System.currentTimeMillis();
                 panel.drawUpdate();
                 long after = System.currentTimeMillis();
@@ -74,7 +75,7 @@ public class Main {
 
         boolean alreadyCheckedRules = true;
 
-        while (true) {
+        while (rules.getStatus() != GameStatusEnum.GAME_STOPPED) {
             /*WHILE BALL HAS SPEED */
             while (tableJeu.anyBallMoving()) {
                 if(alreadyCheckedRules)whiteListener.off();
@@ -84,14 +85,15 @@ public class Main {
             /*WHILE PLAYER IS AIMING OR AFTER BALLS MOVEMENT */
             /*RULES CHECKER */
             if(!alreadyCheckedRules){
-                if (rules.getStatus() != GameStatusEnum.NO_FOOL &&
-                    rules.getStatus() != GameStatusEnum.NO_FOOL_BUT_CAN_REPLAY) {
-
+                rules.endTurn();
+                if (rules.getStatus().getFool()) {
                     whiteListener.on();
                     tableJeu.getBalls().get(0).setIsPotted(false);
+                } else {
+                    whiteListener.off();
                 }
+
                 alreadyCheckedRules = true;
-                rules.endTurn();
             }
 
             //Thread.sleep(10);

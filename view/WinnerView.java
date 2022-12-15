@@ -26,7 +26,11 @@ public class WinnerView implements View{
             g.fillRect(0,0, (int) SCREEN_WIDTH, (int) SCREEN_HEIGHT);
             g.setColor(Color.BLACK);
             g.setFont(new Font("Helvetica", Font.BOLD, 50));
-            g.drawString(rules.getWinner().getID()+" has won!",(int) SCREEN_WIDTH/2, (int) SCREEN_HEIGHT/2);
+            if (rules.getWinner() == null) {
+                g.drawString("Game Over",(int) SCREEN_WIDTH/2, (int) SCREEN_HEIGHT/2);
+            } else {
+                g.drawString(rules.getWinner()+" has won!",(int) SCREEN_WIDTH/2, (int) SCREEN_HEIGHT/2);
+            }
         }
     }
 }

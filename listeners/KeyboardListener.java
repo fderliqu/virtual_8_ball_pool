@@ -17,6 +17,9 @@ public class KeyboardListener extends KeyAdapter {
         if(e.getKeyCode() == KeyEvent.VK_R){
             if  (Constants.DEBUG) System.out.println("Trying to reset");
             rules.resetGame();
+        } else if (e.getKeyCode() == KeyEvent.VK_Q) {
+            if  (Constants.DEBUG) System.out.println("Leaving the game");
+            rules.stopGame();
         }
     }
 }

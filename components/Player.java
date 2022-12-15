@@ -3,7 +3,7 @@ package components;
 import libs.BallTypeEnum;
 
 public class Player {
-    private String ID;
+    private final String ID;
     private BallTypeEnum typeBall = BallTypeEnum.NULL;
 
     //Constructors
@@ -17,7 +17,7 @@ public class Player {
      */
 
     //Getters
-    public String getID(){
+    public String toString(){
         return ID;
     }
 
@@ -26,10 +26,6 @@ public class Player {
     }
 
     //Setters
-
-    public void setID(String ID){
-        this.ID = ID;
-    }
 
     public void setTypeBall(BallTypeEnum typeBall){
         this.typeBall = typeBall;
