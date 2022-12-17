@@ -10,11 +10,16 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.sound.sampled.LineUnavailableException;
 import java.io.File;
 
+/*
+* If you want to add a new sound, just put a new line below "public enum Sound { "
+* Exemple : TEST ("/path/to/sound/<name>.wav"),
+* 
+* To play a sound in another class, just import render.Sound and call playSound()
+* Example : Sound.TEST.playSound();
+*/
+
 public enum Sound {
-    /*
-     * If you want to add a new sound, just put a new line below
-     Exemple: */
-    //TEST ("/path/to/sound/<name>.wav"),
+    
     COLLIDE ("/data/sounds/ball_collision.wav"),
     CUE_LOW ("/data/sounds/cue_collision_strong.wav"),
     CUE_HIGH ("/data/sounds/cue_collision_weak.wav"),
