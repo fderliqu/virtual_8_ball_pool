@@ -11,7 +11,10 @@ import javax.sound.sampled.LineUnavailableException;
 import java.io.File;
 
 public enum Sound {
-
+    /*
+     * If you want to add a new sound, just put a new line below
+     Exemple: */
+    //TEST ("/path/to/sound/<name>.wav"),
     COLLIDE ("/data/sounds/ball_collision.wav"),
     CUE_LOW ("/data/sounds/cue_collision_strong.wav"),
     CUE_HIGH ("/data/sounds/cue_collision_weak.wav"),
