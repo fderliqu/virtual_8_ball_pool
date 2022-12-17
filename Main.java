@@ -13,7 +13,6 @@ public class Main {
     
     public static void main(String[] args) throws InterruptedException {
 
-
         BallTable tableJeu = new BallTable();
         Rules rules = new Rules(tableJeu);
         tableJeu.setRules(rules);
@@ -50,6 +49,7 @@ public class Main {
 
         panel.getWindow().addKeyListener(keyListerner);
 
+        Sound.COLLIDE.init();
         /*
          * Thread for renderer
          */
@@ -78,7 +78,10 @@ public class Main {
         while (rules.getStatus() != GameStatusEnum.GAME_STOPPED) {
             /*WHILE BALL HAS SPEED */
             while (tableJeu.anyBallMoving()) {
-                if(alreadyCheckedRules)whiteListener.off();
+                if(alreadyCheckedRules){
+                    whiteListener.off();
+                    Sound.CUE_HIGH.playSound();
+                }
                 alreadyCheckedRules = false;
                 tableJeu.update();
             }
