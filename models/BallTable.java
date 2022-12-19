@@ -3,6 +3,7 @@ package models;
 import models.Holes.HoleInterface;
 import models.Holes.RoundHole;
 import libs.BallTypeEnum;
+import render.Sound;
 import rules.Rule;
 
 import java.util.ArrayList;
@@ -93,7 +94,9 @@ public class BallTable {
                     if(b.isColliding(b2) && (b.hasSpeed() ||
                        b2.hasSpeed()) && (!b.getChecked()[b2.getBallNumber()] ||
                        !b2.getChecked()[b.getBallNumber()])){
-
+                        /*Play sound */
+                        Sound.COLLIDE.playSound();
+                        /*Compute new vectors */
                         b.transfert_energy(b2);
                         b.setChecked(true, b2.getBallNumber());
                         b2.setChecked(true, b.getBallNumber());
