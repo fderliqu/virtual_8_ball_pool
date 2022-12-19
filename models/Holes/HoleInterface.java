@@ -1,7 +1,7 @@
-package components.Holes;
+package models.Holes;
 
 import libs.SimplePoint;
 
-public interface Hole {
+public interface HoleInterface {
     boolean isColliding (SimplePoint s);
 }

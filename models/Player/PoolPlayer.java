@@ -1,24 +1,12 @@
-package components;
+package models.Player;
 
 import libs.BallTypeEnum;
 
-public class Player {
-    private final String ID;
+public class PoolPlayer extends PlayerAbstract{
     private BallTypeEnum typeBall = BallTypeEnum.NULL;
 
-    //Constructors
-
-    public Player(String ID){
+    public PoolPlayer(String ID){
         this.ID = ID;
-    }
-
-    /*
-     * Methods
-     */
-
-    //Getters
-    public String toString(){
-        return ID;
     }
 
     public BallTypeEnum getTypeBall(){

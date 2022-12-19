@@ -1,8 +1,8 @@
-package components.Holes;
+package models.Holes;
 
 import libs.SimplePoint;
 
-public class StadiumHole implements Hole {
+public class StadiumHole implements HoleInterface {
 
     private final SimplePoint c1;
     private final SimplePoint c2;

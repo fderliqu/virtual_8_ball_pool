@@ -1,8 +1,8 @@
-package components.Holes;
+package models.Holes;
 
 import libs.SimplePoint;
 
-public class RoundHole implements Hole {
+public class RoundHole implements HoleInterface {
     private final SimplePoint position;
     private final double diameter;
 

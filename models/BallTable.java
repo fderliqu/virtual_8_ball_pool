@@ -1,8 +1,9 @@
-package components;
+package models;
 
-import components.Holes.Hole;
-import components.Holes.RoundHole;
+import models.Holes.HoleInterface;
+import models.Holes.RoundHole;
 import libs.BallTypeEnum;
+import rules.Rule;
 
 import java.util.ArrayList;
 
@@ -11,9 +12,9 @@ import static libs.Constants.*;
 
 public class BallTable {
     private final ArrayList<Ball> balls = new ArrayList<>();
-    private final ArrayList<Hole> holes = new ArrayList<>();
+    private final ArrayList<HoleInterface> holes = new ArrayList<>();
 
-    private Rules rules;
+    private Rule rules;
     private long LastTime;
     private long NewTime;
     
@@ -36,12 +37,12 @@ public class BallTable {
         balls.add(new Ball(BALLS_INIT_POS_X[14],BALLS_INIT_POS_Y[14], 0, 0, BallTypeEnum.PLAIN, 5));
         balls.add(new Ball(BALLS_INIT_POS_X[15],BALLS_INIT_POS_Y[15], 0, 0, BallTypeEnum.STRIPED, 12));
 
-        holes.add(new RoundHole(HOLES_INIT_POS_X[0],HOLES_INIT_POS_Y[0],ANGLE_HOLE_DIAMETER));
+        holes.add(new RoundHole(HOLES_INIT_POS_X[0],HOLES_INIT_POS_Y[0], CORNER_HOLE_DIAMETER));
         holes.add(new RoundHole(HOLES_INIT_POS_X[1],HOLES_INIT_POS_Y[1],MID_HOLE_DIAMETER));
-        holes.add(new RoundHole(HOLES_INIT_POS_X[2],HOLES_INIT_POS_Y[2],ANGLE_HOLE_DIAMETER));
-        holes.add(new RoundHole(HOLES_INIT_POS_X[3],HOLES_INIT_POS_Y[3],ANGLE_HOLE_DIAMETER));
+        holes.add(new RoundHole(HOLES_INIT_POS_X[2],HOLES_INIT_POS_Y[2], CORNER_HOLE_DIAMETER));
+        holes.add(new RoundHole(HOLES_INIT_POS_X[3],HOLES_INIT_POS_Y[3], CORNER_HOLE_DIAMETER));
         holes.add(new RoundHole(HOLES_INIT_POS_X[4],HOLES_INIT_POS_Y[4],MID_HOLE_DIAMETER));
-        holes.add(new RoundHole(HOLES_INIT_POS_X[5],HOLES_INIT_POS_Y[5],ANGLE_HOLE_DIAMETER));
+        holes.add(new RoundHole(HOLES_INIT_POS_X[5],HOLES_INIT_POS_Y[5], CORNER_HOLE_DIAMETER));
 
         NewTime = System.nanoTime();
     }
@@ -109,7 +110,7 @@ public class BallTable {
 
                 }
             }
-            for(Hole h : holes){
+            for(HoleInterface h : holes){
                 if(b.ballInHole(h)){
                     b.setIsPotted(true);
                     b.setSpeedX(0);
@@ -126,7 +127,7 @@ public class BallTable {
         return balls;
     }
     
-    public ArrayList<Hole> getHoles(){
+    public ArrayList<HoleInterface> getHoles(){
         return holes;
     }
 
@@ -139,7 +140,7 @@ public class BallTable {
         return false;
     }
 
-    public void setRules (Rules r) {
+    public void setRules (Rule r) {
         rules = r;
     }
 

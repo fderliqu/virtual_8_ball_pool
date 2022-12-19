@@ -1,9 +1,9 @@
 package listeners;
 
-import components.Rules;
+import rules.Rule;
 import libs.SimplePoint;
-import components.BallTable;
-import components.Ball;
+import models.BallTable;
+import models.Ball;
 import static libs.Constants.PX_PER_CM;
 import static libs.Constants.BALL_SIZE;
 import java.awt.event.MouseAdapter;
@@ -14,9 +14,9 @@ public class AimListener extends MouseAdapter {
     static boolean isAiming = false;
     static SimplePoint mousePressed = new SimplePoint(0,0);
     static SimplePoint mouseReleased = new SimplePoint(0,0);
-    private final Rules rules;
+    private final Rule rules;
 
-    public AimListener(BallTable table, Rules r) {
+    public AimListener(BallTable table, Rule r) {
 
         this.table = table;
         this.rules = r;

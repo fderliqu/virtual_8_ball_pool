@@ -1,6 +1,6 @@
 package view;
 
-import components.Rules;
+import rules.Rule;
 
 import java.awt.*;
 
@@ -9,11 +9,11 @@ import static libs.Constants.SCREEN_WIDTH;
 import static libs.CustomDraw.computeTextWidth;
 import static libs.GameStatusEnum.VICTORY;
 
-public class WinnerView implements View{
-    private final Rules rules;
+public class WinnerView implements ViewInterface {
+    private final Rule rules;
     private boolean status = false;
 
-    public WinnerView (Rules r) {
+    public WinnerView (Rule r) {
         this.rules = r;
     }
 
@@ -22,7 +22,7 @@ public class WinnerView implements View{
     }
 
     @Override
-    public void render(Graphics g, double PxPerCm, double verticalOffset) {
+    public void render(Graphics g) {
         if (status) {
             g.setColor(Color.WHITE);
             g.fillRect(0,0, (int) SCREEN_WIDTH, (int) SCREEN_HEIGHT);

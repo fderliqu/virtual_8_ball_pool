@@ -1,7 +1,7 @@
 package listeners;
 
 import libs.SimplePoint;
-import components.Ball;
+import models.Ball;
 
 import static libs.Constants.BALL_SIZE;
 import static libs.Constants.PX_PER_CM;

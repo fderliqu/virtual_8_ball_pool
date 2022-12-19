@@ -1,6 +1,6 @@
 package view;
 
-import components.Ball;
+import models.Ball;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import static libs.Constants.*;
 import libs.BallTypeEnum;
 
-public class BallsView implements View {
+public class BallsView implements ViewInterface {
     private final ArrayList<Ball> balls;
 
     public BallsView(ArrayList<Ball> balls) {
@@ -16,7 +16,7 @@ public class BallsView implements View {
     }
 
     @Override
-    public void render(Graphics g, double PxPerCm, double verticalOffset) {
+    public void render(Graphics g) {
         for (Ball ball : balls) {
             if(!ball.getIsPotted()){
                 switch (ball.getBallNumber()){
@@ -31,17 +31,17 @@ public class BallsView implements View {
                     case 8  -> g.setColor(Color.BLACK);
                 }
 
-                g.fillOval((int) (PxPerCm * (ball.getPosX() - BALL_SIZE/2)),
-                        (int) (PxPerCm * (ball.getPosY() - BALL_SIZE/2)),
-                        (int) (PxPerCm * BALL_SIZE),
-                        (int) (PxPerCm * BALL_SIZE));
+                g.fillOval((int) (PX_PER_CM * (ball.getPosX() - BALL_SIZE/2)),
+                        (int) (PX_PER_CM * (ball.getPosY() - BALL_SIZE/2)),
+                        (int) (PX_PER_CM * BALL_SIZE),
+                        (int) (PX_PER_CM * BALL_SIZE));
                 if (ball.getBallType() == BallTypeEnum.STRIPED) {
                     g.setColor(Color.WHITE);
                     g.drawLine(
-                            (int) (PxPerCm * ball.getPosX()),
-                            (int) (PxPerCm * (ball.getPosY() - (BALL_SIZE / 2))),
-                            (int) (PxPerCm * ball.getPosX()),
-                            (int) (PxPerCm * (ball.getPosY() + (BALL_SIZE / 2)))
+                            (int) (PX_PER_CM * ball.getPosX()),
+                            (int) (PX_PER_CM * (ball.getPosY() - (BALL_SIZE / 2))) + 1,
+                            (int) (PX_PER_CM * ball.getPosX()),
+                            (int) (PX_PER_CM * (ball.getPosY() + (BALL_SIZE / 2))) - 2
                     );
                 }
             }

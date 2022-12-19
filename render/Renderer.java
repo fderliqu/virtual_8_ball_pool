@@ -1,6 +1,6 @@
 package render;
 
-import view.View;
+import view.ViewInterface;
 
 import static libs.Constants.*;
 
@@ -9,12 +9,11 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class Renderer extends JPanel {
-    private final ArrayList<View> views;
+    private final ArrayList<ViewInterface> views;
     private final JFrame window = new JFrame();
     private final int height;
-    private final double PxPerCm;
 
-    public Renderer (ArrayList<View> views) {
+    public Renderer (ArrayList<ViewInterface> views) {
         super();
         this.views  = views;
 
@@ -36,18 +35,23 @@ public class Renderer extends JPanel {
         int width = window.getWidth() - this.getWidth();
         height = window.getHeight();
 
-        PxPerCm = width /POOL_TABLE_LENGTH;
+        if(DEBUG) {
+            System.out.println("const Pxpercm = "+PX_PER_CM);
+            System.out.println("constant width, height = "+SCREEN_WIDTH+","+SCREEN_HEIGHT);
+            System.out.println("calculated width, height = "+width+","+height);
+            System.out.println("rounded pxpercm = " + Math.round(PX_PER_CM));
+            System.out.println("recomposed width, height = "+Math.round(POOL_TABLE_LENGTH * PX_PER_CM) + ", "+Math.round(POOL_TABLE_WIDTH*PX_PER_CM));
+            System.out.println("horizontal, vertical offsets = "+HORIZONTAL_OFFSET_CM+", "+VERTICAL_OFFSET_CM);
+        }
+
         window.revalidate();
         window.repaint();
     }
 
     @Override
     public void paintComponent(Graphics g){
-        //verticalOffset is the space available between the top of the table and the top of the screen
-        int verticalOffset = (int) (height - (PxPerCm * POOL_TABLE_WIDTH))/2;
-
-        for (View v : views) {
-            v.render(g, PxPerCm, verticalOffset);
+        for (ViewInterface v : views) {
+            v.render(g);
         }
     }
 

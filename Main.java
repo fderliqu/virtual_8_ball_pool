@@ -1,10 +1,12 @@
-import components.*;
+import models.*;
 
 import libs.GameStatusEnum;
 import listeners.*;
 import render.*;
 
 import static libs.Constants.*;
+
+import rules.Rule;
 import view.*;
 
 import java.util.ArrayList;
@@ -15,11 +17,11 @@ public class Main {
 
 
         BallTable tableJeu = new BallTable();
-        Rules rules = new Rules(tableJeu);
+        Rule rules = new Rule(tableJeu);
         tableJeu.setRules(rules);
 
         //views creation
-        ArrayList<View> views = new ArrayList<>();
+        ArrayList<ViewInterface> views = new ArrayList<>();
 
         AimLineListener ligneListener = new AimLineListener(null);
         AimListener aimListener = new AimListener(tableJeu, rules);

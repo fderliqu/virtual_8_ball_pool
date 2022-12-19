@@ -1,26 +1,29 @@
-package components;
+package rules;
 
 import libs.BallTypeEnum;
 import libs.GameStatusEnum;
+import models.Ball;
+import models.BallTable;
+import models.Player.PoolPlayer;
 import view.WinnerView;
 
 import static libs.Constants.DEBUG;
 
-public class Rules {
-    private Player currentPlayer;
-    private Player nextPlayer;
+public class Rule {
+    private PoolPlayer currentPlayer;
+    private PoolPlayer nextPlayer;
     private BallTypeEnum firstBallTouch;
     private WinnerView winnerView;
 
-    private Player winner = null;
+    private PoolPlayer winner = null;
 
     private final BallTable table;
 
     private GameStatusEnum status = GameStatusEnum.NO_FOOL;
 
-    public Rules (BallTable table) {
-        currentPlayer = new Player("Player 1");
-        nextPlayer = new Player("Player 2");
+    public Rule(BallTable table) {
+        currentPlayer = new PoolPlayer("Player 1");
+        nextPlayer = new PoolPlayer("Player 2");
 
         this.table = table;
     }
@@ -82,7 +85,7 @@ public class Rules {
         }
 
         if  (status != GameStatusEnum.GOOD_BALL_POTTED) {
-            Player tmp = currentPlayer;
+            PoolPlayer tmp = currentPlayer;
             currentPlayer = nextPlayer;
             nextPlayer = tmp;
         }
@@ -96,7 +99,7 @@ public class Rules {
     public void resetGame() {
         resetFlags();
         this.winner = null;
-        Player tmp = currentPlayer;
+        PoolPlayer tmp = currentPlayer;
         currentPlayer = nextPlayer;
         nextPlayer = tmp;
         currentPlayer.setTypeBall(BallTypeEnum.NULL);
@@ -106,11 +109,11 @@ public class Rules {
     }
 
     //Setters
-    public Player getCurrentPlayer() {
+    public PoolPlayer getCurrentPlayer() {
         return currentPlayer;
     }
 
-    public Player getWinner() {
+    public PoolPlayer getWinner() {
         return winner;
     }
 
@@ -122,7 +125,7 @@ public class Rules {
         status = GameStatusEnum.GAME_STOPPED;
     }
 
-    private void setWinner(Player p) {
+    private void setWinner(PoolPlayer p) {
         if (DEBUG) System.out.println("and the winner is :"+currentPlayer);
         winner = p;
         winnerView.setStatus(true);

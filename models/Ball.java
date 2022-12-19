@@ -1,6 +1,6 @@
-package components;
+package models;
 
-import components.Holes.Hole;
+import models.Holes.HoleInterface;
 import libs.SimplePoint;
 
 import static libs.Constants.*;
@@ -43,28 +43,21 @@ public class Ball {
     /*
     * computes a collision with a wall
     * */
-    public boolean wallCollide(){
-        double ORIGIN_X = (POOL_TABLE_LENGTH - GAME_SURFACE_LENGTH)/2 + HORIZONTAL_OFFSET_CM;
-        double ORIGIN_Y = (POOL_TABLE_WIDTH - GAME_SURFACE_WIDTH)/2 + VERTICAL_OFFSET_CM;
+    public void wallCollide(){
         double rayon = BALL_SIZE/2;
         //Bottom wall
         if(position.getX()-rayon <= ORIGIN_X){
             this.setSpeedX(Math.abs(speed.getX()));
-            return true;
         }
         else if(position.getX()+rayon >= ORIGIN_X + GAME_SURFACE_LENGTH){
             this.setSpeedX(-Math.abs(speed.getX()));
-            return true;
         }
         else if(position.getY()-rayon <= ORIGIN_Y){
             this.setSpeedY(Math.abs(speed.getY()));
-            return true;
         }
         else if(position.getY()+rayon >= ORIGIN_Y + GAME_SURFACE_WIDTH){
             this.setSpeedY(-Math.abs(speed.getY()));
-            return true;
         }
-        else return false;
     }
 
 
@@ -147,7 +140,7 @@ public class Ball {
      * @param hole is the hole to be test
      */
 
-    public boolean ballInHole(Hole hole){
+    public boolean ballInHole(HoleInterface hole){
         return hole.isColliding(position);
     }
 
@@ -167,7 +160,7 @@ public class Ball {
     public double getPosY() { return position.getY(); }
     public void setPosY(double posY) { position.setY(posY); }
 
-    public SimplePoint getSpeed() { return speed; }
+    //public SimplePoint getSpeed() { return speed; }
     public void setSpeed(double x, double y){
         setSpeedX(x);
         setSpeedY(y);

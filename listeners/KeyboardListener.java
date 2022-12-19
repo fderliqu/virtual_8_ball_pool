@@ -1,6 +1,6 @@
 package listeners;
 
-import components.Rules;
+import rules.Rule;
 import libs.Constants;
 
 import java.awt.event.KeyAdapter;
@@ -8,8 +8,8 @@ import java.awt.event.KeyEvent;
 
 
 public class KeyboardListener extends KeyAdapter {
-    private final Rules rules;
-    public KeyboardListener(Rules rules){
+    private final Rule rules;
+    public KeyboardListener(Rule rules){
         this.rules = rules;
     }
     @Override
