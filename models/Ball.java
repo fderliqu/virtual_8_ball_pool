@@ -16,6 +16,8 @@ public class Ball {
     private boolean isPotted;
     private final boolean alreadyChecked[] = new boolean[16];
 
+    private boolean rewind = false;
+
     public Ball(double posX, double posY,double speedX, double speedY, BallTypeEnum ballType, int ballNumber) {
         this.position = new SimplePoint(posX, posY);
         this.speed = new SimplePoint(speedX, speedY);
@@ -182,6 +184,18 @@ public class Ball {
     public boolean[] getChecked() {return alreadyChecked;}
     public void setChecked(boolean status,int i){alreadyChecked[i] = status;}
 
+    public void doRewind(double delta){
+        this.update(-delta);
+        rewind = true;
+    }
+
+    public void resetRewind(){
+        rewind = false;
+    }
+
+    public boolean getRewindFlag(){
+        return rewind;
+    }
 
     public String toString() {
         return ballNumber + " " + ballType;

@@ -81,44 +81,37 @@ public class BallTable {
         LastTime = NewTime;
         NewTime = System.nanoTime();
         double delta = (NewTime-LastTime)/(1E9);
-        for(Ball b : balls)b.update(delta);
+        //for(Ball b : balls)b.update(delta);
         /*Ball checking collision loop */
         for(Ball b : this.balls){
+            b.update(delta);
             /*If ball is already dropped then continue */
             if(b.getIsPotted())continue;
             for(Ball b2 : this.balls){
                 /*if same ball or ball2 is already dropped, skip this loop */
                 if(!b.equals(b2) && !b2.getIsPotted()){
-
                     /*if collide and balls has speed and collision is not checked yet then : */
-                    if(b.isColliding(b2) && (b.hasSpeed() ||
-                       b2.hasSpeed()) && (!b.getChecked()[b2.getBallNumber()] ||
-                       !b2.getChecked()[b.getBallNumber()])){
+                    if(b.isColliding(b2) && (b.hasSpeed() || b2.hasSpeed()) ){
+                        if(!b.getRewindFlag())b.doRewind(delta);
                         /*Play sound */
                         Sound.COLLIDE.playSound();
                         /*Compute new vectors */
                         b.transfert_energy(b2);
-                        b.setChecked(true, b2.getBallNumber());
-                        b2.setChecked(true, b.getBallNumber());
-
                         if(b.getBallType() == BallTypeEnum.WHITE){
                             rules.whiteCollide(b2);
                         }
                     }
                     /*if this collision already check and balls not collide then update flag */
-                    else if((!b.isColliding(b2)  || (!b.hasSpeed() && !b2.hasSpeed())) && (b.getChecked()[b2.getBallNumber()] || b2.getChecked()[b.getBallNumber()])){
-                        b.setChecked(false, b2.getBallNumber());
-                        b2.setChecked(false, b.getBallNumber());
-                    }
 
                 }
             }
+            b.resetRewind();
             for(HoleInterface h : holes){
                 if(b.ballInHole(h)){
                     b.setIsPotted(true);
                     b.setSpeedX(0);
                     b.setSpeedY(0);
-                    
+                    Sound.POCKET.playSound();
                     rules.ballPotted(b);
                 }
             }

@@ -18,7 +18,7 @@ public class Constants {
     //diameter of the ball
     public static final double BALL_SIZE = 5.72;
     //virtual size of the ball (from which we detect collisions)
-    public static final double BALL_SIZE_e = 5.80;
+    public static final double BALL_SIZE_e = 5.720001;
     //size between the balls when they are positioned at the beginning
     public static final double SPACE_X = Math.sqrt(BALL_SIZE_e*BALL_SIZE_e - (BALL_SIZE_e*BALL_SIZE_e)/4);
     //funny name tho
