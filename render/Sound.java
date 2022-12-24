@@ -23,8 +23,8 @@ public enum Sound {
     COLLIDE ("/data/sounds/ball_collision.wav"),
     CUE_LOW ("/data/sounds/cue_collision_strong.wav"),
     CUE_HIGH ("/data/sounds/cue_collision_weak.wav"),
-    POCKET ("/data/sounds/pocket.wav");
-
+    POCKET ("/data/sounds/pocket.wav"),
+    RACK ("/data/sounds/rack.wav");
     // Get a sound clip resource.
     Clip clip;
 

@@ -6,6 +6,7 @@ import models.Ball;
 import models.BallTable;
 import models.Player.PoolPlayer;
 import view.WinnerView;
+import render.Sound;
 
 import static libs.Constants.DEBUG;
 
@@ -106,6 +107,7 @@ public class Rule {
         nextPlayer.setTypeBall(BallTypeEnum.NULL);
         winnerView.setStatus(false);
         table.resetTable();
+        Sound.RACK.playSound();
     }
 
     //Setters
