@@ -71,6 +71,8 @@ public class Rule {
                     return;
                 case WHITE:
                     status = GameStatusEnum.WHITE_BALL_POTTED;
+                case NULL,PLAIN,STRIPED : 
+                    /*nothing to do */
             }
         }
     }
