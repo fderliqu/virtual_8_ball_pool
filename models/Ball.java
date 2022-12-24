@@ -14,7 +14,6 @@ public class Ball {
     private final BallTypeEnum ballType;
     private final int ballNumber;
     private boolean isPotted;
-    private final boolean alreadyChecked[] = new boolean[16];
 
     private boolean rewind = false;
 
@@ -180,9 +179,6 @@ public class Ball {
 
     public boolean getIsPotted() { return isPotted; }
     public void setIsPotted(boolean isDropped) { this.isPotted = isDropped; }
-
-    public boolean[] getChecked() {return alreadyChecked;}
-    public void setChecked(boolean status,int i){alreadyChecked[i] = status;}
 
     public void doRewind(double delta){
         this.update(-delta);

@@ -23,7 +23,6 @@ public class Renderer extends JPanel {
         window.setUndecorated(true);
         window.setVisible(true);
         window.setFocusable(true);
-        if(window.requestFocusInWindow())System.out.println("request focus succes");
 
         if (d.isFullScreenSupported()) {
             d.setFullScreenWindow(window);

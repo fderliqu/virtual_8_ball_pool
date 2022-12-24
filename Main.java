@@ -51,7 +51,8 @@ public class Main {
 
         panel.getWindow().addKeyListener(keyListerner);
 
-        Sound.COLLIDE.init();
+        Sound.RACK.init();
+        Sound.RACK.playSound();
         /*
          * Thread for renderer
          */

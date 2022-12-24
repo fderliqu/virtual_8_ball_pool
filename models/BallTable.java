@@ -53,7 +53,6 @@ public class BallTable {
         for(Ball b : balls){
             b.setPos(BALLS_INIT_POS_X[i],BALLS_INIT_POS_Y[i]);
             b.setSpeed(0, 0);
-            for(int j=0;j<b.getChecked().length;j++)b.setChecked(false, j);
             b.setIsPotted(false);
             i++;
         }
@@ -81,7 +80,6 @@ public class BallTable {
         LastTime = NewTime;
         NewTime = System.nanoTime();
         double delta = (NewTime-LastTime)/(1E9);
-        //for(Ball b : balls)b.update(delta);
         /*Ball checking collision loop */
         for(Ball b : this.balls){
             b.update(delta);
