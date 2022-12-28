@@ -39,6 +39,9 @@ public class Rule {
             firstBallTouch = b.getBallType();
 
             if ((b.getBallType() != currentPlayer.getTypeBall()) && (currentPlayer.getTypeBall() != BallTypeEnum.NULL)) {
+
+                //if the current player has already potted all their balls and hits the black ball first then there is no fool
+                if  ((!table.ballsRemaining(currentPlayer.getTypeBall())) && b.getBallType() == BallTypeEnum.BLACK) return;
                 if  (DEBUG) System.out.println("Fool : wrong ball hit");
                 status = GameStatusEnum.WRONG_WHITE_COLLISION;
             }
