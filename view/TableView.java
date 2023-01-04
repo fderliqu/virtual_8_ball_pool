@@ -17,7 +17,7 @@ public class TableView implements ViewInterface {
                 30,
                 30);
 
-        g.setColor(new Color(0, 184, 148));
+        g.setColor(new Color(62, 136, 189));
         g.fillRoundRect(
                 (int) (PX_PER_CM * WALL_THICKNESS),
                 (int) ((VERTICAL_OFFSET_CM + WALL_THICKNESS) * PX_PER_CM),
